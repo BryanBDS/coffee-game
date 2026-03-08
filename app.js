@@ -203,6 +203,11 @@ t.classList.remove("active");
 
 document.getElementById("tab-"+tab).classList.add("active");
 
+if(tab === "mapa"){
+setTimeout(iniciarMapa,200);
+    
+}
+
     }
 
 
@@ -263,5 +268,6 @@ L.marker([p.lat,p.lng])
 });
 
 }
+
 
 
