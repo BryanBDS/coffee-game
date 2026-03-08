@@ -458,4 +458,64 @@ transform:scale(1.05);
 background:#9cff00;
 color:#000;
     }
+/* PANEL PROFESIONAL DE NAVEGACIÓN */
+
+.icon-sidebar{
+width:75px;
+background:linear-gradient(
+180deg,
+#0b141b,
+#091018
+);
+display:flex;
+flex-direction:column;
+align-items:center;
+padding-top:20px;
+border-right:1px solid rgba(255,255,255,0.08);
+position:relative;
+}
+
+/* BOTONES */
+
+.nav-icon{
+width:52px;
+height:52px;
+margin-bottom:18px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+background:#16222c;
+border-radius:12px;
+cursor:pointer;
+transition:all 0.25s ease;
+position:relative;
+}
+
+/* HOVER */
+
+.nav-icon:hover{
+background:#1f3647;
+transform:scale(1.08);
+}
+
+/* ACTIVO */
+
+.nav-icon.active{
+background:#9cff00;
+color:#000;
+box-shadow:0 0 15px rgba(156,255,0,0.6);
+}
+
+/* INDICADOR LATERAL */
+
+.nav-icon.active::before{
+content:"";
+position:absolute;
+left:-8px;
+width:4px;
+height:60%;
+background:#9cff00;
+border-radius:2px;
+    }
 
