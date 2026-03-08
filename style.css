@@ -25,4 +25,112 @@ cursor:pointer;
 
 margin-top:30px;
 
+
+}
+
+
+:root {
+    --primary: #6ab04c; /* Verde campo */
+    --primary-dark: #417505;
+    --accent: #f0932b; /* Naranja zanahoria */
+    --bg-panel: #ffffff;
+    --text: #2f3640;
+}
+
+body {
+    margin: 0;
+    font-family: 'Quicksand', sans-serif;
+    background: url('https://img.freepik.com') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Efecto de desenfoque al fondo */
+.overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.login-card {
+    background: var(--bg-panel);
+    padding: 30px;
+    border-radius: 30px;
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    text-align: center;
+    border: 5px solid #f1f2f6;
+    animation: fadeIn 0.5s ease;
+}
+
+h2 { font-family: 'Fredoka One', cursive; color: var(--primary-dark); margin: 10px 0; }
+
+.header-icon { font-size: 50px; margin-bottom: 10px; }
+
+.input-box { margin-bottom: 15px; }
+
+input {
+    width: 100%;
+    padding: 15px;
+    border-radius: 15px;
+    border: 2px solid #dcdde1;
+    background: #f5f6fa;
+    font-family: inherit;
+    font-size: 16px;
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border-color: var(--primary);
+    outline: none;
+    background: #fff;
+}
+
+.btn-main {
+    width: 100%;
+    padding: 18px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 15px;
+    font-family: 'Fredoka One', cursive;
+    font-size: 18px;
+    cursor: pointer;
+    box-shadow: 0 6px 0 var(--primary-dark);
+    transition: 0.2s;
+}
+
+.btn-main:active {
+    transform: translateY(4px);
+    box-shadow: 0 2px 0 var(--primary-dark);
+}
+
+.divider { margin: 20px 0; color: #7f8c8d; font-size: 14px; position: relative; }
+.divider::before { content: ""; height: 1px; width: 100%; background: #dcdde1; position: absolute; left: 0; top: 50%; z-index: -1; }
+.divider span { background: #fff; padding: 0 10px; }
+
+.social-login { display: flex; gap: 10px; justify-content: center; }
+
+.social-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px solid #dcdde1;
+    background: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
