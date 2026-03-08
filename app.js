@@ -20,7 +20,6 @@ gameUI.style.display = "block";
 }
 
 // Registro
-
 form.addEventListener("submit", function(e){
 
 e.preventDefault();
@@ -36,31 +35,36 @@ const jugadorData = {
 
 localStorage.setItem("jugador", JSON.stringify(jugadorData));
 
-// Ocultar tarjeta de login
+// Ocultar login
 document.querySelector('.login-card').style.display = 'none';
 
 // Mostrar pantalla de carga
 const loading = document.getElementById('loadingScreen');
-loading.style.display = 'flex';
 
-// Barra de progreso
+if(loading){
+loading.style.display = 'flex';
+}
+
 let progress = 0;
 const fill = document.querySelector('.progress-fill');
 
 const interval = setInterval(() => {
 
-progress += Math.random() * 10;
+progress += 10;
 
 if(progress > 100) progress = 100;
 
+if(fill){
 fill.style.width = progress + "%";
+}
 
 if(progress === 100){
 
 clearInterval(interval);
 
-// Ocultar pantalla de carga
+if(loading){
 loading.style.display = "none";
+}
 
 // Mostrar juego
 loginScreen.style.display = "none";
@@ -73,6 +77,8 @@ document.getElementById("playerMoney").textContent = "💰 Balance: " + jugadorD
 }
 
 },200);
+
+});
 
 });
 
@@ -186,6 +192,7 @@ document.getElementById("pantalla").innerHTML = `
 
 
 }
+
 
 
 
