@@ -59,17 +59,123 @@
 <p id="playerMoney">💰 Balance: 0 CoffeeCoins</p>
 </div>       
 
-<h1>☕ Coffee Empire</h1>
+<div class="game-wrapper">
 
-<div id="menu">
+<!-- BARRA LATERAL -->
+<aside class="sidebar">
 
-<button onclick="mostrarMapa()">🌍 Mapa cafetero</button>
-<button onclick="mostrarFinca()">🌱 Mi finca</button>
-<button onclick="mostrarMercado()">💰 Mercado</button>
+<div class="header">
+<h2 id="farmName">Mi finca</h2>
+</div>
+
+<nav class="menu">
+
+<button class="nav-btn active" onclick="switchTab('mapa')">
+<span class="icon">🗺️</span> MAPA CAFETERO
+</button>
+
+<button class="nav-btn" onclick="switchTab('finca')">
+<span class="icon">🏡</span> MI FINCA
+</button>
+
+<button class="nav-btn" onclick="switchTab('mercado')">
+<span class="icon">📈</span> MERCADO
+</button>
+
+</nav>
+
+<div id="quick-info" class="info-panel">
+
+<h3>Mi Finca</h3>
+
+<div class="stat-row">
+<p>Balance:</p>
+<span id="playerMoney">0 CoffeeCoins</span>
+</div>
 
 </div>
 
-<div id="pantalla"></div>
+</aside>
+
+
+<main class="viewport">
+
+<section id="tab-mapa" class="content-tab active">
+
+<div class="map-container">
+
+<div class="region-selector">
+
+<h3>COLOMBIA ▼</h3>
+
+<ul>
+
+<li onclick="loadRegion('Nariño')">☕ Nariño</li>
+<li onclick="loadRegion('Huila')">☕ Huila</li>
+<li onclick="loadRegion('Antioquia')">🌋 Antioquia</li>
+<li onclick="loadRegion('Tolima')">🌋 Tolima</li>
+
+</ul>
+
+</div>
+
+<div class="map-render">
+
+<div class="parcel c1"><span>C1</span><br>CAFÉ</div>
+<div class="parcel c2 selected"><span>C2</span><br>CAFÉ</div>
+<div class="parcel c3"><span>C3</span><br>VACÍO</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="tab-finca" class="content-tab">
+
+<div class="finca-detail">
+
+<h2>Estado del Cultivo</h2>
+
+<div class="card">
+
+<p>Variedad: Café Arábica</p>
+
+<p>Fase: Crecimiento</p>
+
+<div class="progress-bar">
+<div class="fill" style="width:40%"></div>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="tab-mercado" class="content-tab">
+
+<div class="market-view">
+
+<div class="price-ticker">
+
+<p>PRECIO DEL CAFÉ</p>
+
+<h1 id="market-price">$208 USD</h1>
+
+<span class="trend up">▲ +5% Hoy</span>
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
         
 </div>
         
@@ -78,6 +184,7 @@
 </body>
 
 </html>
+
 
 
 
