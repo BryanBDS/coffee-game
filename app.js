@@ -1,3 +1,51 @@
+// Esperar que la página cargue
+document.addEventListener("DOMContentLoaded", function() {
+
+const form = document.getElementById("registerForm");
+
+// Verificar si el jugador ya está registrado
+const jugadorGuardado = localStorage.getItem("jugador");
+
+if (jugadorGuardado) {
+
+    document.getElementById("loginScreen").style.display = "none";
+    document.getElementById("gameUI").style.display = "block";
+
+}
+
+// Registro del jugador
+form.addEventListener("submit", function(e) {
+
+    e.preventDefault();
+
+    const inputs = form.querySelectorAll("input");
+
+    const granja = inputs[0].value;
+    const email = inputs[1].value;
+    const password = inputs[2].value;
+
+    const jugador = {
+        granja: granja,
+        email: email,
+        dinero: 100,
+        cafe: 0
+    };
+
+    // Guardar jugador
+    localStorage.setItem("jugador", JSON.stringify(jugador));
+
+    // Ocultar login
+    document.getElementById("loginScreen").style.display = "none";
+
+    // Mostrar juego
+    document.getElementById("gameUI").style.display = "block";
+
+});
+
+});
+
+
+
 let terrenoComprado = false
 let plantas = 0
 let cafeListo = false
@@ -103,5 +151,6 @@ document.getElementById("pantalla").innerHTML = `
 <h2>💰 Mercado del café</h2>
 <p>Precio actual: 2.5 CCF/kg</p>
 `
+
 
 }
