@@ -422,3 +422,39 @@ background:#0091ff;
 padding:6px 12px;
 border-radius:8px;
 }
+
+/* PANEL ICONOS IZQUIERDO */
+
+.icon-sidebar{
+width:70px;
+background:#0b141b;
+display:flex;
+flex-direction:column;
+align-items:center;
+padding-top:20px;
+border-right:1px solid rgba(255,255,255,0.08);
+}
+
+.icon-btn{
+width:50px;
+height:50px;
+margin-bottom:15px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:22px;
+background:#16222c;
+border-radius:10px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.icon-btn:hover{
+background:#0091ff;
+transform:scale(1.05);
+}
+
+.icon-btn.active{
+background:#9cff00;
+color:#000;
+    }
