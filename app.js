@@ -8,8 +8,15 @@ const gameUI = document.getElementById("gameUI");
 const jugador = localStorage.getItem("jugador");
 
 if (jugador) {
-    loginScreen.style.display = "none";
-    gameUI.style.display = "block";
+
+const datos = JSON.parse(jugador);
+
+document.getElementById("farmName").textContent = "🌱 " + datos.granja;
+document.getElementById("playerMoney").textContent = "💰 Balance: " + datos.dinero + " CoffeeCoins";
+
+loginScreen.style.display = "none";
+gameUI.style.display = "block";
+
 }
 
 // Registro
@@ -27,6 +34,9 @@ form.addEventListener("submit", function(e){
     };
 
     localStorage.setItem("jugador", JSON.stringify(jugadorData));
+
+    document.getElementById("farmName").textContent = "🌱 " + jugadorData.granja;
+    document.getElementById("playerMoney").textContent = "💰 Balance: " + jugadorData.dinero + " CoffeeCoins";
 
     loginScreen.style.display = "none";
     gameUI.style.display = "block";
@@ -145,4 +155,5 @@ document.getElementById("pantalla").innerHTML = `
 
 
 }
+
 
