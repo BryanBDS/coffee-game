@@ -1,44 +1,35 @@
-// Esperar que la página cargue
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
 
 const form = document.getElementById("registerForm");
+const loginScreen = document.getElementById("loginScreen");
+const gameUI = document.getElementById("gameUI");
 
-// Verificar si el jugador ya está registrado
-const jugadorGuardado = localStorage.getItem("jugador");
+// Revisar si ya hay jugador guardado
+const jugador = localStorage.getItem("jugador");
 
-if (jugadorGuardado) {
-
-    document.getElementById("loginScreen").style.display = "none";
-    document.getElementById("gameUI").style.display = "block";
-
+if (jugador) {
+    loginScreen.style.display = "none";
+    gameUI.style.display = "block";
 }
 
-// Registro del jugador
-form.addEventListener("submit", function(e) {
+// Registro
+form.addEventListener("submit", function(e){
 
     e.preventDefault();
 
     const inputs = form.querySelectorAll("input");
 
-    const granja = inputs[0].value;
-    const email = inputs[1].value;
-    const password = inputs[2].value;
-
-    const jugador = {
-        granja: granja,
-        email: email,
+    const jugadorData = {
+        granja: inputs[0].value,
+        email: inputs[1].value,
         dinero: 100,
         cafe: 0
     };
 
-    // Guardar jugador
-    localStorage.setItem("jugador", JSON.stringify(jugador));
+    localStorage.setItem("jugador", JSON.stringify(jugadorData));
 
-    // Ocultar login
-    document.getElementById("loginScreen").style.display = "none";
-
-    // Mostrar juego
-    document.getElementById("gameUI").style.display = "block";
+    loginScreen.style.display = "none";
+    gameUI.style.display = "block";
 
 });
 
@@ -154,3 +145,4 @@ document.getElementById("pantalla").innerHTML = `
 
 
 }
+
