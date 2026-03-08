@@ -231,4 +231,37 @@ switchTab(tab);
 });
 
 
+function iniciarMapa(){
+
+const map = L.map('coffeeMap').setView([4.5709, -74.2973], 6);
+
+// mapa base
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+
+attribution: '© OpenStreetMap'
+
+}).addTo(map);
+
+
+// PARCELAS DE EJEMPLO
+
+const parcelas = [
+
+{nombre:"Finca Antioquia",lat:6.2442,lng:-75.5812},
+{nombre:"Finca Huila",lat:2.5359,lng:-75.5277},
+{nombre:"Finca Quindio",lat:4.535,lng:-75.6811}
+
+];
+
+parcelas.forEach(p=>{
+
+L.marker([p.lat,p.lng])
+.addTo(map)
+.bindPopup(`<b>${p.nombre}</b><br>Terreno disponible`);
+
+});
+
+}
+
 
