@@ -216,7 +216,7 @@ margin-top:60px;
 
 /* SIDEBAR */
 .sidebar {
-width: 320px;
+width: 260px;
 background: var(--sidebar-bg);
 padding: 25px;
 border-right: 1px solid rgba(255,255,255,0.1);
@@ -458,3 +458,4 @@ transform:scale(1.05);
 background:#9cff00;
 color:#000;
     }
+
