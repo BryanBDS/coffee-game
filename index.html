@@ -3,10 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <title>Coffee Empire</title>
+<link href="https://fonts.googleapis.com" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+<div class="overlay">
+        <div class="login-card">
+            <div class="header-icon">🚜</div>
+            <h2>¡Bienvenido, Granjero!</h2>
+            <p>Crea tu cuenta para empezar a sembrar</p>
+            
+            <form id="registerForm">
+                <div class="input-box">
+                    <input type="text" required placeholder="Nombre de tu granja">
+                </div>
+                <div class="input-box">
+                    <input type="email" required placeholder="Correo electrónico">
+                </div>
+                <div class="input-box">
+                    <input type="password" required placeholder="Contraseña">
+                </div>
+                
+                <button type="submit" class="btn-main">EMPEZAR A JUGAR</button>
+            </form>
+
+            <div class="divider"><span>O entra con</span></div>
+
+            <div class="social-login">
+                <button class="social-btn google">G</button>
+                <button class="social-btn apple">A</button>
+            </div>
+        </div>
+    </div>
+
 
 <h1>☕ Coffee Empire</h1>
 
@@ -23,4 +53,5 @@
 <script src="app.js"></script>
 
 </body>
+
 </html>
