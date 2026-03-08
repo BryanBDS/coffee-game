@@ -209,8 +209,9 @@ overflow: hidden;
 }
 
 .game-wrapper {
-display: flex;
-height: 100vh;
+display:flex;
+height:calc(100vh - 60px);
+margin-top:60px;
 }
 
 /* SIDEBAR */
@@ -390,3 +391,34 @@ overflow:hidden;
 height:100%;
 background:var(--accent-blue);
     }
+
+
+/* BARRA DEL JUGADOR */
+
+#playerBar{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:60px;
+background:#0f1c25;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 30px;
+border-bottom:1px solid rgba(255,255,255,0.1);
+z-index:1000;
+}
+
+.player-left{
+font-size:18px;
+font-weight:600;
+color:#f1c40f;
+}
+
+.player-right{
+font-size:16px;
+background:#0091ff;
+padding:6px 12px;
+border-radius:8px;
+}
