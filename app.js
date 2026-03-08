@@ -20,58 +20,61 @@ gameUI.style.display = "block";
 }
 
 // Registro
+
 form.addEventListener("submit", function(e){
 
-    e.preventDefault();
+e.preventDefault();
 
-    const inputs = form.querySelectorAll("input");
+const inputs = form.querySelectorAll("input");
 
-    const jugadorData = {
-        granja: inputs[0].value,
-        email: inputs[1].value,
-        dinero: 100,
-        cafe: 0
-    };
+const jugadorData = {
+    granja: inputs[0].value,
+    email: inputs[1].value,
+    dinero: 100,
+    cafe: 0
+};
 
-    localStorage.setItem("jugador", JSON.stringify(jugadorData));
+localStorage.setItem("jugador", JSON.stringify(jugadorData));
 
-    document.getElementById("farmName").textContent = "🌱 " + jugadorData.granja;
-    document.getElementById("playerMoney").textContent = "💰 Balance: " + jugadorData.dinero + " CoffeeCoins";
+// Ocultar tarjeta de login
+document.querySelector('.login-card').style.display = 'none';
 
-    loginScreen.style.display = "none";
-    gameUI.style.display = "block";
+// Mostrar pantalla de carga
+const loading = document.getElementById('loadingScreen');
+loading.style.display = 'flex';
+
+// Barra de progreso
+let progress = 0;
+const fill = document.querySelector('.progress-fill');
+
+const interval = setInterval(() => {
+
+progress += Math.random() * 10;
+
+if(progress > 100) progress = 100;
+
+fill.style.width = progress + "%";
+
+if(progress === 100){
+
+clearInterval(interval);
+
+// Ocultar pantalla de carga
+loading.style.display = "none";
+
+// Mostrar juego
+loginScreen.style.display = "none";
+gameUI.style.display = "block";
+
+// Mostrar datos del jugador
+document.getElementById("farmName").textContent = "🌱 " + jugadorData.granja;
+document.getElementById("playerMoney").textContent = "💰 Balance: " + jugadorData.dinero + " CoffeeCoins";
+
+}
+
+},200);
 
 });
-
-});
-
-
-document.getElementById('registerForm').addEventListener('submit', function(e) {
-    e.preventDefault(); // Evita que la página se recargue
-    
-    // Ocultar card de registro y mostrar carga
-    document.querySelector('.login-card').style.display = 'none';
-    const loading = document.getElementById('loadingScreen');
-    loading.style.display = 'flex';
-
-    // Simular el progreso de carga
-    let progress = 0;
-    const fill = document.querySelector('.progress-fill');
-    
-    const interval = setInterval(() => {
-        progress += Math.random() * 10;
-        if (progress > 100) progress = 100;
-        
-        fill.style.width = progress + '%';
-        
-        if (progress === 100) {
-            clearInterval(interval);
-            alert("¡Granja lista! Bienvenido.");
-            // Aquí redirigirías al juego real
-        }
-    }, 200);
-});
-
 
 
 
@@ -183,6 +186,7 @@ document.getElementById("pantalla").innerHTML = `
 
 
 }
+
 
 
 
