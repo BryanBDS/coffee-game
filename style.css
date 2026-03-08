@@ -190,3 +190,203 @@ input:focus {
 }
 
 
+
+:root {
+--bg-dark: #12232e;
+--sidebar-bg: #1a2c38;
+--accent-blue: #0091ff;
+--accent-yellow: #f1c40f;
+--text-main: #ffffff;
+--text-dim: #a0aec0;
+}
+
+body {
+margin: 0;
+font-family: 'Quicksand', sans-serif;
+background: var(--bg-dark);
+color: var(--text-main);
+overflow: hidden;
+}
+
+.game-wrapper {
+display: flex;
+height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+width: 320px;
+background: var(--sidebar-bg);
+padding: 25px;
+border-right: 1px solid rgba(255,255,255,0.1);
+display: flex;
+flex-direction: column;
+}
+
+.nav-btn {
+width: 100%;
+padding: 15px;
+margin-bottom: 12px;
+background: rgba(255,255,255,0.05);
+border: 1px solid rgba(255,255,255,0.1);
+border-radius: 10px;
+color: white;
+text-align: left;
+cursor: pointer;
+font-size: 16px;
+transition: 0.3s;
+}
+
+.nav-btn.active {
+background: var(--accent-blue);
+border-color: var(--accent-blue);
+box-shadow: 0 4px 15px rgba(0, 145, 255, 0.3);
+}
+
+.info-panel {
+margin-top: auto;
+background: rgba(0,0,0,0.2);
+padding: 15px;
+border-radius: 12px;
+}
+
+/* VIEWPORT / MAPA */
+.viewport {
+flex-grow: 1;
+position: relative;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.content-tab {
+display: none;
+width: 100%;
+height: 100%;
+}
+
+.content-tab.active { display: block; }
+
+.map-render {
+display: grid;
+grid-template-areas: "c1 c2" "c3 c2";
+gap: 20px;
+padding: 50px;
+}
+
+.parcel {
+background: #4a5568;
+border-radius: 15px;
+padding: 30px;
+text-align: center;
+border: 3px solid transparent;
+cursor: pointer;
+transition: 0.3s;
+}
+
+.parcel.c1 { background: #b7903c; } /* Trigo /
+.parcel.c2 { background: #ed8936; height: 300px; grid-area: c2; } / Maíz /
+.parcel.c3 { background: #4a5568; } / Barbecho */
+
+.parcel.selected {
+border-color: #fff;
+box-shadow: 0 0 20px #fff;
+transform: scale(1.05);
+}
+
+/* MERCADO */
+.market-view {
+display: flex;
+justify-content: flex-end;
+align-items: flex-end;
+height: 90%;
+padding: 40px;
+}
+
+.price-ticker {
+background: rgba(0,0,0,0.6);
+padding: 20px;
+border-radius: 15px;
+border-bottom: 4px solid var(--accent-yellow);
+}
+
+
+/* HEADER SIDEBAR */
+
+.header{
+margin-bottom:20px;
+}
+
+.header h2{
+margin:0;
+font-size:20px;
+color:var(--accent-yellow);
+}
+
+/* ICONOS MENU */
+
+.icon{
+margin-right:8px;
+}
+
+/* MAPA */
+
+.map-container{
+width:100%;
+height:100%;
+display:flex;
+justify-content:center;
+align-items:center;
+position:relative;
+}
+
+.region-selector{
+position:absolute;
+top:20px;
+left:20px;
+background:rgba(0,0,0,0.6);
+padding:15px;
+border-radius:10px;
+}
+
+.region-selector ul{
+list-style:none;
+padding:0;
+margin:10px 0 0 0;
+}
+
+.region-selector li{
+padding:5px 0;
+cursor:pointer;
+color:var(--text-main);
+}
+
+.region-selector li:hover{
+color:var(--accent-yellow);
+}
+
+/* FINCA */
+
+.finca-detail{
+padding:40px;
+}
+
+.card{
+background:rgba(0,0,0,0.4);
+padding:20px;
+border-radius:15px;
+max-width:400px;
+}
+
+.progress-bar{
+height:12px;
+background:#333;
+border-radius:10px;
+margin-top:10px;
+overflow:hidden;
+}
+
+.fill{
+height:100%;
+background:var(--accent-blue);
+    }
