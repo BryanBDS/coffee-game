@@ -196,19 +196,24 @@ document.getElementById("pantalla").innerHTML = `
 
 function switchTab(tab){
 
-document.querySelectorAll(".content-tab").forEach(section=>{
-section.classList.remove("active");
+const tabs = document.querySelectorAll(".content-tab");
+
+tabs.forEach(t=>{
+t.classList.remove("active");
 });
 
 document.getElementById("tab-"+tab).classList.add("active");
 
-document.querySelectorAll(".nav-btn").forEach(btn=>{
-btn.classList.remove("active");
+const buttons = document.querySelectorAll(".nav-btn");
+
+buttons.forEach(b=>{
+b.classList.remove("active");
 });
 
 event.target.classList.add("active");
 
 }
+
 
 
 
