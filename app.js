@@ -46,6 +46,34 @@ form.addEventListener("submit", function(e){
 });
 
 
+document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault(); // Evita que la página se recargue
+    
+    // Ocultar card de registro y mostrar carga
+    document.querySelector('.login-card').style.display = 'none';
+    const loading = document.getElementById('loadingScreen');
+    loading.style.display = 'flex';
+
+    // Simular el progreso de carga
+    let progress = 0;
+    const fill = document.querySelector('.progress-fill');
+    
+    const interval = setInterval(() => {
+        progress += Math.random() * 10;
+        if (progress > 100) progress = 100;
+        
+        fill.style.width = progress + '%';
+        
+        if (progress === 100) {
+            clearInterval(interval);
+            alert("¡Granja lista! Bienvenido.");
+            // Aquí redirigirías al juego real
+        }
+    }, 200);
+});
+
+
+
 
 let terrenoComprado = false
 let plantas = 0
@@ -155,5 +183,6 @@ document.getElementById("pantalla").innerHTML = `
 
 
 }
+
 
 
