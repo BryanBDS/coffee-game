@@ -230,44 +230,6 @@ setTimeout(iniciarMapa,200);
 }
 
 
-document.querySelectorAll(".nav-icon").forEach(icon => {
-
-icon.addEventListener("click", () => {
-
-const tab = icon.dataset.tab;
-
-switchTab(tab);
-
-});
-
-});
-
-
-
-/* NAVEGACIÓN PANEL PROFESIONAL */
-
-document.addEventListener("DOMContentLoaded", () => {
-
-const navIcons = document.querySelectorAll(".nav-icon");
-
-navIcons.forEach(icon => {
-
-icon.addEventListener("click", function(){
-
-document.querySelector(".nav-icon.active")?.classList.remove("active");
-
-this.classList.add("active");
-
-const tab = this.getAttribute("data-tab");
-
-switchTab(tab);
-
-});
-
-});
-
-});
-
 
 function iniciarMapa(){
 
@@ -467,6 +429,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
