@@ -25,14 +25,13 @@ cursor:pointer;
 
 margin-top:30px;
 
-
 }
 
 
 :root {
-    --primary: #6ab04c; /* Verde campo */
+    --primary: #6ab04c;
     --primary-dark: #417505;
-    --accent: #f0932b; /* Naranja zanahoria */
+    --accent: #f0932b;
     --bg-panel: #ffffff;
     --text: #2f3640;
 }
@@ -48,7 +47,8 @@ body {
     height: 100vh;
 }
 
-/* Efecto de desenfoque al fondo */
+/* Efecto de desenfoque */
+
 .overlay {
     width: 100%;
     height: 100%;
@@ -71,11 +71,20 @@ body {
     animation: fadeIn 0.5s ease;
 }
 
-h2 { font-family: 'Fredoka One', cursive; color: var(--primary-dark); margin: 10px 0; }
+h2 { 
+font-family: 'Fredoka One', cursive; 
+color: var(--primary-dark); 
+margin: 10px 0; 
+}
 
-.header-icon { font-size: 50px; margin-bottom: 10px; }
+.header-icon { 
+font-size: 50px; 
+margin-bottom: 10px; 
+}
 
-.input-box { margin-bottom: 15px; }
+.input-box { 
+margin-bottom: 15px; 
+}
 
 input {
     width: 100%;
@@ -114,11 +123,34 @@ input:focus {
     box-shadow: 0 2px 0 var(--primary-dark);
 }
 
-.divider { margin: 20px 0; color: #7f8c8d; font-size: 14px; position: relative; }
-.divider::before { content: ""; height: 1px; width: 100%; background: #dcdde1; position: absolute; left: 0; top: 50%; z-index: -1; }
-.divider span { background: #fff; padding: 0 10px; }
+.divider { 
+margin: 20px 0; 
+color: #7f8c8d; 
+font-size: 14px; 
+position: relative; 
+}
 
-.social-login { display: flex; gap: 10px; justify-content: center; }
+.divider::before { 
+content: ""; 
+height: 1px; 
+width: 100%; 
+background: #dcdde1; 
+position: absolute; 
+left: 0; 
+top: 50%; 
+z-index: -1; 
+}
+
+.divider span { 
+background: #fff; 
+padding: 0 10px; 
+}
+
+.social-login { 
+display: flex; 
+gap: 10px; 
+justify-content: center; 
+}
 
 .social-btn {
     width: 50px;
@@ -136,13 +168,15 @@ input:focus {
 }
 
 
+/* PANTALLA DE CARGA */
+
 .loading-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(106, 176, 76, 0.95); /* Color verde suave */
+    background: rgba(106, 176, 76, 0.95);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -154,7 +188,6 @@ input:focus {
     color: white;
 }
 
-/* Animación de la planta creciendo */
 .seedling {
     font-size: 80px;
     animation: grow 2s infinite ease-in-out;
@@ -179,7 +212,7 @@ input:focus {
 .progress-fill {
     width: 0%;
     height: 100%;
-    background: var(--accent); /* Naranja zanahoria */
+    background: var(--accent);
     border-radius: 5px;
     transition: width 0.3s;
 }
@@ -190,6 +223,7 @@ input:focus {
 }
 
 
+/* VARIABLES DEL JUEGO */
 
 :root {
 --bg-dark: #12232e;
@@ -208,13 +242,19 @@ color: var(--text-main);
 overflow: hidden;
 }
 
+
+/* CONTENEDOR DEL JUEGO */
+
 .game-wrapper {
 display:flex;
+flex-direction:row;
 height:calc(100vh - 60px);
 margin-top:60px;
 }
 
+
 /* SIDEBAR */
+
 .sidebar {
 width: 260px;
 background: var(--sidebar-bg);
@@ -223,6 +263,9 @@ border-right: 1px solid rgba(255,255,255,0.1);
 display: flex;
 flex-direction: column;
 }
+
+
+/* BOTONES SIDEBAR */
 
 .nav-btn {
 width: 100%;
@@ -244,14 +287,9 @@ border-color: var(--accent-blue);
 box-shadow: 0 4px 15px rgba(0, 145, 255, 0.3);
 }
 
-.info-panel {
-margin-top: auto;
-background: rgba(0,0,0,0.2);
-padding: 15px;
-border-radius: 12px;
-}
 
-/* VIEWPORT / MAPA */
+/* VIEWPORT */
+
 .viewport {
 flex-grow: 1;
 position: relative;
@@ -266,7 +304,12 @@ width: 100%;
 height: 100%;
 }
 
-.content-tab.active { display: block; }
+.content-tab.active { 
+display: block; 
+}
+
+
+/* PARCELAS */
 
 .map-render {
 display: grid;
@@ -285,9 +328,9 @@ cursor: pointer;
 transition: 0.3s;
 }
 
-.parcel.c1 { background: #b7903c; } /* Trigo /
-.parcel.c2 { background: #ed8936; height: 300px; grid-area: c2; } / Maíz /
-.parcel.c3 { background: #4a5568; } / Barbecho */
+.parcel.c1 { background: #b7903c; } /* Trigo */
+.parcel.c2 { background: #ed8936; height: 300px; grid-area: c2; } /* Maíz */
+.parcel.c3 { background: #4a5568; } /* Barbecho */
 
 .parcel.selected {
 border-color: #fff;
@@ -295,105 +338,8 @@ box-shadow: 0 0 20px #fff;
 transform: scale(1.05);
 }
 
-/* MERCADO */
-.market-view {
-display: flex;
-justify-content: flex-end;
-align-items: flex-end;
-height: 90%;
-padding: 40px;
-}
 
-.price-ticker {
-background: rgba(0,0,0,0.6);
-padding: 20px;
-border-radius: 15px;
-border-bottom: 4px solid var(--accent-yellow);
-}
-
-
-/* HEADER SIDEBAR */
-
-.header{
-margin-bottom:20px;
-}
-
-.header h2{
-margin:0;
-font-size:20px;
-color:var(--accent-yellow);
-}
-
-/* ICONOS MENU */
-
-.icon{
-margin-right:8px;
-}
-
-/* MAPA */
-
-.map-container{
-width:100%;
-height:100%;
-display:flex;
-justify-content:center;
-align-items:center;
-position:relative;
-}
-
-.region-selector{
-position:absolute;
-top:20px;
-left:20px;
-background:rgba(0,0,0,0.6);
-padding:15px;
-border-radius:10px;
-}
-
-.region-selector ul{
-list-style:none;
-padding:0;
-margin:10px 0 0 0;
-}
-
-.region-selector li{
-padding:5px 0;
-cursor:pointer;
-color:var(--text-main);
-}
-
-.region-selector li:hover{
-color:var(--accent-yellow);
-}
-
-/* FINCA */
-
-.finca-detail{
-padding:40px;
-}
-
-.card{
-background:rgba(0,0,0,0.4);
-padding:20px;
-border-radius:15px;
-max-width:400px;
-}
-
-.progress-bar{
-height:12px;
-background:#333;
-border-radius:10px;
-margin-top:10px;
-overflow:hidden;
-}
-
-.fill{
-height:100%;
-background:var(--accent-blue);
-    }
-
-
-/* BARRA DEL JUGADOR */
+/* PANEL JUGADOR */
 
 #playerBar{
 position:absolute;
@@ -410,72 +356,21 @@ border-bottom:1px solid rgba(255,255,255,0.1);
 z-index:1000;
 }
 
-.player-left{
-font-size:18px;
-font-weight:600;
-color:#f1c40f;
-}
 
-.player-right{
-font-size:16px;
-background:#0091ff;
-padding:6px 12px;
-border-radius:8px;
-}
-
-/* PANEL ICONOS IZQUIERDO */
-
-.icon-sidebar{
-width:70px;
-background:#0b141b;
-display:flex;
-flex-direction:column;
-align-items:center;
-padding-top:20px;
-border-right:1px solid rgba(255,255,255,0.08);
-}
-
-.icon-btn{
-width:50px;
-height:50px;
-margin-bottom:15px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:22px;
-background:#16222c;
-border-radius:10px;
-cursor:pointer;
-transition:0.3s;
-}
-
-.icon-btn:hover{
-background:#0091ff;
-transform:scale(1.05);
-}
-
-.icon-btn.active{
-background:#9cff00;
-color:#000;
-    }
-/* PANEL PROFESIONAL DE NAVEGACIÓN */
+/* PANEL ICONOS */
 
 .icon-sidebar{
 width:75px;
-background:linear-gradient(
-180deg,
-#0b141b,
-#091018
-);
+background:linear-gradient(180deg,#0b141b,#091018);
 display:flex;
 flex-direction:column;
 align-items:center;
 padding-top:20px;
 border-right:1px solid rgba(255,255,255,0.08);
 position:relative;
+flex-shrink:0;
+z-index:500;
 }
-
-/* BOTONES */
 
 .nav-icon{
 width:52px;
@@ -492,22 +387,16 @@ transition:all 0.25s ease;
 position:relative;
 }
 
-/* HOVER */
-
 .nav-icon:hover{
 background:#1f3647;
 transform:scale(1.08);
 }
-
-/* ACTIVO */
 
 .nav-icon.active{
 background:#9cff00;
 color:#000;
 box-shadow:0 0 15px rgba(156,255,0,0.6);
 }
-
-/* INDICADOR LATERAL */
 
 .nav-icon.active::before{
 content:"";
@@ -517,7 +406,10 @@ width:4px;
 height:60%;
 background:#9cff00;
 border-radius:2px;
-    }
+}
+
+
+/* MAPA */
 
 #coffeeMap{
 height:100%;
@@ -527,14 +419,16 @@ border-radius:12px;
 overflow:hidden;
 }
 
-/* SIDEBAR OCULTA AL INICIO */
+
+/* SIDEBAR OCULTA */
 
 .sidebar{
 transform:translateX(-100%);
 transition:0.3s;
+position:relative;
+z-index:400;
 }
 
 .sidebar.active{
 transform:translateX(0);
-    }
-
+}
