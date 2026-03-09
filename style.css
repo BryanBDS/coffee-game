@@ -422,13 +422,21 @@ overflow:hidden;
 
 /* SIDEBAR OCULTA */
 
+/* SIDEBAR OCULTA */
+
 .sidebar{
+position:absolute;
+left:75px;
+top:0;
+height:100%;
+
 transform:translateX(-100%);
 transition:0.3s;
-position:relative;
+
 z-index:400;
 }
 
 .sidebar.active{
 transform:translateX(0);
 }
+
