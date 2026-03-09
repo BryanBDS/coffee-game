@@ -72,15 +72,15 @@
 <!-- PANEL NAVEGACIÓN PROFESIONAL -->
 <div class="icon-sidebar">
 
-<div class="nav-icon active" data-tab="mapa">
+<div class="nav-icon active" data-tab="mapa" onclick="switchTab('mapa')">
 <span>🗺️</span>
 </div>
 
-<div class="nav-icon" data-tab="finca">
+<div class="nav-icon" data-tab="finca" onclick="switchTab('finca')">
 <span>🚜</span>
 </div>
 
-<div class="nav-icon" data-tab="mercado">
+<div class="nav-icon" data-tab="mercado" onclick="switchTab('mercado')">
 <span>📈</span>
 </div>
 
@@ -100,7 +100,7 @@
 <aside class="sidebar" id="sideMenu">
 
 <div class="header">
-<h2 id="farmName">Mi finca</h2>
+<h2 id="farmNameSide">Mi finca</h2>
 </div>
 
 <nav class="menu">
@@ -125,7 +125,7 @@
 
 <div class="stat-row">
 <p>Balance:</p>
-<span id="playerMoney">0 CoffeeCoins</span>
+<span id="playerMoneySide">0 CoffeeCoins</span>
 </div>
 
 </div>
@@ -220,6 +220,7 @@
 </body>
 
 </html>
+
 
 
 
