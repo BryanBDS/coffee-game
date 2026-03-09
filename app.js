@@ -409,5 +409,33 @@ function loadGameMap(){
 }
 
 
+/* ===========================
+   NAVEGACIÓN PRINCIPAL
+=========================== */
+
+const navIcons = document.querySelectorAll(".nav-icon");
+const sidebar = document.getElementById("sideMenu");
+
+navIcons.forEach(icon => {
+
+icon.addEventListener("click", () => {
+
+    /* activar icono */
+    navIcons.forEach(i => i.classList.remove("active"));
+    icon.classList.add("active");
+
+    /* mostrar sidebar */
+    sidebar.classList.add("active");
+
+    /* abrir sección */
+    const tab = icon.dataset.tab;
+    switchTab(tab);
+
+});
+
+});
+
+
+
 
 
