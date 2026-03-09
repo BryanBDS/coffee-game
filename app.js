@@ -205,10 +205,9 @@ document.getElementById("tab-"+tab).classList.add("active");
 
 if(tab === "mapa"){
 setTimeout(iniciarMapa,200);
-    
 }
 
-    }
+}
 
 
 /* NAVEGACIÓN PANEL PROFESIONAL */
@@ -239,6 +238,15 @@ switchTab(tab);
 function iniciarMapa(){
 
 const map = L.map('coffeeMap').setView([4.5709, -74.2973], 6);
+const narino = L.marker([1.289, -77.357])
+.addTo(map)
+.bindPopup("☕ Región Cafetera: Nariño");
+
+narino.on("click", function(){
+
+mostrarMunicipios();
+
+});  
 
 // mapa base
 
@@ -268,6 +276,108 @@ L.marker([p.lat,p.lng])
 });
 
 }
+
+
+function mostrarMunicipios(){
+
+const municipios = [
+
+"San Juan de Pasto",
+"La Unión",
+"Buesaco",
+"Consacá",
+"Sandoná"
+
+];
+
+let html = "<h3>Municipios cafeteros</h3>";
+
+municipios.forEach(m =>{
+
+html += `<button onclick="seleccionarMunicipio('${m}')">${m}</button>`;
+
+});
+
+document.getElementById("panelMapa").innerHTML = html;
+
+}
+
+
+function seleccionarMunicipio(nombre){
+
+const lotes = [
+
+{id:"L1", precio:200},
+{id:"L2", precio:300},
+{id:"L3", precio:250}
+
+];
+
+let html = `<h3>${nombre}</h3>`;
+
+lotes.forEach(l =>{
+
+html += `
+<div class="lote">
+<p>${l.id}</p>
+<p>Precio: ${l.precio}</p>
+<button onclick="comprarLote('${l.id}',${l.precio})">
+Comprar
+</button>
+</div>
+`;
+
+});
+
+document.getElementById("panelMapa").innerHTML = html;
+
+}
+
+
+function comprarLote(id,precio){
+
+let jugador = JSON.parse(localStorage.getItem("jugador"));
+
+if(jugador.dinero >= precio){
+
+jugador.dinero -= precio;
+
+jugador.parcela = id;
+
+localStorage.setItem("jugador",JSON.stringify(jugador));
+
+alert("Terreno comprado");
+
+switchTab("finca");
+
+mostrarParcelaComprada();
+
+}else{
+
+alert("No tienes suficiente dinero");
+
+}
+
+             }
+
+
+
+function mostrarParcelaComprada(){
+
+let jugador = JSON.parse(localStorage.getItem("jugador"));
+
+document.getElementById("tab-finca").innerHTML = `
+
+<h2>🌱 Mi finca</h2>
+
+<p>Parcela: ${jugador.parcela}</p>
+
+<button onclick="sembrar()">Sembrar café</button>
+
+`;
+
+    }
+
 
 
 
