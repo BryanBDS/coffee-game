@@ -196,19 +196,52 @@ document.getElementById("pantalla").innerHTML = `
 
 function switchTab(tab){
 
+// cambiar pestañas
 const tabs = document.querySelectorAll(".content-tab");
 
 tabs.forEach(t=>{
 t.classList.remove("active");
 });
 
-document.getElementById("tab-"+tab).classList.add("active");
+const target = document.getElementById("tab-"+tab);
 
-if(tab === "mapa"){
+if(target){
+target.classList.add("active");
+}
+
+// activar iconos
+const icons = document.querySelectorAll(".nav-icon");
+
+icons.forEach(i=>{
+i.classList.remove("active");
+});
+
+const activeIcon = document.querySelector('.nav-icon[data-tab="'+tab+'"]');
+
+if(activeIcon){
+activeIcon.classList.add("active");
+}
+
+// iniciar mapa solo una vez
+if(tab === "mapa" && typeof iniciarMapa === "function"){
 setTimeout(iniciarMapa,200);
 }
 
 }
+
+
+document.querySelectorAll(".nav-icon").forEach(icon => {
+
+icon.addEventListener("click", () => {
+
+const tab = icon.dataset.tab;
+
+switchTab(tab);
+
+});
+
+});
+
 
 
 /* NAVEGACIÓN PANEL PROFESIONAL */
@@ -434,6 +467,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
