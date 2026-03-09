@@ -419,9 +419,7 @@ icon.addEventListener("click", () => {
     navIcons.forEach(i => i.classList.remove("active"));
     icon.classList.add("active");
 
-    /* mostrar sidebar */
-    sidebar.classList.add("active");
-
+    
     /* abrir sección */
     const tab = icon.dataset.tab;
     switchTab(tab);
@@ -429,6 +427,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
