@@ -230,12 +230,25 @@ activeIcon.classList.add("active");
 }
 
 
-/* =========================
-ABRIR SIDEBAR
+/* =========================  
+ABRIR / CERRAR SIDEBAR  
 ========================= */
 
 const sidebar = document.getElementById("sideMenu");
 
+const activeIconNow = document.querySelector(".nav-icon.active");
+
+/* si se presiona el mismo icono -> cerrar */
+if(activeIconNow && activeIconNow.dataset.tab === tab && sidebar.classList.contains("active")){
+
+sidebar.classList.remove("active");
+activeIconNow.classList.remove("active");
+
+return;
+
+}
+
+/* abrir sidebar */
 sidebar.classList.add("active");
 
 
@@ -460,6 +473,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
