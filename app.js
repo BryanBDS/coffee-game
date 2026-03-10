@@ -69,7 +69,7 @@ loading.style.display = "none";
 // Mostrar juego
 loginScreen.style.display = "none";
 gameUI.style.display = "block";
-loadGameMap();   
+   
 
 // Mostrar datos del jugador
 document.getElementById("farmName").textContent = "🌱 " + jugadorData.granja;
@@ -209,6 +209,7 @@ if(target){
 target.classList.add("active");
 }
 
+
 // activar iconos
 const icons = document.querySelectorAll(".nav-icon");
 
@@ -222,35 +223,39 @@ if(activeIcon){
 activeIcon.classList.add("active");
 }
 
-// iniciar mapa solo una vez
-if(tab === "mapa" && typeof iniciarMapa === "function"){
-setTimeout(iniciarMapa,200);
+
+// iniciar mapa
+if(tab === "mapa"){
+
+setTimeout(()=>{
+
+iniciarMapa();
+
+if(coffeeMap){
+coffeeMap.invalidateSize();
+}
+
+},300);
+
 }
 
 }
 
 
+
+let coffeeMap = null;
 
 function iniciarMapa(){
 
-const map = L.map('coffeeMap').setView([4.5709, -74.2973], 6);
-const narino = L.marker([1.289, -77.357])
-.addTo(map)
-.bindPopup("☕ Región Cafetera: Nariño");
+if(coffeeMap) return;
 
-narino.on("click", function(){
-
-mostrarMunicipios();
-
-});  
-
-// mapa base
+coffeeMap = L.map('coffeeMap').setView([4.5709, -74.2973], 6);
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 attribution: '© OpenStreetMap'
 
-}).addTo(map);
+}).addTo(coffeeMap);
 
 
 // PARCELAS DE EJEMPLO
@@ -266,7 +271,7 @@ const parcelas = [
 parcelas.forEach(p=>{
 
 L.marker([p.lat,p.lng])
-.addTo(map)
+.addTo(coffeeMap)
 .bindPopup(`<b>${p.nombre}</b><br>Terreno disponible`);
 
 });
@@ -375,34 +380,6 @@ document.getElementById("tab-finca").innerHTML = `
     }
 
 
-/* ===============================
-   MAPA DE COLOMBIA - COFFEE MAP
-   =============================== */
-
-let map;
-
-function initCoffeeMap() {
-
-    map = L.map('coffeeMap').setView([4.5709, -74.2973], 6);
-
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: 'Coffee Empire Map'
-    }).addTo(map);
-
-}
-
-/* Cargar mapa cuando el juego aparece */
-
-function loadGameMap(){
-
-    setTimeout(() => {
-        if(document.getElementById("coffeeMap")){
-            initCoffeeMap();
-        }
-    },500);
-
-}
-
 
 /* ===========================
    NAVEGACIÓN PRINCIPAL
@@ -427,6 +404,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
