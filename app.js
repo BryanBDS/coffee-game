@@ -345,6 +345,18 @@ L.marker([p.lat,p.lng])
 
 });
 
+/* =========================
+MARCADOR NARIÑO
+========================= */
+
+const narino = L.marker([1.289, -77.357]).addTo(coffeeMap);
+
+narino.bindPopup(`
+<h3>☕ Región Cafetera</h3>
+<p>Nariño</p>
+<button onclick="mostrarMunicipios()">Ver Municipios</button>
+`);
+    
 }
 
 
@@ -368,9 +380,12 @@ html += `<button onclick="seleccionarMunicipio('${m}')">${m}</button>`;
 
 });
 
-document.getElementById("panelMapa").innerHTML = html;
+document.querySelector(".menu").innerHTML = html;
 
 }
+
+
+
 
 
 function seleccionarMunicipio(nombre){
@@ -404,31 +419,36 @@ document.getElementById("panelMapa").innerHTML = html;
 }
 
 
-function comprarLote(id,precio){
+function mostrarLotes(municipio){
+const menu = document.querySelector(".menu");
 
-let jugador = JSON.parse(localStorage.getItem("jugador"));
+menu.innerHTML = `
+<h3>Lotes en ${municipio}</h3>
 
-if(jugador.dinero >= precio){
+<button class="nav-btn" onclick="comprarLote('${municipio}',1)">
+Lote 1 - 1 Hectárea
+💰 100 CoffeeCoins
+</button>
 
-jugador.dinero -= precio;
+<button class="nav-btn" onclick="comprarLote('${municipio}',2)">
+Lote 2 - 2 Hectáreas
+💰 180 CoffeeCoins
+</button>
 
-jugador.parcela = id;
-
-localStorage.setItem("jugador",JSON.stringify(jugador));
-
-alert("Terreno comprado");
-
-switchTab("finca");
-
-mostrarParcelaComprada();
-
-}else{
-
-alert("No tienes suficiente dinero");
+`;
 
 }
+ 
 
-             }
+function comprarLote(municipio,lote){
+
+alert("Compraste un lote en " + municipio);
+
+/* abrir MI FINCA */
+switchTab("finca");
+
+} 
+
 
 
 
@@ -473,6 +493,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
