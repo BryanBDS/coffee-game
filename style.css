@@ -165,13 +165,18 @@ ICON SIDEBAR
 ========================= */
 
 .icon-sidebar{
+position:fixed;
+top:60px;
+left:0;
 width:70px;
+height:calc(100vh - 60px);
 background:#091018;
 display:flex;
 flex-direction:column;
 align-items:center;
 padding-top:20px;
 border-right:1px solid rgba(255,255,255,0.1);
+z-index:900;
 }
 
 .nav-icon{
@@ -237,6 +242,7 @@ flex:1;
 position:relative;
 height:100%;
 overflow:hidden;
+margin-left:70px;    
 }
 
 
@@ -345,16 +351,22 @@ Barra desplegable
 ==================*/
 
 .sidebar{
-width:260px;
+position:fixed;
+top:60px;
+left:70px;
+width:250px;
+height:calc(100vh - 60px);
 background:#1a2c38;
-padding:25px;
+padding:20px;
 border-right:1px solid rgba(255,255,255,0.1);
 display:flex;
 flex-direction:column;
 transform:translateX(-100%);
 transition:0.3s;
+z-index:800;
 }
 
 .sidebar.active{
 transform:translateX(0);
 }
+
