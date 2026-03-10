@@ -376,7 +376,7 @@ let html = "<h3>Municipios cafeteros</h3>";
 
 municipios.forEach(m =>{
 
-html += `<button onclick="seleccionarMunicipio('${m}')">${m}</button>`;
+html += `<button class="nav-btn" onclick="seleccionarMunicipio('${m}')">📍 ${m}</button>`;
 
 });
 
@@ -523,6 +523,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
