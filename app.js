@@ -469,22 +469,34 @@ mostrarMiFinca();
 
 
 
+function mostrarMiFinca(){
 
-function mostrarParcelaComprada(){
+const data = localStorage.getItem("miFinca");
 
-let jugador = JSON.parse(localStorage.getItem("jugador"));
+if(!data) return;
 
-document.getElementById("tab-finca").innerHTML = `
+const finca = JSON.parse(data);
 
-<h2>🌱 Mi finca</h2>
+let html = `
+<div class="card">
 
-<p>Parcela: ${jugador.parcela}</p>
+<h2>☕ Mi finca</h2>
 
-<button onclick="sembrar()">Sembrar café</button>
+<p><b>Municipio:</b> ${finca.municipio}</p>
 
+<p><b>Lote:</b> ${finca.lote}</p>
+
+<p><b>Precio:</b> ${finca.precio} CoffeeCoins</p>
+
+<button class="nav-btn">🌱 Sembrar café</button>
+
+</div>
 `;
 
-    }
+document.querySelector("#tab-finca").innerHTML = html;
+
+}
+
 
 
 
@@ -511,6 +523,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
