@@ -440,14 +440,32 @@ Lote 2 - 2 Hectáreas
 }
  
 
-function comprarLote(municipio,lote){
+function comprarLote(municipio,lote,precio){
 
-alert("Compraste un lote en " + municipio);
+/* =========================
+CREAR FINCA
+========================= */
 
-/* abrir MI FINCA */
+const finca = {
+municipio: municipio,
+lote: lote,
+precio: precio
+};
+
+/* guardar finca temporalmente */
+localStorage.setItem("miFinca",JSON.stringify(finca));
+
+alert("¡Compraste "+lote+" en "+municipio+"! ☕");
+
+/* abrir sección MI FINCA */
+
 switchTab("finca");
 
-} 
+/* mostrar información de la finca */
+
+mostrarMiFinca();
+
+}
 
 
 
@@ -493,6 +511,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
