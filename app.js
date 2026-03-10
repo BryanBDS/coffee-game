@@ -231,6 +231,15 @@ activeIcon.classList.add("active");
 
 
 /* =========================
+ABRIR SIDEBAR
+========================= */
+
+const sidebar = document.getElementById("sideMenu");
+
+sidebar.classList.add("active");
+
+
+/* =========================
 CAMBIAR CONTENIDO SIDEBAR
 ========================= */
 
@@ -239,53 +248,23 @@ const menu = document.querySelector(".menu");
 let html = "";
 
 if(tab === "mapa"){
-
-html = `
-<button class="nav-btn active">
-🗺️ MAPA CAFETERO
-</button>
-`;
-
+html = `<button class="nav-btn active">🗺️ MAPA CAFETERO</button>`;
 }
 
 if(tab === "finca"){
-
-html = `
-<button class="nav-btn active">
-🏡 MI FINCA
-</button>
-`;
-
+html = `<button class="nav-btn active">🏡 MI FINCA</button>`;
 }
 
 if(tab === "mercado"){
-
-html = `
-<button class="nav-btn active">
-📈 MERCADO
-</button>
-`;
-
+html = `<button class="nav-btn active">📈 MERCADO</button>`;
 }
 
 if(tab === "procesos"){
-
-html = `
-<button class="nav-btn active">
-🏭 PROCESOS
-</button>
-`;
-
+html = `<button class="nav-btn active">🏭 PROCESOS</button>`;
 }
 
 if(tab === "config"){
-
-html = `
-<button class="nav-btn active">
-⚙️ CONFIGURACIÓN
-</button>
-`;
-
+html = `<button class="nav-btn active">⚙️ CONFIGURACIÓN</button>`;
 }
 
 menu.innerHTML = html;
@@ -312,6 +291,10 @@ coffeeMap.invalidateSize();
 }
 
 }
+
+
+
+
 
 
 
@@ -477,6 +460,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
