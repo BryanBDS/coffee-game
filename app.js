@@ -196,7 +196,10 @@ document.getElementById("pantalla").innerHTML = `
 
 function switchTab(tab){
 
-// cambiar pestañas
+/* =========================
+CAMBIAR CONTENIDO PRINCIPAL
+========================= */
+
 const tabs = document.querySelectorAll(".content-tab");
 
 tabs.forEach(t=>{
@@ -210,7 +213,10 @@ target.classList.add("active");
 }
 
 
-// activar iconos
+/* =========================
+ACTIVAR ICONO
+========================= */
+
 const icons = document.querySelectorAll(".nav-icon");
 
 icons.forEach(i=>{
@@ -224,14 +230,80 @@ activeIcon.classList.add("active");
 }
 
 
-// iniciar mapa
+/* =========================
+CAMBIAR CONTENIDO SIDEBAR
+========================= */
+
+const menu = document.querySelector(".menu");
+
+let html = "";
+
+if(tab === "mapa"){
+
+html = `
+<button class="nav-btn active">
+🗺️ MAPA CAFETERO
+</button>
+`;
+
+}
+
+if(tab === "finca"){
+
+html = `
+<button class="nav-btn active">
+🏡 MI FINCA
+</button>
+`;
+
+}
+
+if(tab === "mercado"){
+
+html = `
+<button class="nav-btn active">
+📈 MERCADO
+</button>
+`;
+
+}
+
+if(tab === "procesos"){
+
+html = `
+<button class="nav-btn active">
+🏭 PROCESOS
+</button>
+`;
+
+}
+
+if(tab === "config"){
+
+html = `
+<button class="nav-btn active">
+⚙️ CONFIGURACIÓN
+</button>
+`;
+
+}
+
+menu.innerHTML = html;
+
+
+/* =========================
+INICIAR MAPA
+========================= */
+
 if(tab === "mapa"){
 
 setTimeout(()=>{
 
+if(typeof iniciarMapa === "function"){
 iniciarMapa();
+}
 
-if(coffeeMap){
+if(typeof coffeeMap !== "undefined" && coffeeMap){
 coffeeMap.invalidateSize();
 }
 
@@ -240,6 +312,7 @@ coffeeMap.invalidateSize();
 }
 
 }
+
 
 
 
@@ -404,6 +477,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
