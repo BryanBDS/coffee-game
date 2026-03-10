@@ -392,29 +392,29 @@ function seleccionarMunicipio(nombre){
 
 const lotes = [
 
-{id:"L1", precio:200},
-{id:"L2", precio:300},
-{id:"L3", precio:250}
+{nombre:"Lote 1", tamaño:"1 hectárea", precio:100},
+{nombre:"Lote 2", tamaño:"2 hectáreas", precio:180},
+{nombre:"Lote 3", tamaño:"5 hectáreas", precio:400}
 
 ];
 
-let html = `<h3>${nombre}</h3>`;
+let html = `<h3>Lotes en ${nombre}</h3>`;
 
 lotes.forEach(l =>{
 
 html += `
-<div class="lote">
-<p>${l.id}</p>
-<p>Precio: ${l.precio}</p>
-<button onclick="comprarLote('${l.id}',${l.precio})">
-Comprar
+<button class="nav-btn" onclick="comprarLote('${nombre}','${l.nombre}',${l.precio})">
+
+${l.nombre}  
+${l.tamaño}  
+💰 ${l.precio} CoffeeCoins
+
 </button>
-</div>
 `;
 
 });
 
-document.getElementById("panelMapa").innerHTML = html;
+document.querySelector(".menu").innerHTML = html;
 
 }
 
@@ -493,6 +493,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
