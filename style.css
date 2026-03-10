@@ -339,3 +339,22 @@ text-align:center;
 font-size:40px;
 margin-top:10px;
     }
+
+/*================
+Barra desplegable
+==================*/
+
+.sidebar{
+width:260px;
+background:#1a2c38;
+padding:25px;
+border-right:1px solid rgba(255,255,255,0.1);
+display:flex;
+flex-direction:column;
+transform:translateX(-100%);
+transition:0.3s;
+}
+
+.sidebar.active{
+transform:translateX(0);
+}
