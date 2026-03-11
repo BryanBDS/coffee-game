@@ -207,10 +207,14 @@ tabs.forEach(t=>{
 t.classList.remove("active");
 });
 
+if(tab !== "menu"){
+
 const target = document.getElementById("tab-"+tab);
 
 if(target){
 target.classList.add("active");
+}
+
 }
 
 
@@ -266,20 +270,20 @@ html = `<button class="nav-btn active" onclick="abrirMapaCafetero()">🗺️ MAP
 }
 
 if(tab === "finca"){
-html = `<button class="nav-btn active" onclick="abrirFinca()">🏡 MI FINCA</button>`;
+html = `<button class="nav-btn active" onclick="switchTab('finca')">🏡 MI FINCA</button>`;
 }
 
 if(tab === "mercado"){
-html = `<button class="nav-btn active" onclick="abrirMercado()">📈 MERCADO</button>`;
+html = `<button class="nav-btn active" onclick="switchTab('mercado')">📈 MERCADO</button>`;
 }
 
 if(tab === "procesos"){
-html = `<button class="nav-btn active" onclick="abrirProcesos()">🏭 PROCESOS</button>`;
+html = `<button class="nav-btn active" onclick="switchTab('procesos')">🏭 PROCESOS</button>`;
 }
 
 if(tab === "config"){
-html = `<button class="nav-btn active" onclick="abrirConfig()">⚙️ CONFIGURACIÓN</button>`;
-}  
+html = `<button class="nav-btn active" onclick="switchTab('config')">⚙️ CONFIGURACIÓN</button>`;
+}
 
 menu.innerHTML = html;
 
@@ -652,6 +656,7 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 }
+
 
 
 
