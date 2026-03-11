@@ -262,7 +262,7 @@ const menu = document.querySelector(".menu");
 let html = "";
 
 if(tab === "mapa"){
-html = `<button class="nav-btn active">🗺️ MAPA CAFETERO</button>`;
+html = `<button class="nav-btn active" onclick="abrirMapaCafetero()">🗺️ MAPA CAFETERO</button>`;
 }
 
 if(tab === "finca"){
@@ -285,28 +285,12 @@ menu.innerHTML = html;
 
 
 /* =========================
-INICIAR MAPA
+ICONO MAPA (SOLO ABRE MENÚ)
 ========================= */
 
 if(tab === "mapa"){
 
-setTimeout(()=>{
-
-if(typeof iniciarMapa === "function"){
-iniciarMapa();
-}
-
-if(typeof coffeeMap !== "undefined" && coffeeMap){
-coffeeMap.invalidateSize();
-    
-/* VOLVER AL MAPA INICIAL */
-coffeeMap.setView([4.5709, -74.2973], 6);
-/* BORRAR LOTES */
-grupoLotes.clearLayers();    
-    
-}
-
-},300);
+/* aquí no abrimos el mapa */
 
 }
 
@@ -577,6 +561,33 @@ icon.addEventListener("click", () => {
 
 
 
+/* =========================
+ABRIR MAPA CAFETERO
+========================= */
+
+function abrirMapaCafetero(){
+
+setTimeout(()=>{
+
+if(typeof iniciarMapa === "function"){
+iniciarMapa();
+}
+
+if(coffeeMap){
+
+coffeeMap.setView([4.5709,-74.2973],6);
+coffeeMap.invalidateSize();
+
+}
+
+/* borrar lotes */
+if(typeof grupoLotes !== "undefined"){
+grupoLotes.clearLayers();
+}
+
+},300);
+
+}
 
 
 
