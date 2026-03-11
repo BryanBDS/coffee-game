@@ -266,20 +266,20 @@ html = `<button class="nav-btn active" onclick="abrirMapaCafetero()">🗺️ MAP
 }
 
 if(tab === "finca"){
-html = `<button class="nav-btn active">🏡 MI FINCA</button>`;
+html = `<button class="nav-btn active" onclick="abrirFinca()">🏡 MI FINCA</button>`;
 }
 
 if(tab === "mercado"){
-html = `<button class="nav-btn active">📈 MERCADO</button>`;
+html = `<button class="nav-btn active" onclick="abrirMercado()">📈 MERCADO</button>`;
 }
 
 if(tab === "procesos"){
-html = `<button class="nav-btn active">🏭 PROCESOS</button>`;
+html = `<button class="nav-btn active" onclick="abrirProcesos()">🏭 PROCESOS</button>`;
 }
 
 if(tab === "config"){
-html = `<button class="nav-btn active">⚙️ CONFIGURACIÓN</button>`;
-}
+html = `<button class="nav-btn active" onclick="abrirConfig()">⚙️ CONFIGURACIÓN</button>`;
+}  
 
 menu.innerHTML = html;
 
@@ -589,6 +589,69 @@ grupoLotes.clearLayers();
 
 }
 
+
+/* =========================
+ABRIR FINCA
+========================= */
+
+function abrirFinca(){
+
+const tab = document.getElementById("tab-finca");
+
+document.querySelectorAll(".content-tab").forEach(t=>{
+t.classList.remove("active");
+});
+
+tab.classList.add("active");
+
+}
+
+/* =========================
+ABRIR MERCADO
+========================= */
+
+function abrirMercado(){
+
+const tab = document.getElementById("tab-mercado");
+
+document.querySelectorAll(".content-tab").forEach(t=>{
+t.classList.remove("active");
+});
+
+tab.classList.add("active");
+
+}
+
+/* =========================
+ABRIR PROCESOS
+========================= */
+
+function abrirProcesos(){
+
+const tab = document.getElementById("tab-procesos");
+
+document.querySelectorAll(".content-tab").forEach(t=>{
+t.classList.remove("active");
+});
+
+tab.classList.add("active");
+
+}
+
+/* =========================
+ABRIR CONFIG
+========================= */
+
+function abrirConfig(){
+
+const tab = document.getElementById("tab-config");
+
+document.querySelectorAll(".content-tab").forEach(t=>{
+t.classList.remove("active");
+});
+
+tab.classList.add("active");
+}
 
 
 
