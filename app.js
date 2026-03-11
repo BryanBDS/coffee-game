@@ -297,6 +297,10 @@ iniciarMapa();
 
 if(typeof coffeeMap !== "undefined" && coffeeMap){
 coffeeMap.invalidateSize();
+    
+/* VOLVER AL MAPA INICIAL */
+coffeeMap.setView([4.5709, -74.2973], 6);
+    
 }
 
 },300);
@@ -566,6 +570,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
