@@ -84,7 +84,8 @@ document.getElementById("playerMoney").textContent = "💰 Balance: " + jugadorD
 });
 
 
-
+let coffeeMap = null;
+let grupoLotes = L.layerGroup();
 let terrenoComprado = false
 let plantas = 0
 let cafeListo = false
@@ -300,6 +301,8 @@ coffeeMap.invalidateSize();
     
 /* VOLVER AL MAPA INICIAL */
 coffeeMap.setView([4.5709, -74.2973], 6);
+/* BORRAR LOTES */
+grupoLotes.clearLayers();    
     
 }
 
@@ -316,13 +319,14 @@ coffeeMap.setView([4.5709, -74.2973], 6);
 
 
 
-let coffeeMap = null;
+
 
 function iniciarMapa(){
 
 if(coffeeMap) return;
 
 coffeeMap = L.map('coffeeMap').setView([4.5709, -74.2973], 6);
+grupoLotes.addTo(coffeeMap);    
 
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
@@ -431,7 +435,7 @@ const parcelasMunicipio = [
 parcelasMunicipio.forEach(p=>{
 
 L.marker([p.lat,p.lng])
-.addTo(coffeeMap)
+.addTo(grupoLotes)
 .bindPopup(`<b>${p.nombre}</b><br><button onclick="comprarLote('${nombre}','${p.nombre}',100)">Comprar</button>`);
 
 });    
@@ -570,6 +574,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
