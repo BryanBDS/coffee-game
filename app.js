@@ -207,9 +207,12 @@ tabs.forEach(t=>{
 t.classList.remove("active");
 });
 
-if(tab !== "menu"){
+/* SOLO abrir contenido si viene del botón */
+if(tab === "abrirMapa" || tab === "abrirFinca" || tab === "abrirMercado" || tab === "abrirProcesos" || tab === "abrirConfig"){
 
-const target = document.getElementById("tab-"+tab);
+const realTab = tab.replace("abrir","").toLowerCase();
+
+const target = document.getElementById("tab-"+realTab);
 
 if(target){
 target.classList.add("active");
@@ -656,6 +659,7 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 }
+
 
 
 
