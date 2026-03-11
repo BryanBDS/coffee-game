@@ -390,6 +390,49 @@ document.querySelector(".menu").innerHTML = html;
 
 function seleccionarMunicipio(nombre){
 
+/* =========================
+COORDENADAS MUNICIPIOS
+========================= */
+
+const coords = {
+
+"San Juan de Pasto":[1.2136,-77.2811],
+"La Unión":[1.6019,-77.1310],
+"Buesaco":[1.3833,-77.1561],
+"Consacá":[1.2089,-77.4600],
+"Sandoná":[1.2862,-77.4720]
+
+};
+
+ /* mover mapa al municipio */
+
+if(coffeeMap && coords[nombre]){
+
+coffeeMap.setView(coords[nombre],11);
+
+}
+
+/* =========================
+PARCELAS EN EL MAPA
+========================= */
+
+const parcelasMunicipio = [
+
+{nombre:"Lote 1",lat:coords[nombre][0]+0.01,lng:coords[nombre][1]+0.01},
+{nombre:"Lote 2",lat:coords[nombre][0]-0.01,lng:coords[nombre][1]-0.01},
+{nombre:"Lote 3",lat:coords[nombre][0]+0.015,lng:coords[nombre][1]-0.01}
+
+];
+
+parcelasMunicipio.forEach(p=>{
+
+L.marker([p.lat,p.lng])
+.addTo(coffeeMap)
+.bindPopup(`<b>${p.nombre}</b><br><button onclick="comprarLote('${nombre}','${p.nombre}',100)">Comprar</button>`);
+
+});    
+
+    
 const lotes = [
 
 {nombre:"Lote 1", tamaño:"1 hectárea", precio:100},
@@ -523,6 +566,7 @@ icon.addEventListener("click", () => {
 });
 
 });
+
 
 
 
