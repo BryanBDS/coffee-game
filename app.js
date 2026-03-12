@@ -200,18 +200,27 @@ function switchTab(tab){
 CAMBIAR CONTENIDO PRINCIPAL
 ========================= */
 
+/* =========================
+SOLO ABRIR CONTENIDO SI ES BOTÓN
+========================= */
+
+if(tab.startsWith("abrir")){
+
+const realTab = tab.replace("abrir","").toLowerCase();
+
 const tabs = document.querySelectorAll(".content-tab");
 
 tabs.forEach(t=>{
 t.classList.remove("active");
 });
 
-const target = document.getElementById("tab-" + tab);
+const target = document.getElementById("tab-"+realTab);
 
 if(target){
 target.classList.add("active");
 }
 
+}
 
 /* =========================
 ACTIVAR ICONO
@@ -622,6 +631,7 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 }
+
 
 
 
