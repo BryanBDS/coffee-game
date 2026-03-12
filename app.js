@@ -69,6 +69,7 @@ loading.style.display = "none";
 // Mostrar juego
 loginScreen.style.display = "none";
 gameUI.style.display = "block";
+    
    
 
 // Mostrar datos del jugador
@@ -273,8 +274,8 @@ return;
 let html = "";
 
 if(tab === "mapa"){
-html = `<button class="nav-btn active" onclick="switchTab('abrirMapa')">🗺️ MAPA CAFETERO</button>`;
-}
+html = `<button class="nav-btn active" onclick="abrirMapaCafetero()">🗺️ MAPA CAFETERO</button>`;
+  }
 
 if(tab === "finca"){
 html = `<button class="nav-btn active" onclick="switchTab('abrirFinca')">🏡 MI FINCA</button>`;
@@ -671,6 +672,7 @@ i.classList.remove("active");
 });
 
 });
+
 
 
 
