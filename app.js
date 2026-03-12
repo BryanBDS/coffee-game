@@ -347,8 +347,21 @@ const narino = L.marker([1.289, -77.357]).addTo(coffeeMap);
 narino.bindPopup(`
 <h3>☕ Región Cafetera</h3>
 <p>Nariño</p>
-<button onclick="mostrarMunicipios()">Ver Municipios</button>
+<button id="btnMunicipios">Ver Municipios</button>
 `);
+
+narino.on('popupopen', function(){
+
+const btn = document.getElementById("btnMunicipios");
+
+if(btn){
+btn.addEventListener("click", function(){
+mostrarMunicipios();
+});
+}
+
+});
+    
     
 }
 
@@ -702,6 +715,7 @@ i.classList.remove("active");
 });
 
 });
+
 
 
 
