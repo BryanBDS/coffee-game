@@ -273,19 +273,19 @@ html = `<button class="nav-btn active" onclick="abrirMapaCafetero()">🗺️ MAP
 }
 
 if(tab === "finca"){
-html = `<button class="nav-btn active" onclick="switchTab('finca')">🏡 MI FINCA</button>`;
+html = `<button class="nav-btn active" onclick="abrirFinca()">🏡 MI FINCA</button>`;
 }
 
 if(tab === "mercado"){
-html = `<button class="nav-btn active" onclick="switchTab('mercado')">📈 MERCADO</button>`;
+html = `<button class="nav-btn active" onclick="abrirMercado()">📈 MERCADO</button>`;
 }
 
 if(tab === "procesos"){
-html = `<button class="nav-btn active" onclick="switchTab('procesos')">🏭 PROCESOS</button>`;
+html = `<button class="nav-btn active" onclick="abrirProcesos()">🏭 PROCESOS</button>`;
 }
 
 if(tab === "config"){
-html = `<button class="nav-btn active" onclick="switchTab('config')">⚙️ CONFIGURACIÓN</button>`;
+html = `<button class="nav-btn active" onclick="abrirConfig()">⚙️ CONFIGURACIÓN</button>`;
 }
 
 menu.innerHTML = html;
@@ -659,129 +659,6 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 }
-
-
-
-/* =========================
-ABRIR MENÚ LATERAL
-========================= */
-
-function abrirMenu(seccion){
-
-const sidebar = document.getElementById("sideMenu");
-
-sidebar.classList.add("active");
-
-const menu = document.querySelector(".menu");
-
-let html = "";
-
-if(seccion === "mapa"){
-
-html = `
-<button class="nav-btn active" onclick="abrirContenido('mapa')">
-🗺️ MAPA CAFETERO
-</button>
-`;
-
-}
-
-if(seccion === "finca"){
-
-html = `
-<button class="nav-btn active" onclick="abrirContenido('finca')">
-🏡 MI FINCA
-</button>
-`;
-
-}
-
-if(seccion === "mercado"){
-
-html = `
-<button class="nav-btn active" onclick="abrirContenido('mercado')">
-📈 MERCADO
-</button>
-`;
-
-}
-
-if(seccion === "procesos"){
-
-html = `
-<button class="nav-btn active" onclick="abrirContenido('procesos')">
-🏭 PROCESOS
-</button>
-`;
-
-}
-
-if(seccion === "config"){
-
-html = `
-<button class="nav-btn active" onclick="abrirContenido('config')">
-⚙ CONFIGURACIÓN
-</button>
-`;
-
-}
-
-menu.innerHTML = html;
-
-}
-
-
-/* =========================
-ABRIR CONTENIDO
-========================= */
-
-function abrirContenido(tab){
-
-const tabs = document.querySelectorAll(".content-tab");
-
-tabs.forEach(t=>{
-t.classList.remove("active");
-});
-
-const target = document.getElementById("tab-"+tab);
-
-if(target){
-target.classList.add("active");
-}
-
-/* iniciar mapa si es mapa */
-
-if(tab === "mapa"){
-
-setTimeout(()=>{
-
-if(typeof iniciarMapa === "function"){
-iniciarMapa();
-}
-
-if(coffeeMap){
-
-coffeeMap.setView([4.5709,-74.2973],6);
-coffeeMap.invalidateSize();
-
-}
-
-},300);
-
-}
-
-}
-
-
-
-
-
-
-
-
-
-
-
 
 
 
