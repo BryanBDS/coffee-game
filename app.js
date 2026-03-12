@@ -191,10 +191,9 @@ document.getElementById("pantalla").innerHTML = `
 <h2>💰 Mercado del café</h2>
 <p>Precio actual: 2.5 CCF/kg</p>
 `
-
-
 }
 
+    
 function switchTab(tab){
 
 /* =========================
@@ -211,16 +210,6 @@ const target = document.getElementById("tab-" + tab);
 
 if(target){
 target.classList.add("active");
-}
-
-const realTab = tab.replace("abrir","").toLowerCase();
-
-const target = document.getElementById("tab-"+realTab);
-
-if(target){
-target.classList.add("active");
-}
-
 }
 
 
@@ -249,7 +238,6 @@ const sidebar = document.getElementById("sideMenu");
 
 const activeIconNow = document.querySelector(".nav-icon.active");
 
-/* si se presiona el mismo icono -> cerrar */
 if(activeIconNow && activeIconNow.dataset.tab === tab && sidebar.classList.contains("active")){
 
 sidebar.classList.remove("active");
@@ -259,7 +247,6 @@ return;
 
 }
 
-/* abrir sidebar */
 sidebar.classList.add("active");
 
 
@@ -267,12 +254,13 @@ sidebar.classList.add("active");
 CAMBIAR CONTENIDO SIDEBAR
 ========================= */
 
-const menu = document.getElementById("sideMenu").querySelector(".menu");
+const menu = sidebar.querySelector(".menu");
+
 if(!menu){
 console.log("Menu no encontrado");
 return;
 }
-    
+
 let html = "";
 
 if(tab === "mapa"){
@@ -296,17 +284,6 @@ html = `<button class="nav-btn active" onclick="abrirConfig()">⚙️ CONFIGURAC
 }
 
 menu.innerHTML = html;
-
-
-/* =========================
-ICONO MAPA (SOLO ABRE MENÚ)
-========================= */
-
-if(tab === "mapa"){
-
-/* aquí no abrimos el mapa */
-
-}
 
 }
 
@@ -645,6 +622,7 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 }
+
 
 
 
