@@ -545,21 +545,41 @@ ABRIR MAPA CAFETERO
 
 function abrirMapaCafetero(){
 
+/* abrir pestaña mapa */
+
+document.querySelectorAll(".content-tab").forEach(t=>{
+t.classList.remove("active");
+});
+
+const tab = document.getElementById("tab-mapa");
+
+if(tab){
+tab.classList.add("active");
+}
+
+/* esperar a que el contenedor aparezca */
+
 setTimeout(()=>{
 
-if(typeof iniciarMapa === "function"){
+/* iniciar mapa si no existe */
+
+if(!coffeeMap){
 iniciarMapa();
 }
 
+/* recalcular tamaño */
+
 if(coffeeMap){
-
-coffeeMap.setView([4.5709,-74.2973],6);
 coffeeMap.invalidateSize();
-
 }
 
-/* borrar lotes */
-if(typeof grupoLotes !== "undefined"){
+/* volver al mapa inicial */
+
+coffeeMap.setView([4.5709,-74.2973],6);
+
+/* limpiar lotes */
+
+if(grupoLotes){
 grupoLotes.clearLayers();
 }
 
@@ -660,6 +680,7 @@ i.classList.remove("active");
 });
 
 });
+
 
 
 
