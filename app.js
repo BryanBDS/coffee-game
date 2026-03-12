@@ -353,7 +353,31 @@ narino.bindPopup(`
 }
 
 
+function mostrar rarMunicipios(){
 function mostrarMunicipios(){
+
+/* =========================
+ABRIR SIDEBAR
+========================= */
+
+const sidebar = document.getElementById("sideMenu");
+sidebar.classList.add("active");
+
+/* activar icono mapa */
+
+document.querySelectorAll(".nav-icon").forEach(i=>{
+i.classList.remove("active");
+});
+
+const iconMapa = document.querySelector('.nav-icon[data-tab="mapa"]');
+
+if(iconMapa){
+iconMapa.classList.add("active");
+}
+
+/* =========================
+MOSTRAR MUNICIPIOS
+========================= */
 
 const municipios = [
 
@@ -373,7 +397,13 @@ html += `<button class="nav-btn" onclick="seleccionarMunicipio('${m}')">📍 ${m
 
 });
 
-document.querySelector(".menu").innerHTML = html;
+/* poner contenido en el menú */
+
+const menu = document.querySelector(".menu");
+
+if(menu){
+menu.innerHTML = html;
+}
 
 }
 
@@ -672,6 +702,7 @@ i.classList.remove("active");
 });
 
 });
+
 
 
 
