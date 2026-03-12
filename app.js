@@ -277,19 +277,19 @@ html = `<button class="nav-btn active" onclick="abrirMapaCafetero()">🗺️ MAP
 }
 
 if(tab === "finca"){
-html = `<button class="nav-btn active" onclick="abrirFinca()">🏡 MI FINCA</button>`;
+html = `<button class="nav-btn active" onclick="switchTab('abrirFinca')">🏡 MI FINCA</button>`;
 }
 
 if(tab === "mercado"){
-html = `<button class="nav-btn active" onclick="abrirMercado()">📈 MERCADO</button>`;
+html = `<button class="nav-btn active" onclick="switchTab('abrirMercado')">📈 MERCADO</button>`;
 }
 
 if(tab === "procesos"){
-html = `<button class="nav-btn active" onclick="abrirProcesos()">🏭 PROCESOS</button>`;
+html = `<button class="nav-btn active" onclick="switchTab('abrirProcesos')">🏭 PROCESOS</button>`;
 }
 
 if(tab === "config"){
-html = `<button class="nav-btn active" onclick="abrirConfig()">⚙️ CONFIGURACIÓN</button>`;
+html = `<button class="nav-btn active" onclick="switchTab('abrirConfig')">⚙️ CONFIGURACIÓN</button>`;
 }
 
 menu.innerHTML = html;
@@ -631,6 +631,7 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 }
+
 
 
 
