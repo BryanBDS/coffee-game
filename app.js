@@ -545,45 +545,36 @@ ABRIR MAPA CAFETERO
 
 function abrirMapaCafetero(){
 
-/* abrir pestaña mapa */
+/* abrir la pestaña del mapa */
 
-document.querySelectorAll(".content-tab").forEach(t=>{
-t.classList.remove("active");
+document.querySelectorAll(".content-tab").forEach(tab=>{
+tab.classList.remove("active");
 });
 
-const tab = document.getElementById("tab-mapa");
+const mapaTab = document.getElementById("tab-mapa");
 
-if(tab){
-tab.classList.add("active");
+if(mapaTab){
+mapaTab.classList.add("active");
 }
 
-/* esperar a que el contenedor aparezca */
+
+/* esperar a que el contenedor sea visible */
 
 setTimeout(()=>{
 
-/* iniciar mapa si no existe */
+/* crear mapa solo si no existe */
 
 if(!coffeeMap){
 iniciarMapa();
 }
 
-/* recalcular tamaño */
+/* recalcular tamaño del mapa */
 
 if(coffeeMap){
 coffeeMap.invalidateSize();
 }
 
-/* volver al mapa inicial */
-
-coffeeMap.setView([4.5709,-74.2973],6);
-
-/* limpiar lotes */
-
-if(grupoLotes){
-grupoLotes.clearLayers();
-}
-
-},300);
+},200);
 
 }
 
@@ -680,6 +671,7 @@ i.classList.remove("active");
 });
 
 });
+
 
 
 
