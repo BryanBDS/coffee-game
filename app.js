@@ -353,7 +353,7 @@ narino.bindPopup(`
 }
 
 
-function mostrar rarMunicipios(){
+
 function mostrarMunicipios(){
 
 /* =========================
@@ -702,6 +702,7 @@ i.classList.remove("active");
 });
 
 });
+
 
 
 
