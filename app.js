@@ -684,6 +684,7 @@ document.addEventListener("click", function(e){
 
 const sidebar = document.getElementById("sideMenu");
 const iconSidebar = document.querySelector(".icon-sidebar");
+const leafletPopup = document.querySelector(".leaflet-popup");
 
 /* si la barra no está abierta no hacemos nada */
 if(!sidebar.classList.contains("active")) return;
@@ -693,6 +694,9 @@ if(sidebar.contains(e.target)) return;
 
 /* si se toca un icono tampoco cerrar */
 if(iconSidebar.contains(e.target)) return;
+
+/* si se toca el popup del mapa no cerrar */
+if(leafletPopup && leafletPopup.contains(e.target)) return;
 
 /* cerrar sidebar */
 sidebar.classList.remove("active");
