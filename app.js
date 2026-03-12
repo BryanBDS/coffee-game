@@ -273,7 +273,7 @@ return;
 let html = "";
 
 if(tab === "mapa"){
-html = `<button class="nav-btn active" onclick="abrirMapaCafetero()">🗺️ MAPA CAFETERO</button>`;
+html = `<button class="nav-btn active" onclick="switchTab('abrirMapa')">🗺️ MAPA CAFETERO</button>`;
 }
 
 if(tab === "finca"){
@@ -660,6 +660,7 @@ i.classList.remove("active");
 });
 
 });
+
 
 
 
