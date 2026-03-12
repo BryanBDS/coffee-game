@@ -264,8 +264,12 @@ sidebar.classList.add("active");
 CAMBIAR CONTENIDO SIDEBAR
 ========================= */
 
-const menu = document.querySelector(".menu");
-
+const menu = document.getElementById("sideMenu").querySelector(".menu");
+if(!menu){
+console.log("Menu no encontrado");
+return;
+}
+    
 let html = "";
 
 if(tab === "mapa"){
@@ -659,6 +663,7 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 }
+
 
 
 
