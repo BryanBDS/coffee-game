@@ -633,6 +633,33 @@ tab.classList.add("active");
 }
 
 
+/* =========================
+CERRAR SIDEBAR AL TOCAR PANTALLA
+========================= */
+
+document.addEventListener("click", function(e){
+
+const sidebar = document.getElementById("sideMenu");
+const iconSidebar = document.querySelector(".icon-sidebar");
+
+/* si la barra no está abierta no hacemos nada */
+if(!sidebar.classList.contains("active")) return;
+
+/* si se toca dentro del sidebar no cerrar */
+if(sidebar.contains(e.target)) return;
+
+/* si se toca un icono tampoco cerrar */
+if(iconSidebar.contains(e.target)) return;
+
+/* cerrar sidebar */
+sidebar.classList.remove("active");
+
+/* quitar icono activo */
+document.querySelectorAll(".nav-icon").forEach(i=>{
+i.classList.remove("active");
+});
+
+});
 
 
 
