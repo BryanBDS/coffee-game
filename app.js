@@ -589,26 +589,40 @@ if(mapaTab){
 mapaTab.classList.add("active");
 }
 
-
-/* esperar a que el contenedor sea visible */
+/* esperar a que el mapa sea visible */
 
 setTimeout(()=>{
-
-/* crear mapa solo si no existe */
 
 if(!coffeeMap){
 iniciarMapa();
 }
 
-/* recalcular tamaño del mapa */
+/* limpiar lotes del municipio */
+
+if(grupoLotes){
+grupoLotes.clearLayers();
+}
+
+/* regresar a vista inicial de Colombia */
 
 if(coffeeMap){
+coffeeMap.setView([4.5709, -74.2973],6);
 coffeeMap.invalidateSize();
 }
 
 },200);
 
+/* restaurar menú inicial */
+
+const menu = document.querySelector("#sideMenu .menu");
+
+if(menu){
+menu.innerHTML = `
+<button class="nav-btn active" onclick="abrirMapaCafetero()">🗺️ MAPA CAFETERO</button>
+`;
 }
+
+ }
 
 
 
@@ -707,6 +721,7 @@ i.classList.remove("active");
 });
 
 });
+
 
 
 
