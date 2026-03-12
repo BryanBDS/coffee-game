@@ -207,8 +207,11 @@ tabs.forEach(t=>{
 t.classList.remove("active");
 });
 
-/* SOLO abrir contenido si viene del botón */
-if(tab === "abrirMapa" || tab === "abrirFinca" || tab === "abrirMercado" || tab === "abrirProcesos" || tab === "abrirConfig"){
+const target = document.getElementById("tab-" + tab);
+
+if(target){
+target.classList.add("active");
+}
 
 const realTab = tab.replace("abrir","").toLowerCase();
 
@@ -546,29 +549,7 @@ document.querySelector("#tab-finca").innerHTML = html;
 
 
 
-/* ===========================
-   NAVEGACIÓN PRINCIPAL
-=========================== */
 
-const navIcons = document.querySelectorAll(".nav-icon");
-const sidebar = document.getElementById("sideMenu");
-
-navIcons.forEach(icon => {
-
-icon.addEventListener("click", () => {
-
-    /* activar icono */
-    navIcons.forEach(i => i.classList.remove("active"));
-    icon.classList.add("active");
-
-    
-    /* abrir sección */
-    const tab = icon.dataset.tab;
-    switchTab(tab);
-
-});
-
-});
 
 
 
@@ -599,6 +580,7 @@ grupoLotes.clearLayers();
 },300);
 
 }
+
 
 
 /* =========================
@@ -663,6 +645,7 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 }
+
 
 
 
