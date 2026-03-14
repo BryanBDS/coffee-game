@@ -126,6 +126,8 @@ if(coffeeMap && coords[nombre]){
 
 coffeeMap.setView(coords[nombre],11);
 
+obtenerClima(coords[nombre][0],coords[nombre][1]);
+
 }
 
 /* =========================
