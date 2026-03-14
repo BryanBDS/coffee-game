@@ -73,8 +73,8 @@ gameUI.style.display = "block";
    
 
 // Mostrar datos del jugador
-document.getElementById("farmName").textContent = "ðŸŒ± " + jugadorData.granja;
-document.getElementById("playerMoney").textContent = "ðŸ’° Balance: " + jugadorData.dinero + " CoffeeCoins";
+document.getElementById("farmName").textContent = "🌱 " + jugadorData.granja;
+document.getElementById("playerMoney").textContent = "💰 Balance: " + jugadorData.dinero + " CoffeeCoins";
 
 }
 
