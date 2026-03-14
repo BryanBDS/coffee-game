@@ -1,3 +1,5 @@
+let climaActual = "";
+
 async function obtenerClima(lat,lng){
 
 const apiKey = "TU_API_KEY";
@@ -9,14 +11,14 @@ try{
 const res = await fetch(url);
 const data = await res.json();
 
-const clima = data.weather[0].main;
+climaActual = data.weather[0].main;
 const temp = data.main.temp;
 
-mostrarClima(clima,temp);
+mostrarClima(climaActual,temp);
 
 }catch(error){
 
-console.log("Error clima",error);
+console.log("Error obteniendo clima",error);
 
 }
 
@@ -29,7 +31,7 @@ const panel = document.getElementById("climaInfo");
 if(!panel) return;
 
 panel.innerHTML = `
-🌦 Clima actual: ${clima}<br>
+🌦 Clima: ${clima}<br>
 🌡 Temperatura: ${temp}°C
 `;
 
