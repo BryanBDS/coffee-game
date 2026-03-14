@@ -11,8 +11,8 @@ if (jugador) {
 
 const datos = JSON.parse(jugador);
 
-document.getElementById("farmName").textContent = "ðŸŒ± " + datos.granja;
-document.getElementById("playerMoney").textContent = "ðŸ’° Balance: " + datos.dinero + " CoffeeCoins";
+document.getElementById("farmName").textContent = "🌱 " + datos.granja;
+document.getElementById("playerMoney").textContent = "💰 Balance: " + datos.dinero + " CoffeeCoins";
 
 loginScreen.style.display = "none";
 gameUI.style.display = "block";
