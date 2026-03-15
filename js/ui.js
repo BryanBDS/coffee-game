@@ -82,7 +82,17 @@ html = `<button class="nav-btn active" onclick="abrirMapaCafetero()">🗺️ MAP
 
 if(tab === "finca"){
 html = `<button class="nav-btn active" onclick="switchTab('abrirFinca')">🏡 MI FINCA</button>`;
+
+setTimeout(()=>{
+
+if(window.iniciarFinca3D){
+iniciarFinca3D();
 }
+
+},200);
+
+}
+
 
 if(tab === "mercado"){
 html = `<button class="nav-btn active" onclick="switchTab('abrirMercado')">📈 MERCADO</button>`;
