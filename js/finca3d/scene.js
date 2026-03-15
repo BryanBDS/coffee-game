@@ -1,3 +1,8 @@
+let scene, camera, renderer;
+
+let parcelasCompradas = 0;
+const parcelas = [];
+
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
 window.iniciarFinca3D = function(){
@@ -79,6 +84,39 @@ parcelas.push(parcela);
 }
 
 }
+
+
+function crearParcela(){
+
+const parcelaGeo = new THREE.PlaneGeometry(3,3);
+const parcelaMat = new THREE.MeshStandardMaterial({color:0x6d4c41});
+
+const parcela = new THREE.Mesh(parcelaGeo, parcelaMat);
+
+parcela.rotation.x = -Math.PI/2;
+
+/* posición automática */
+
+const posicionX = parcelasCompradas * 4;
+
+parcela.position.set(posicionX,0.01,0);
+
+scene.add(parcela);
+
+parcelas.push(parcela);
+
+parcelasCompradas++;
+
+}
+
+
+function comprarParcela3D(){
+
+crearParcela();
+
+}
+
+
 
 /* CUBO ROJO */
 
