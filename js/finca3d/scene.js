@@ -1,48 +1,51 @@
-import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160/build/three.module.js";
+import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
-let scene, camera, renderer;
+window.iniciarFinca3D = function(){
 
-function iniciarFinca3D(){
+const container = document.getElementById("finca3d");
 
-scene = new THREE.Scene();
-scene.background = new THREE.Color(0x87ceeb);
+if(!container){
+console.log("No existe el contenedor finca3d");
+return;
+}
 
-camera = new THREE.PerspectiveCamera(
+container.innerHTML = "";
+
+const scene = new THREE.Scene();
+
+const camera = new THREE.PerspectiveCamera(
 75,
-window.innerWidth/window.innerHeight,
+container.clientWidth / container.clientHeight,
 0.1,
 1000
 );
 
-renderer = new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(window.innerWidth, window.innerHeight);
+const renderer = new THREE.WebGLRenderer({antialias:true});
 
-document.body.appendChild(renderer.domElement);
+renderer.setSize(container.clientWidth, 400);
 
-const luz = new THREE.DirectionalLight(0xffffff,1);
-luz.position.set(5,10,5);
-scene.add(luz);
+container.appendChild(renderer.domElement);
 
-const terrenoGeo = new THREE.PlaneGeometry(50,50);
-const terrenoMat = new THREE.MeshStandardMaterial({color:0x3e8e41});
-const terreno = new THREE.Mesh(terrenoGeo, terrenoMat);
+const geometry = new THREE.BoxGeometry();
+const material = new THREE.MeshBasicMaterial({color:0x00ff00});
 
-terreno.rotation.x = -Math.PI/2;
+const cube = new THREE.Mesh(geometry, material);
 
-scene.add(terreno);
+scene.add(cube);
 
-camera.position.set(0,10,20);
-
-animate();
-
-}
+camera.position.z = 3;
 
 function animate(){
 
 requestAnimationFrame(animate);
 
-renderer.render(scene,camera);
+cube.rotation.x += 0.01;
+cube.rotation.y += 0.01;
+
+renderer.render(scene, camera);
 
 }
 
-window.iniciarFinca3D = iniciarFinca3D;
+animate();
+
+};
