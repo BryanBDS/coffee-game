@@ -104,6 +104,7 @@ menu.innerHTML = html;
 ABRIR FINCA
 ========================= */
 
+
 function abrirFinca(){
 
 const tab = document.getElementById("tab-finca");
@@ -114,8 +115,7 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 
-
-/* INICIAR FINCA 3D */
+/* INICIAR ESCENA 3D */
 
 setTimeout(()=>{
 
