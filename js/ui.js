@@ -115,12 +115,14 @@ t.classList.remove("active");
 tab.classList.add("active");
 
 
-/* INICIAR ESCENA 3D */
+/* INICIAR FINCA 3D */
 
 setTimeout(()=>{
-if(typeof iniciarFinca3D === "function"){
+
+if(window.iniciarFinca3D){
 iniciarFinca3D();
 }
+
 },200);
 
 }
