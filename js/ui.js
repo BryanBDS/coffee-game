@@ -114,6 +114,17 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 
+
+/* =========================
+INICIAR FINCA 3D
+========================= */
+
+if(typeof iniciarFinca3D === "function"){
+
+iniciarFinca3D();
+
+}
+
 }
 
 /* =========================
