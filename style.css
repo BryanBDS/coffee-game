@@ -370,3 +370,9 @@ z-index:800;
 transform:translateX(0);
 }
 
+
+#finca3d{
+width:100%;
+height:500px;
+background:#000;
+}
