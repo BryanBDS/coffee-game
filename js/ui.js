@@ -114,7 +114,6 @@ menu.innerHTML = html;
 ABRIR FINCA
 ========================= */
 
-
 function abrirFinca(){
 
 const tab = document.getElementById("tab-finca");
@@ -125,14 +124,24 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 
-/* iniciar motor 3D si existe */
+/* iniciar finca 3D cuando la pestaña esté visible */
+
+setTimeout(()=>{
+
+const contenedor = document.getElementById("finca3d");
+
+if(!contenedor){
+console.log("No existe el contenedor finca3d");
+return;
+}
 
 if(typeof iniciarFinca3D === "function"){
 iniciarFinca3D();
 }
 
-}
+},200);
 
+}
 
 
 /* =========================
