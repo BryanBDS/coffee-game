@@ -125,17 +125,14 @@ t.classList.remove("active");
 
 tab.classList.add("active");
 
-/* INICIAR ESCENA 3D */
+/* iniciar motor 3D si existe */
 
-setTimeout(()=>{
-
-if(window.iniciarFinca3D){
+if(typeof iniciarFinca3D === "function"){
 iniciarFinca3D();
 }
 
-},200);
-
 }
+
 
 
 /* =========================
