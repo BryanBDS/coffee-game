@@ -22,6 +22,8 @@ if(dinero >= 500){
 dinero -= 500
 terrenoComprado = true
 
+comprarParcela3D();
+
 document.getElementById("pantalla").innerHTML = `
 <h2>Terreno comprado en Colombia</h2>
 <p>Dinero restante: ${dinero}</p>
