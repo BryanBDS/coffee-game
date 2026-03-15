@@ -27,10 +27,16 @@ container.clientWidth / container.clientHeight,
 
 /* RENDER */
 
-const renderer = new THREE.WebGLRenderer({antialias:true});
+const renderer = new THREE.WebGLRenderer({
+antialias:false,
+powerPreference:"high-performance"
+});
 renderer.setSize(container.clientWidth, container.clientHeight);
 
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+
 container.appendChild(renderer.domElement);
+
 
 /* LUZ */
 
@@ -70,6 +76,10 @@ camera.lookAt(0,0,0);
 function animate(){
 
 requestAnimationFrame(animate);
+
+/* si la pestaña no está visible no renderizar */
+
+if(document.hidden) return;
 
 cube.rotation.y += 0.01;
 
