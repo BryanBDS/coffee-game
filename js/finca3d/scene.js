@@ -163,3 +163,6 @@ animate();
 esperarContenedor();
 
 } 
+
+
+window.iniciarFinca3D = iniciarFinca3D;
