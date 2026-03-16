@@ -28,15 +28,14 @@ target.classList.add("active");
 
 if(realTab === "finca"){
 
-setTimeout(()=>{
+requestAnimationFrame(()=>{
 
 if(window.iniciarFinca3D){
 iniciarFinca3D();
 }
 
-},100);
+});
 
-}
 }
 
 /* =========================
