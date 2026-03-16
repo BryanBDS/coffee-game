@@ -25,7 +25,7 @@ scene.background = new THREE.Color(0x87ceeb);
 
 camera = new THREE.PerspectiveCamera(
 75,
-container.clientWidth / container.clientHeight,
+container.offsetWidth / container.offsetHeight,
 0.1,
 1000
 );
