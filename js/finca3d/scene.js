@@ -33,7 +33,7 @@ container.clientWidth / container.clientHeight,
 /* RENDER */
 
 renderer = new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.setSize(container.offsetWidth, container.offsetHeight);
 
 container.appendChild(renderer.domElement);
 
