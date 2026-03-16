@@ -126,26 +126,22 @@ t.classList.remove("active");
 });
 
 tab.classList.add("active");
+} 
 
-/* iniciar finca 3D cuando la pestaña esté visible */
+
+/* iniciar escena 3D cuando se abra finca */
+
+if(realTab === "finca"){
 
 setTimeout(()=>{
 
-const contenedor = document.getElementById("finca3d");
-
-if(!contenedor){
-console.log("No existe el contenedor finca3d");
-return;
-}
-
-if(typeof iniciarFinca3D === "function"){
+if(window.iniciarFinca3D){
 iniciarFinca3D();
 }
 
-},200);
+},100);
 
 }
-
 
 /* =========================
 ABRIR MERCADO
