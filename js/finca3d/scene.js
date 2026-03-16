@@ -7,12 +7,18 @@ import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
 window.iniciarFinca3D = function(){
 
+
+const esperarContenedor = () => {
 const container = document.getElementById("finca3d");
 
 if(!container){
-console.log("No existe el contenedor finca3d");
-return;
-}
+
+requestAnimationFrame(esperarContenedor);
+            return;
+        }
+
+console.log("Contenedor finca3d encontrado");
+
 
 container.innerHTML = "";
 
@@ -153,3 +159,7 @@ renderer.render(scene,camera);
 animate();
 
 };
+
+esperarContenedor();
+
+} 
