@@ -4,12 +4,31 @@ let scene, camera, renderer;
 
 function iniciarFinca3D(){
 
+function esperarContenedor(){
+
 const container = document.getElementById("finca3d");
 
 if(!container){
-console.log("Contenedor finca3d aún no existe");
+
+console.log("Esperando contenedor finca3d...");
+
+requestAnimationFrame(esperarContenedor);
+
 return;
+
 }
+
+iniciarEscena(container);
+
+}
+
+esperarContenedor();
+
+}
+
+
+
+function iniciarEscena(container){
 
 container.innerHTML = "";
 
