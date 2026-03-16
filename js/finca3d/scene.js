@@ -81,15 +81,7 @@ function esperarFinca(){
 
 const container = document.getElementById("finca3d");
 
-if(container){
 
-console.log("Finca detectada, iniciando 3D");
-
-crearEscena(container);
-
-return;
-
-}
 
 /* observar cambios en el DOM */
 
