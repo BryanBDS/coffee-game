@@ -2,33 +2,7 @@ import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
 let scene, camera, renderer;
 
-function iniciarFinca3D(){
-
-function esperarContenedor(){
-
-const container = document.getElementById("finca3d");
-
-if(!container){
-
-console.log("Esperando contenedor finca3d...");
-
-requestAnimationFrame(esperarContenedor);
-
-return;
-
-}
-
-iniciarEscena(container);
-
-}
-
-esperarContenedor();
-
-}
-
-
-
-function iniciarEscena(container){
+function crearEscena(container){
 
 container.innerHTML = "";
 
@@ -48,9 +22,7 @@ container.clientWidth / container.clientHeight,
 
 /* RENDER */
 
-renderer = new THREE.WebGLRenderer({
-antialias:true
-});
+renderer = new THREE.WebGLRenderer({antialias:true});
 
 renderer.setSize(container.clientWidth, container.clientHeight);
 
@@ -60,7 +32,6 @@ container.appendChild(renderer.domElement);
 
 const light = new THREE.DirectionalLight(0xffffff,1);
 light.position.set(5,10,5);
-
 scene.add(light);
 
 /* TERRENO */
@@ -74,7 +45,7 @@ ground.rotation.x = -Math.PI/2;
 
 scene.add(ground);
 
-/* CUBO DE PRUEBA */
+/* CUBO PRUEBA */
 
 const cubeGeo = new THREE.BoxGeometry();
 const cubeMat = new THREE.MeshStandardMaterial({color:0xff0000});
@@ -85,12 +56,8 @@ cube.position.y = 1;
 
 scene.add(cube);
 
-/* POSICION CAMARA */
-
 camera.position.set(5,5,5);
 camera.lookAt(0,0,0);
-
-/* ANIMACION */
 
 function animate(){
 
@@ -106,6 +73,49 @@ animate();
 
 }
 
-/* HACER LA FUNCION GLOBAL */
+/* =========================
+OBSERVADOR DEL DOM
+========================= */
 
-window.iniciarFinca3D = iniciarFinca3D;
+function esperarFinca(){
+
+const container = document.getElementById("finca3d");
+
+if(container){
+
+console.log("Finca detectada, iniciando 3D");
+
+crearEscena(container);
+
+return;
+
+}
+
+/* observar cambios en el DOM */
+
+const observer = new MutationObserver(() => {
+
+const container = document.getElementById("finca3d");
+
+if(container){
+
+console.log("Finca detectada por observer");
+
+crearEscena(container);
+
+observer.disconnect();
+
+}
+
+});
+
+observer.observe(document.body,{
+childList:true,
+subtree:true
+});
+
+}
+
+/* HACER GLOBAL */
+
+window.iniciarFinca3D = esperarFinca;
