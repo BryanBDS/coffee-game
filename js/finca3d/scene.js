@@ -89,15 +89,7 @@ const observer = new MutationObserver(() => {
 
 const container = document.getElementById("finca3d");
 
-if(container){
 
-console.log("Finca detectada por observer");
-
-crearEscena(container);
-
-observer.disconnect();
-
-}
 
 });
 
