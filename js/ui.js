@@ -130,19 +130,7 @@ tab.classList.add("active");
 } 
 
 
-/* iniciar escena 3D cuando se abra finca */
 
-if(realTab === "finca"){
-
-setTimeout(()=>{
-
-if(window.iniciarFinca3D){
-iniciarFinca3D();
-}
-
-},100);
-
-}
 
 /* =========================
 ABRIR MERCADO
