@@ -132,7 +132,7 @@ let html = `
 </div>
 `;
 
-document.querySelector("#tab-finca").innerHTML = html;
+document.querySelector(".finca-detail").innerHTML = html;
 
 }
 
