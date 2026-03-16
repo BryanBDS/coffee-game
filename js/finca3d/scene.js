@@ -1,10 +1,20 @@
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
 let scene, camera, renderer;
+let iniciada = false;
 
-function crearEscena(container){
+function iniciarFinca3D(){
 
-container.innerHTML = "";
+if(iniciada) return;
+
+const container = document.getElementById("finca3d");
+
+if(!container){
+console.log("No existe finca3d en el HTML");
+return;
+}
+
+iniciada = true;
 
 /* ESCENA */
 
@@ -23,7 +33,6 @@ container.clientWidth / container.clientHeight,
 /* RENDER */
 
 renderer = new THREE.WebGLRenderer({antialias:true});
-
 renderer.setSize(container.clientWidth, container.clientHeight);
 
 container.appendChild(renderer.domElement);
@@ -40,7 +49,6 @@ const groundGeo = new THREE.PlaneGeometry(40,40);
 const groundMat = new THREE.MeshStandardMaterial({color:0x4caf50});
 
 const ground = new THREE.Mesh(groundGeo,groundMat);
-
 ground.rotation.x = -Math.PI/2;
 
 scene.add(ground);
@@ -51,13 +59,16 @@ const cubeGeo = new THREE.BoxGeometry();
 const cubeMat = new THREE.MeshStandardMaterial({color:0xff0000});
 
 const cube = new THREE.Mesh(cubeGeo,cubeMat);
-
 cube.position.y = 1;
 
 scene.add(cube);
 
-camera.position.set(5,5,5);
+/* CAMARA */
+
+camera.position.set(6,6,6);
 camera.lookAt(0,0,0);
+
+/* ANIMACION */
 
 function animate(){
 
@@ -73,33 +84,4 @@ animate();
 
 }
 
-/* =========================
-OBSERVADOR DEL DOM
-========================= */
-
-function esperarFinca(){
-
-const container = document.getElementById("finca3d");
-
-
-
-/* observar cambios en el DOM */
-
-const observer = new MutationObserver(() => {
-
-const container = document.getElementById("finca3d");
-
-
-
-});
-
-observer.observe(document.body,{
-childList:true,
-subtree:true
-});
-
-}
-
-/* HACER GLOBAL */
-
-window.iniciarFinca3D = esperarFinca;
+window.iniciarFinca3D = iniciarFinca3D;
