@@ -161,8 +161,6 @@ animate();
 };
 
 esperarContenedor();
-
+window.iniciarFinca3D = iniciarFinca3D;
 } 
 
-
-window.iniciarFinca3D = iniciarFinca3D;
