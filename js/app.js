@@ -17,3 +17,16 @@ console.log("Sistema de finca listo");
 }
 
 });
+
+
+window.addEventListener("load", ()=>{
+
+setTimeout(()=>{
+
+if(window.iniciarFinca3D){
+iniciarFinca3D();
+}
+
+},500);
+
+});
