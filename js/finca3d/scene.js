@@ -35,6 +35,18 @@ container.clientWidth / container.clientHeight,
 renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(container.offsetWidth, container.offsetHeight);
 
+window.addEventListener("resize", ()=>{
+
+const w = container.offsetWidth;
+const h = container.offsetHeight;
+
+camera.aspect = w / h;
+camera.updateProjectionMatrix();
+
+renderer.setSize(w,h);
+
+});
+
 container.appendChild(renderer.domElement);
 
 /* LUZ */
