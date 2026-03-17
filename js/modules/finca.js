@@ -1,7 +1,6 @@
 let terrenoComprado = false
 let plantas = 0
 let cafeListo = false
-let dinero = 1000
 
 function mostrarMapa(){
 
@@ -15,24 +14,33 @@ document.getElementById("pantalla").innerHTML = `
 
 }
 
+
 function comprarTerreno(){
 
-if(dinero >= 500){
+/* usar dinero del GameManager */
 
-dinero -= 500
-terrenoComprado = true
+if(GameManager.money >= 500){
 
-comprarParcela3D();
+GameManager.money -= 500;
+
+/* guardar parcela REAL */
+
+GameManager.comprarParcela(Date.now());
+
+/* actualizar UI */
+GameManager.actualizarUI();
+
+/* mostrar resultado */
 
 document.getElementById("pantalla").innerHTML = `
 <h2>Terreno comprado en Colombia</h2>
-<p>Dinero restante: ${dinero}</p>
-<button onclick="mostrarFinca()">Ir a mi finca</button>
-`
+<p>Dinero restante: ${GameManager.money}</p>
+<button onclick="switchTab('abrirFinca')">Ir a mi finca</button>
+`;
 
 }else{
 
-alert("No tienes dinero suficiente")
+alert("No tienes dinero suficiente");
 
 }
 
