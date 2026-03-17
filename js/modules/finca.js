@@ -47,31 +47,38 @@ alert("No tienes dinero suficiente");
 }
 
 
-
 function mostrarFinca(){
 
-if(!terrenoComprado){
+/* validar si tiene parcelas reales */
+
+if(!GameManager.parcelas.length){
 
 document.getElementById("pantalla").innerHTML = `
 <h2>No tienes terreno</h2>
-`
+`;
 
-return
+return;
 }
+
+/* mostrar UI */
 
 document.getElementById("pantalla").innerHTML = `
 
 <h2>🌱 Mi finca</h2>
 
-<p>Plantas sembradas: ${plantas}</p>
+<p>Parcelas: ${GameManager.parcelas.length}</p>
 
 <button onclick="sembrar()">Sembrar café</button>
 
 <button onclick="crecer()">Avanzar crecimiento</button>
 
-`
+<button onclick="switchTab('abrirFinca')">Ver en 3D</button>
+
+`;
 
 }
+
+
 
 function sembrar(){
 
