@@ -38,6 +38,8 @@ alert("No tienes dinero suficiente")
 
 }
 
+
+
 function mostrarFinca(){
 
 if(!terrenoComprado){
