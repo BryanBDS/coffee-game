@@ -90,31 +90,9 @@ return;
 
 let html = "";
 
-
 if(tab === "mapa"){
-
-html = `
-<h2>🌍 Mapa cafetero</h2>
-<button id="btnComprar">Comprar terreno en Colombia</button>
-`;
-
-setTimeout(()=>{
-
-const btn = document.getElementById("btnComprar");
-
-if(btn){
-btn.addEventListener("click", ()=>{
-
-console.log("CLICK comprarTerreno desde UI");
-window.comprarTerreno();
-
-});
+html = `<button class="nav-btn active" onclick="mostrarMapa()">🗺️ MAPA CAFETERO</button>`;
 }
-
-},100);
-
-}
-
 
 if(tab === "finca"){
 html = `<button class="nav-btn active" onclick="switchTab('abrirFinca')">🏡 MI FINCA</button>`;
