@@ -3,7 +3,7 @@ let plantas = 0
 let cafeListo = false
 
 
-function mostrarMapa(){
+window.mostrarMapa = function(){
 
 document.getElementById("tab-mapa").innerHTML = `
 
