@@ -1,16 +1,17 @@
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
 let scene, camera, renderer;
-let iniciada = false;
 
 function iniciarFinca3D(){
 
 const container = document.getElementById("finca3d");
 
 if(!container){
-console.log("No existe finca3d en el HTML");
+console.log("No existe finca3d");
 return;
 }
+
+/* limpiar */
 
 container.innerHTML = "";
 
@@ -23,7 +24,7 @@ scene.background = new THREE.Color(0x87ceeb);
 
 camera = new THREE.PerspectiveCamera(
 75,
-container.offsetWidth / container.offsetHeight,
+container.clientWidth / container.clientHeight,
 0.1,
 1000
 );
@@ -31,19 +32,7 @@ container.offsetWidth / container.offsetHeight,
 /* RENDER */
 
 renderer = new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(container.offsetWidth, container.offsetHeight);
-
-window.addEventListener("resize", ()=>{
-
-const w = container.offsetWidth;
-const h = container.offsetHeight;
-
-camera.aspect = w / h;
-camera.updateProjectionMatrix();
-
-renderer.setSize(w,h);
-
-});
+renderer.setSize(container.clientWidth, container.clientHeight);
 
 container.appendChild(renderer.domElement);
 
@@ -63,50 +52,18 @@ ground.rotation.x = -Math.PI/2;
 
 scene.add(ground);
 
+/* PARCELA BASE */
 
+const parcelaGeo = new THREE.PlaneGeometry(3,3);
+const parcelaMat = new THREE.MeshStandardMaterial({color:0x6d4c41});
 
-/* PRUEBA FORZADA */
-
-console.log("Probando render de parcela...");
-
-const geo = new THREE.PlaneGeometry(3,3);
-const mat = new THREE.MeshStandardMaterial({color:0x6d4c41});
-
-const testParcela = new THREE.Mesh(geo, mat);
-
-testParcela.rotation.x = -Math.PI/2;
-testParcela.position.set(0, 0.02, 0);
-
-scene.add(testParcela);
-
-
-/* =========================
-DIBUJAR PARCELAS REALES
-========================= */
-
-if(window.GameManager){
-
-console.log("Parcelas actuales:", GameManager.parcelas);
-
-GameManager.parcelas.forEach((p, index)=>{
-
-const geo = new THREE.PlaneGeometry(3,3);
-const mat = new THREE.MeshStandardMaterial({color:0x6d4c41});
-
-const parcela = new THREE.Mesh(geo, mat);
-
+const parcela = new THREE.Mesh(parcelaGeo, parcelaMat);
 parcela.rotation.x = -Math.PI/2;
-
-/* posición en fila */
-parcela.position.set(index * 4, 0.02, 0);
+parcela.position.set(0,0.02,0);
 
 scene.add(parcela);
 
-});
-
-}
-
-/* CUBO PRUEBA */
+/* CUBO */
 
 const cubeGeo = new THREE.BoxGeometry();
 const cubeMat = new THREE.MeshStandardMaterial({color:0xff0000});
@@ -121,16 +78,12 @@ scene.add(cube);
 camera.position.set(6,6,6);
 camera.lookAt(0,0,0);
 
-/* ANIMACION */
+/* LOOP */
 
 function animate(){
-
 requestAnimationFrame(animate);
-
 cube.rotation.y += 0.01;
-
 renderer.render(scene,camera);
-
 }
 
 animate();
