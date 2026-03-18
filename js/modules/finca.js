@@ -2,7 +2,6 @@
 let plantas = 0
 let cafeListo = false
 
-function mostrarMapa(){
 
 function mostrarMapa(){
 
