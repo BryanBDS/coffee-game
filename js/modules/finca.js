@@ -4,13 +4,17 @@ let cafeListo = false
 
 function mostrarMapa(){
 
+function mostrarMapa(){
+
 document.getElementById("tab-mapa").innerHTML = `
 
 <h2>🌍 Mapa cafetero</h2>
 
-<button id="btnComprar">Comprar terreno en Colombia</button>
+<button onclick="comprarTerreno()">Comprar terreno en Colombia</button>
 
 `;
+
+}
 
 setTimeout(()=>{
 
