@@ -1,4 +1,4 @@
-let terrenoComprado = false
+
 let plantas = 0
 let cafeListo = false
 
