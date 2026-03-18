@@ -44,7 +44,12 @@ const id = Date.now();
 
 console.log("Creando parcela con ID:", id);
 
+
+console.log("ANTES DE COMPRAR:", GameManager.parcelas);
+
 GameManager.comprarParcela(id);
+
+console.log("DESPUÉS DE COMPRAR:", GameManager.parcelas);
 
 /* guardar */
 
