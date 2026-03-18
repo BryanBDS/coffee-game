@@ -15,34 +15,48 @@ document.getElementById("pantalla").innerHTML = `
 }
 
 
+
 function comprarTerreno(){
 
-/* usar dinero del GameManager */
+console.log("CLICK comprarTerreno");
 
-if(GameManager.money >= 500){
+/* validar GameManager */
+
+if(!window.GameManager){
+console.log("GameManager NO existe");
+return;
+}
+
+/* validar dinero */
+
+if(GameManager.money < 500){
+alert("No tienes dinero suficiente");
+return;
+}
+
+/* descontar dinero */
 
 GameManager.money -= 500;
 
-/* guardar parcela REAL */
+/* crear parcela */
 
-GameManager.comprarParcela(Date.now());
+const id = Date.now();
 
-/* actualizar UI */
-GameManager.actualizarUI();
+console.log("Creando parcela con ID:", id);
 
-/* mostrar resultado */
+GameManager.comprarParcela(id);
 
-document.getElementById("pantalla").innerHTML = `
-<h2>Terreno comprado en Colombia</h2>
-<p>Dinero restante: ${GameManager.money}</p>
-<button onclick="switchTab('abrirFinca')">Ir a mi finca</button>
-`;
+/* guardar */
 
-}else{
+GameManager.guardar();
 
-alert("No tienes dinero suficiente");
+/* DEBUG */
 
-}
+console.log("Parcelas después de comprar:", GameManager.parcelas);
+
+/* ir a finca */
+
+switchTab("abrirFinca");
 
 }
 
