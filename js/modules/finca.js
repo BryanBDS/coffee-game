@@ -4,7 +4,7 @@ let cafeListo = false
 
 function mostrarMapa(){
 
-document.getElementById("pantalla").innerHTML = `
+document.getElementById("tab-mapa").innerHTML = `
 
 <h2>🌍 Mapa cafetero</h2>
 
