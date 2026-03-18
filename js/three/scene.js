@@ -65,31 +65,21 @@ ground.rotation.x = -Math.PI/2;
 
 scene.add(ground);
 
-/* =========================
-DIBUJAR PARCELAS REALES
-========================= */
 
-if(window.GameManager){
 
-console.log("Parcelas actuales:", GameManager.parcelas);
+/* PRUEBA FORZADA */
 
-GameManager.parcelas.forEach((p, index)=>{
+console.log("Probando render de parcela...");
 
 const geo = new THREE.PlaneGeometry(3,3);
 const mat = new THREE.MeshStandardMaterial({color:0x6d4c41});
 
-const parcela = new THREE.Mesh(geo, mat);
+const testParcela = new THREE.Mesh(geo, mat);
 
-parcela.rotation.x = -Math.PI/2;
+testParcela.rotation.x = -Math.PI/2;
+testParcela.position.set(0, 0.02, 0);
 
-/* posición en fila */
-parcela.position.set(index * 4, 0.02, 0);
-
-scene.add(parcela);
-
-});
-
-}
+scene.add(testParcela);
 
 
 /* =========================
