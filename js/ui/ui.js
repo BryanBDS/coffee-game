@@ -90,32 +90,31 @@ return;
 
 let html = "";
 
+
 if(tab === "mapa"){
 
 html = `
-<button id="btnComprar" class="nav-btn active">Comprar terreno en Colombia</button>
+<h2>🌍 Mapa cafetero</h2>
+<button id="btnComprar">Comprar terreno en Colombia</button>
 `;
 
 setTimeout(()=>{
 
 const btn = document.getElementById("btnComprar");
 
-if(!btn){
-console.log("Botón comprar NO encontrado");
-return;
-}
-
+if(btn){
 btn.addEventListener("click", ()=>{
 
 console.log("CLICK comprarTerreno desde UI");
-
 window.comprarTerreno();
 
 });
+}
 
 },100);
 
 }
+
 
 if(tab === "finca"){
 html = `<button class="nav-btn active" onclick="switchTab('abrirFinca')">🏡 MI FINCA</button>`;
