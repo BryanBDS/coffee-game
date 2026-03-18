@@ -5,7 +5,12 @@ let iniciada = false;
 
 function iniciarFinca3D(){
 
-if(iniciada) return;
+if(iniciada){
+console.log("Reiniciando escena...");
+
+container.innerHTML = "";
+iniciada = false;
+}
 
 const container = document.getElementById("finca3d");
 
