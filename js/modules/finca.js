@@ -58,6 +58,12 @@ console.log("Parcelas después de comprar:", GameManager.parcelas);
 
 switchTab("abrirFinca");
 
+setTimeout(()=>{
+if(window.iniciarFinca3D){
+iniciarFinca3D();
+}
+},300);
+
 }
 
 
