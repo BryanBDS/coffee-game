@@ -91,6 +91,33 @@ scene.add(parcela);
 
 }
 
+
+/* =========================
+DIBUJAR PARCELAS REALES
+========================= */
+
+if(window.GameManager){
+
+console.log("Parcelas actuales:", GameManager.parcelas);
+
+GameManager.parcelas.forEach((p, index)=>{
+
+const geo = new THREE.PlaneGeometry(3,3);
+const mat = new THREE.MeshStandardMaterial({color:0x6d4c41});
+
+const parcela = new THREE.Mesh(geo, mat);
+
+parcela.rotation.x = -Math.PI/2;
+
+/* posición en fila */
+parcela.position.set(index * 4, 0.02, 0);
+
+scene.add(parcela);
+
+});
+
+}
+
 /* CUBO PRUEBA */
 
 const cubeGeo = new THREE.BoxGeometry();
