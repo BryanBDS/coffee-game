@@ -8,9 +8,30 @@ document.getElementById("pantalla").innerHTML = `
 
 <h2>🌍 Mapa cafetero</h2>
 
-<button onclick="comprarTerreno()">Comprar terreno en Colombia</button>
+<button id="btnComprar">Comprar terreno en Colombia</button>
 
-`
+`;
+
+setTimeout(()=>{
+
+const btn = document.getElementById("btnComprar");
+
+if(!btn){
+console.log("Botón NO encontrado");
+return;
+}
+
+btn.addEventListener("click", function(){
+
+console.log("CLICK comprarTerreno");
+
+/* ejecutar función real */
+window.comprarTerreno();
+
+});
+
+},100);
+
 
 }
 
