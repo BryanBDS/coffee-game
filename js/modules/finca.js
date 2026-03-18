@@ -16,7 +16,7 @@ document.getElementById("pantalla").innerHTML = `
 
 
 
-function comprarTerreno(){
+window.comprarTerreno = function(){
 
 console.log("CLICK comprarTerreno");
 
