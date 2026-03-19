@@ -91,7 +91,7 @@ return;
 let html = "";
 
 if(tab === "mapa"){
-html = `<button class="nav-btn active" onclick="mostrarMapa()">🗺️ MAPA CAFETERO</button>`;
+html = `<button class="nav-btn active" onclick="abrirMapaCafetero()">🗺️ MAPA CAFETERO</button>`;
 }
 
 if(tab === "finca"){
