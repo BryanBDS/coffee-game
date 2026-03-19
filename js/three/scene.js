@@ -1,9 +1,8 @@
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
 /* VARIABLES GLOBALES */
-window.scene = null;
-window.camera = null;
-window.renderer = null;
+let scene, camera, renderer;
+let animationId = null;
 
 function iniciarFinca3D(){
 
@@ -12,6 +11,12 @@ const container = document.getElementById("finca3d");
 if(!container){
 console.log("No existe finca3d");
 return;
+}
+
+/* detener animación anterior */
+if(animationId){
+cancelAnimationFrame(animationId);
+animationId = null;
 }
 
 /* limpiar escena siempre */
@@ -105,7 +110,7 @@ camera.lookAt(0,0,0);
 /* LOOP */
 
 function animate(){
-requestAnimationFrame(animate);
+animationId = requestAnimationFrame(animate);
 cube.rotation.y += 0.01;
 renderer.render(scene,camera);
 }
