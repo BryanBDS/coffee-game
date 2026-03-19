@@ -54,16 +54,35 @@ ground.rotation.x = -Math.PI/2;
 
 scene.add(ground);
 
-/* PARCELA BASE */
+/* =========================
+PARCELAS REALES DEL JUGADOR
+========================= */
 
-const parcelaGeo = new THREE.PlaneGeometry(3,3);
-const parcelaMat = new THREE.MeshStandardMaterial({color:0x6d4c41});
+if(window.GameManager){
 
-const parcela = new THREE.Mesh(parcelaGeo, parcelaMat);
+console.log("Parcelas del jugador:", GameManager.parcelas);
+
+/* recorrer parcelas */
+
+GameManager.parcelas.forEach((p, index)=>{
+
+const geo = new THREE.PlaneGeometry(3,3);
+const mat = new THREE.MeshStandardMaterial({color:0x6d4c41});
+
+const parcela = new THREE.Mesh(geo, mat);
+
 parcela.rotation.x = -Math.PI/2;
-parcela.position.set(0,0.02,0);
+
+/* distribución en fila */
+parcela.position.set(index * 4, 0.02, 0);
 
 scene.add(parcela);
+
+});
+
+}
+
+
 
 /* CUBO */
 
