@@ -1,7 +1,10 @@
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
-let scene, camera, renderer;
-let iniciada = false;
+/* VARIABLES GLOBALES */
+window.scene = null;
+window.camera = null;
+window.renderer = null;
+window.iniciada = false;
 
 function iniciarFinca3D(){
 
@@ -12,7 +15,7 @@ console.log("No existe finca3d en el HTML");
 return;
 }
 
-if(iniciada){
+if(window.iniciada){
 container.innerHTML = "";
 iniciada = false;
 }
