@@ -13,16 +13,22 @@ console.log("No existe finca3d");
 return;
 }
 
-/* detener animación anterior */
+/* 🔥 DETENER ANIMACIÓN */
 if(animationId){
 cancelAnimationFrame(animationId);
 animationId = null;
 }
 
-/* limpiar escena siempre */
-while (container.firstChild) {
-container.removeChild(container.firstChild);
+/* 🔥 DESTRUIR RENDERER ANTERIOR */
+if(renderer){
+renderer.dispose();
+renderer.forceContextLoss();
+renderer.domElement = null;
+renderer = null;
 }
+
+/* 🔥 LIMPIAR HTML COMPLETAMENTE */
+container.innerHTML = "";
 
 
 /* ESCENA */
