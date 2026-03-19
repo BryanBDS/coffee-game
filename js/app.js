@@ -23,3 +23,8 @@ console.log("Sistema de finca listo");
 }
 
 });
+
+
+window.onerror = function(msg, url, line){
+console.error("ERROR GLOBAL:", msg, "en línea:", line);
+}
