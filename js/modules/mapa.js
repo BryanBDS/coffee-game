@@ -221,7 +221,8 @@ id: id,
 municipio: municipio,
 lote: lote,
 precio: precio,
-cultivo: "vacio",
+hectareas: hectareas, // 🔥 NUEVO
+estado: "vacio",
 nivel: 1
 });
 
