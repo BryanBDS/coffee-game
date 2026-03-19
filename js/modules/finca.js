@@ -13,93 +13,27 @@ switchTab("abrirMapa");
 }
 
 
-
-
-
 window.comprarTerreno = function(){
 
 console.log("CLICK comprarTerreno");
 
-/* validar GameManager */
-
-if(!window.GameManager){
-console.log("GameManager NO existe");
-return;
-}
-
-/* validar dinero */
+if(!window.GameManager) return;
 
 if(GameManager.money < 500){
 alert("No tienes dinero suficiente");
 return;
 }
 
-/* descontar dinero */
-
 GameManager.money -= 500;
-
-/* crear parcela */
 
 const id = Date.now();
 
-console.log("Creando parcela con ID:", id);
-
-
-console.log("ANTES DE COMPRAR:", GameManager.parcelas);
-
 GameManager.comprarParcela(id);
-
-console.log("DESPUÉS DE COMPRAR:", GameManager.parcelas);
-
-/* guardar */
 
 GameManager.guardar();
 
-/* DEBUG */
-
-console.log("Parcelas después de comprar:", GameManager.parcelas);
-
 /* ir a finca */
-
 switchTab("abrirFinca");
-
-setTimeout(()=>{
-if(window.iniciarFinca3D){
-iniciarFinca3D();
-}
-},300);
-
-}
-
-
-function mostrarFinca(){
-
-/* validar si tiene parcelas reales */
-
-if(!GameManager.parcelas.length){
-
-document.getElementById("pantalla").innerHTML = `
-<h2>No tienes terreno</h2>
-`;
-
-return;
-}
-
-/* mostrar UI */
-
-document.getElementById("pantalla").innerHTML = `
-
-<h2>🌱 Mi finca</h2>
-
-<p>Parcelas: ${GameManager.parcelas.length}</p>
-
-<button onclick="sembrar()">Sembrar café</button>
-
-<button onclick="crecer()">Avanzar crecimiento</button>
-
-<button onclick="switchTab('abrirFinca')">Ver en 3D</button>
-
-`;
 
 }
 
