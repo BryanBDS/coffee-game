@@ -142,13 +142,35 @@ const parcelasMunicipio = [
 
 ];
 
-parcelasMunicipio.forEach(p=>{
+parcelasMunicipio.forEach((p, index)=>{
+
+/* asignar hectáreas según lote */
+let hectareas = 1;
+let precio = 100;
+
+if(index === 1){
+hectareas = 2;
+precio = 180;
+}
+
+if(index === 2){
+hectareas = 5;
+precio = 400;
+}
 
 L.marker([p.lat,p.lng])
 .addTo(grupoLotes)
-.bindPopup(`<b>${p.nombre}</b><br><button onclick="comprarLote('${nombre}','${p.nombre}',100)">Comprar</button>`);
+.bindPopup(`
+<b>${p.nombre}</b><br>
+${hectareas} hectáreas<br>
+💰 ${precio} CoffeeCoins<br><br>
+<button onclick="comprarLote('${nombre}','${p.nombre}',${precio},${hectareas})">
+Comprar
+</button>
+`);
 
-});    
+});
+ 
 
     
 const lotes = [
