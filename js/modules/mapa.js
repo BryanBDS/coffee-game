@@ -167,12 +167,11 @@ html += `
 <button class="nav-btn" onclick="comprarLote('${nombre}','${l.nombre}',${l.precio},${l.hectareas})"
 
 ${l.nombre}  
-${l.tamaño}  
+${l.hectareas} hectáreas  
 💰 ${l.precio} CoffeeCoins
 
 </button>
 `;
-
 });
 
 document.querySelector(".menu").innerHTML = html;
