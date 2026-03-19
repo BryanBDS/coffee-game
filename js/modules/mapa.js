@@ -201,30 +201,44 @@ Lote 2 - 2 Hectáreas
 }
 
 
-function comprarLote(municipio,lote,precio){
+function comprarLote(municipio, lote, precio){
 
-/* =========================
-CREAR FINCA
-========================= */
+if(!window.GameManager) return;
 
-const finca = {
+if(GameManager.money < precio){
+alert("No tienes dinero suficiente");
+return;
+}
+
+/* descontar dinero */
+GameManager.money -= precio;
+
+/* crear parcela REAL */
+const id = Date.now();
+
+GameManager.parcelas.push({
+id: id,
 municipio: municipio,
 lote: lote,
-precio: precio
-};
+precio: precio,
+cultivo: "vacio",
+nivel: 1
+});
 
-/* guardar finca temporalmente */
-localStorage.setItem("miFinca",JSON.stringify(finca));
+/* guardar */
+GameManager.guardar();
 
-alert("¡Compraste "+lote+" en "+municipio+"! ☕");
+alert("¡Compraste " + lote + " en " + municipio + "! ☕");
 
-/* abrir sección MI FINCA */
+/* ir a finca */
+switchTab("abrirFinca");
 
-switchTab("finca");
-
-/* mostrar información de la finca */
-
-mostrarMiFinca();
+/* renderizar 3D */
+setTimeout(()=>{
+if(window.iniciarFinca3D){
+iniciarFinca3D();
+}
+},300);
 
 }
 
