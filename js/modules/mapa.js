@@ -164,7 +164,7 @@ let html = `<h3>Lotes en ${nombre}</h3>`;
 lotes.forEach(l =>{
 
 html += `
-<button class="nav-btn" onclick="comprarLote('${nombre}','${l.nombre}',${l.precio},${l.hectareas})"
+<button class="nav-btn" onclick="comprarLote('${nombre}','${l.nombre}',${l.precio},${l.hectareas})">
 
 ${l.nombre}  
 ${l.hectareas} hectáreas  
