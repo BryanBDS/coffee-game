@@ -39,6 +39,16 @@ switchTab("abrirFinca");
 
 
 
+window.mostrarMapa = function(){
+
+console.log("Mapa activado");
+
+/* abrir pestaña correctamente */
+switchTab("abrirMapa");
+
+}
+
+
 function sembrar(){
 
 plantas = 100
