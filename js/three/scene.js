@@ -7,13 +7,15 @@ function iniciarFinca3D(){
 const container = document.getElementById("finca3d");
 
 if(!container){
-console.log("No existe finca3d");
+console.log("No existe finca3d en el HTML");
 return;
 }
 
-/* limpiar */
-
+if(iniciada){
 container.innerHTML = "";
+iniciada = false;
+}
+
 
 /* ESCENA */
 
