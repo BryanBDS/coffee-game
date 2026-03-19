@@ -153,9 +153,9 @@ L.marker([p.lat,p.lng])
     
 const lotes = [
 
-{nombre:"Lote 1", tamaño:"1 hectárea", precio:100},
-{nombre:"Lote 2", tamaño:"2 hectáreas", precio:180},
-{nombre:"Lote 3", tamaño:"5 hectáreas", precio:400}
+{nombre:"Lote 1", hectareas:1, precio:100},
+{nombre:"Lote 2", hectareas:2, precio:180},
+{nombre:"Lote 3", hectareas:5, precio:400}
 
 ];
 
@@ -164,7 +164,7 @@ let html = `<h3>Lotes en ${nombre}</h3>`;
 lotes.forEach(l =>{
 
 html += `
-<button class="nav-btn" onclick="comprarLote('${nombre}','${l.nombre}',${l.precio})">
+<button class="nav-btn" onclick="comprarLote('${nombre}','${l.nombre}',${l.precio},${l.hectareas})"
 
 ${l.nombre}  
 ${l.tamaño}  
@@ -201,7 +201,7 @@ Lote 2 - 2 Hectáreas
 }
 
 
-function comprarLote(municipio, lote, precio){
+function comprarLote(municipio,lote,precio,hectareas){
 
 if(!window.GameManager) return;
 
