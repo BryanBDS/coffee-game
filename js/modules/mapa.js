@@ -240,7 +240,7 @@ const id = Date.now();
 GameManager.parcelas.push({
 id: id,
 municipio: municipio,
-lote: lote,
+nombre: lote,
 precio: precio,
 hectareas: hectareas, // 🔥 NUEVO
 estado: "vacio",
