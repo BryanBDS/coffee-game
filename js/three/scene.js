@@ -54,19 +54,65 @@ container.appendChild(renderer.domElement);
 
 /* LUZ */
 
-const light = new THREE.DirectionalLight(0xffffff,1);
-light.position.set(5,10,5);
+const light = new THREE.DirectionalLight(0xffffff,1.5);
+light.position.set(10,20,10);
 scene.add(light);
+
+const ambient = new THREE.AmbientLight(0xffffff,0.4);
+scene.add(ambient);
 
 /* TERRENO */
 
-const groundGeo = new THREE.PlaneGeometry(40,40);
-const groundMat = new THREE.MeshStandardMaterial({color:0x4caf50});
+const textureLoader = new THREE.TextureLoader();
+
+const groundTexture = textureLoader.load("https://threejs.org/examples/textures/terrain/grasslight-big.jpg");
+
+groundTexture.wrapS = THREE.RepeatWrapping;
+groundTexture.wrapT = THREE.RepeatWrapping;
+groundTexture.repeat.set(10,10);
+
+const groundGeo = new THREE.PlaneGeometry(100,100);
+const groundMat = new THREE.MeshStandardMaterial({
+map: groundTexture
+});
 
 const ground = new THREE.Mesh(groundGeo,groundMat);
 ground.rotation.x = -Math.PI/2;
 
 scene.add(ground);
+
+/* =========================
+ÁRBOLES NATURALES
+========================= */
+
+function crearArbol(x,z){
+
+// tronco
+const troncoGeo = new THREE.CylinderGeometry(0.2,0.2,2);
+const troncoMat = new THREE.MeshStandardMaterial({color:0x8d6e63});
+const tronco = new THREE.Mesh(troncoGeo, troncoMat);
+tronco.position.set(x,1,z);
+
+// copa
+const copaGeo = new THREE.SphereGeometry(1.2,8,8);
+const copaMat = new THREE.MeshStandardMaterial({color:0x2e7d32});
+const copa = new THREE.Mesh(copaGeo, copaMat);
+copa.position.set(x,2.5,z);
+
+scene.add(tronco);
+scene.add(copa);
+}
+
+/* generar varios árboles */
+for(let i=0;i<20;i++){
+
+let x = (Math.random()*80)-40;
+let z = (Math.random()*80)-40;
+
+crearArbol(x,z);
+
+}
+
 
 /* =========================
 PARCELAS REALES DEL JUGADOR
@@ -93,7 +139,11 @@ let color = 0x6d4c41; // café
 if(p.estado === "sembrado") color = 0x2e7d32;
 if(p.estado === "listo") color = 0xffeb3b;
 
-const mat = new THREE.MeshStandardMaterial({color: color});
+const mat = new THREE.MeshStandardMaterial({
+color: color,
+roughness: 1,
+metalness: 0
+});
 
 const parcela = new THREE.Mesh(geo, mat);
 
@@ -122,7 +172,7 @@ scene.add(cube);
 
 /* CAMARA */
 
-camera.position.set(6,6,6);
+camera.position.set(15,10,15);
 camera.lookAt(0,0,0);
 
 /* LOOP */
