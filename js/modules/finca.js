@@ -5,13 +5,10 @@ let cafeListo = false
 
 window.mostrarMapa = function(){
 
-document.getElementById("tab-mapa").innerHTML = `
+console.log("Mapa activado");
 
-<h2>🌍 Mapa cafetero</h2>
-
-<button onclick="comprarTerreno()">Comprar terreno en Colombia</button>
-
-`;
+/* SOLO cambiar de pestaña */
+switchTab("abrirMapa");
 
 }
 
