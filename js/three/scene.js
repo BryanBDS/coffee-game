@@ -59,7 +59,7 @@ container.innerHTML = "";
 scene = new THREE.Scene();
 scene.background = new THREE.Color(0xbfd1e5);
 
-scene.fog = new THREE.Fog(0xbfd1e5, 30, 120);
+scene.fog = new THREE.FogExp2(0xbfd1e5, 0.01);
 
 /* CAMARA */
 
@@ -84,6 +84,8 @@ container.appendChild(renderer.domElement);
 
 const light = new THREE.DirectionalLight(0xffffff,1);
 light.position.set(10,20,10);
+
+let tiempoDia = 0;
 
 light.castShadow = true;
 
@@ -142,6 +144,62 @@ scene.add(ground);
 ground.receiveShadow = true;
 
 
+
+let nubes = [];
+
+function crearNube(){
+
+const geo = new THREE.SphereGeometry(2,6,6);
+const mat = new THREE.MeshStandardMaterial({
+color: 0xffffff,
+transparent: true,
+opacity: 0.8
+});
+
+const nube = new THREE.Mesh(geo, mat);
+
+nube.position.set(
+(Math.random()*80)-40,
+10 + Math.random()*10,
+(Math.random()*80)-40
+);
+
+scene.add(nube);
+nubes.push(nube);
+
+}
+
+/* generar varias */
+for(let i=0;i<10;i++){
+crearNube();
+}
+
+
+
+
+let aves = [];
+
+function crearAve(){
+
+const geo = new THREE.ConeGeometry(0.2,0.5,4);
+const mat = new THREE.MeshStandardMaterial({color:0x000000});
+
+const ave = new THREE.Mesh(geo, mat);
+
+ave.position.set(
+(Math.random()*40)-20,
+8 + Math.random()*5,
+(Math.random()*40)-20
+);
+
+scene.add(ave);
+aves.push(ave);
+
+}
+
+for(let i=0;i<5;i++){
+crearAve();
+}
 
 
 
