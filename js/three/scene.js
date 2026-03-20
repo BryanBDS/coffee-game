@@ -107,7 +107,9 @@ vertices.setZ(i, altura);
 groundGeo.computeVertexNormals();
 
 const groundMat = new THREE.MeshStandardMaterial({
-map: groundTexture
+map: groundTexture,
+roughness: 1,
+metalness: 0
 });
 
 const ground = new THREE.Mesh(groundGeo,groundMat);
