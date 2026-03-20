@@ -133,6 +133,19 @@ scene.add(copa);
 
 }
 
+/* =========================
+GENERAR ÁRBOLES
+========================= */
+
+for(let i=0;i<50;i++){
+
+let x = (Math.random()*80)-40;
+let z = (Math.random()*80)-40;
+
+crearArbol(x,z);
+
+}
+
 
 
 /* =========================
