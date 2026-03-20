@@ -69,7 +69,7 @@ light.shadow.mapSize.height = 2048;
 
 scene.add(light);
 
-const ambient = new THREE.AmbientLight(0xffffff,0.4);
+const ambient = new THREE.AmbientLight(0xffffff,0.6);
 scene.add(ambient);
 
 /* TERRENO */
