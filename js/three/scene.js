@@ -375,23 +375,65 @@ camera.lookAt(0,0,0);
 
 /* LOOP */
 
-function animate(time){
+function animate(t){
 
 animationId = requestAnimationFrame(animate);
 
-/* tiempo */
-let t = time * 0.001;
+/* =========================
+TIEMPO GLOBAL
+========================= */
 
-/* animar hojas */
-if(hojasAnimadas){
-hojasAnimadas.forEach(mat=>{
-mat.uniforms.uTime.value = t;
+const time = t * 0.001;
+
+/* =========================
+MOVIMIENTO HOJAS (VIENTO)
+========================= */
+
+if(window.arbolesShader){
+window.arbolesShader.forEach(mat=>{
+mat.uniforms.uTime.value = time;
 });
 }
 
+/* =========================
+CICLO DÍA / NOCHE
+========================= */
+
+const dia = Math.sin(time * 0.05);
+
+/* color del cielo */
+scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
+
+/* intensidad de luz */
+if(window.sol){
+window.sol.intensity = 1 + dia;
+window.sol.position.x = Math.sin(time * 0.1) * 20;
+window.sol.position.y = 20 + Math.cos(time * 0.1) * 10;
+}
+
+/* =========================
+ANIMACIÓN AVES
+========================= */
+
+if(window.aves){
+window.aves.forEach(ave=>{
+ave.position.x += 0.05;
+if(ave.position.x > 50) ave.position.x = -50;
+});
+}
+
+/* =========================
+CUBO DEBUG (puedes quitar luego)
+========================= */
+
 cube.rotation.y += 0.01;
 
+/* =========================
+RENDER
+========================= */
+
 renderer.render(scene,camera);
+
 }
 
 animate();
