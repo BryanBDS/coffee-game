@@ -36,6 +36,8 @@ container.innerHTML = "";
 scene = new THREE.Scene();
 scene.background = new THREE.Color(0xbfd1e5);
 
+scene.fog = new THREE.Fog(0xbfd1e5, 30, 120);
+
 /* CAMARA */
 
 camera = new THREE.PerspectiveCamera(
@@ -94,7 +96,9 @@ const x = vertices.getX(i);
 const y = vertices.getY(i);
 
 /* ruido simple tipo montaña */
-const altura = Math.sin(x * 0.2) * Math.cos(y * 0.2) * 2;
+const altura =
+Math.sin(x * 0.15) * Math.cos(y * 0.15) * 3 +
+Math.sin(x * 0.05) * 2;
 
 vertices.setZ(i, altura);
 
@@ -127,7 +131,7 @@ const troncoMat = new THREE.MeshStandardMaterial({color:0x5d4037});
 const tronco = new THREE.Mesh(troncoGeo, troncoMat);
 
 /* COPA MÁS NATURAL */
-const copaGeo = new THREE.ConeGeometry(1.2,3,8);
+const copaGeo = new THREE.SphereGeometry(1.5, 8, 8);
 const copaMat = new THREE.MeshStandardMaterial({color:0x1b5e20});
 const copa = new THREE.Mesh(copaGeo, copaMat);
 
@@ -136,7 +140,14 @@ tronco.position.set(x, y + 1, z);
 copa.position.set(x, y + 3, z);
 
 /* pequeña variación */
-copa.scale.y = 1 + Math.random()*0.5;
+copa.scale.set(
+0.8 + Math.random()*0.6,
+0.8 + Math.random()*0.8,
+0.8 + Math.random()*0.6
+);
+
+tronco.castShadow = true;
+copa.castShadow = true;
 
 scene.add(tronco);
 scene.add(copa);
