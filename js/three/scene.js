@@ -34,7 +34,7 @@ container.innerHTML = "";
 /* ESCENA */
 
 scene = new THREE.Scene();
-scene.background = new THREE.Color(0x87ceeb);
+scene.background = new THREE.Color(0xbfd1e5);
 
 /* CAMARA */
 
@@ -71,7 +71,28 @@ groundTexture.wrapS = THREE.RepeatWrapping;
 groundTexture.wrapT = THREE.RepeatWrapping;
 groundTexture.repeat.set(10,10);
 
-const groundGeo = new THREE.PlaneGeometry(100,100);
+const groundGeo = new THREE.PlaneGeometry(100,100,64,64);
+
+/* =========================
+CREAR MONTAÑAS (ALTURA)
+========================= */
+
+const vertices = groundGeo.attributes.position;
+
+for(let i=0; i<vertices.count; i++){
+
+const x = vertices.getX(i);
+const y = vertices.getY(i);
+
+/* ruido simple tipo montaña */
+const altura = Math.sin(x * 0.2) * Math.cos(y * 0.2) * 2;
+
+vertices.setZ(i, altura);
+
+}
+
+groundGeo.computeVertexNormals();
+
 const groundMat = new THREE.MeshStandardMaterial({
 map: groundTexture
 });
@@ -87,31 +108,31 @@ scene.add(ground);
 
 function crearArbol(x,z){
 
-// tronco
-const troncoGeo = new THREE.CylinderGeometry(0.2,0.2,2);
-const troncoMat = new THREE.MeshStandardMaterial({color:0x8d6e63});
-const tronco = new THREE.Mesh(troncoGeo, troncoMat);
-tronco.position.set(x,1,z);
+/* altura base del terreno */
+let y = 0;
 
-// copa
-const copaGeo = new THREE.SphereGeometry(1.2,8,8);
-const copaMat = new THREE.MeshStandardMaterial({color:0x2e7d32});
+/* TRONCO */
+const troncoGeo = new THREE.CylinderGeometry(0.15,0.25,2,6);
+const troncoMat = new THREE.MeshStandardMaterial({color:0x5d4037});
+const tronco = new THREE.Mesh(troncoGeo, troncoMat);
+
+/* COPA MÁS NATURAL */
+const copaGeo = new THREE.ConeGeometry(1.2,3,8);
+const copaMat = new THREE.MeshStandardMaterial({color:0x1b5e20});
 const copa = new THREE.Mesh(copaGeo, copaMat);
-copa.position.set(x,2.5,z);
+
+/* posición */
+tronco.position.set(x, y + 1, z);
+copa.position.set(x, y + 3, z);
+
+/* pequeña variación */
+copa.scale.y = 1 + Math.random()*0.5;
 
 scene.add(tronco);
 scene.add(copa);
-}
-
-/* generar varios árboles */
-for(let i=0;i<20;i++){
-
-let x = (Math.random()*80)-40;
-let z = (Math.random()*80)-40;
-
-crearArbol(x,z);
 
 }
+
 
 
 /* =========================
