@@ -50,12 +50,21 @@ container.clientWidth / container.clientHeight,
 renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(container.clientWidth, container.clientHeight);
 
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
 container.appendChild(renderer.domElement);
 
 /* LUZ */
 
-const light = new THREE.DirectionalLight(0xffffff,1.5);
+const light = new THREE.DirectionalLight(0xffffff,1);
 light.position.set(10,20,10);
+
+light.castShadow = true;
+
+light.shadow.mapSize.width = 2048;
+light.shadow.mapSize.height = 2048;
+
 scene.add(light);
 
 const ambient = new THREE.AmbientLight(0xffffff,0.4);
@@ -101,6 +110,7 @@ const ground = new THREE.Mesh(groundGeo,groundMat);
 ground.rotation.x = -Math.PI/2;
 
 scene.add(ground);
+ground.receiveShadow = true;
 
 /* =========================
 ÁRBOLES NATURALES
