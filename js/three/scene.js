@@ -26,6 +26,9 @@ gl_FragColor = vec4(uColor * light, 1.0);
 /* VARIABLES GLOBALES */
 let scene, camera, renderer;
 let animationId = null;
+let arbolesShader = [];
+let aves = [];
+let sol;
 
 function iniciarFinca3D(){
 
@@ -82,8 +85,11 @@ container.appendChild(renderer.domElement);
 
 /* LUZ */
 
-const light = new THREE.DirectionalLight(0xffffff,1);
-light.position.set(10,20,10);
+sol = new THREE.DirectionalLight(0xffffff,1);
+sol.position.set(10,20,10);
+sol.castShadow = true;
+
+scene.add(sol);
 
 let tiempoDia = 0;
 
@@ -144,7 +150,6 @@ scene.add(ground);
 ground.receiveShadow = true;
 
 
-
 let nubes = [];
 
 function crearNube(){
@@ -176,8 +181,6 @@ crearNube();
 
 
 
-
-let aves = [];
 
 function crearAve(){
 
