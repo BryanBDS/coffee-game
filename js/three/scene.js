@@ -1,5 +1,28 @@
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
+const leafVertexShader = `
+varying vec3 vNormal;
+uniform float uTime;
+void main() {
+vNormal = normalize(normalMatrix * normal);
+float instanceId = float(gl_InstanceID);
+float wind = sin(uTime * 1.5 + instanceId) * 0.1;
+vec3 newPos = position;
+newPos.x += wind * (position.y + 0.5); 
+vec4 mvPosition = modelViewMatrix * instanceMatrix * vec4(newPos, 1.0);
+gl_Position = projectionMatrix * mvPosition;
+}
+`;
+
+const leafFragmentShader = `
+varying vec3 vNormal;
+uniform vec3 uColor;
+void main() {
+float light = dot(vNormal, normalize(vec3(1.0, 1.0, 1.0))) * 0.5 + 0.5;
+gl_FragColor = vec4(uColor * light, 1.0);
+}
+`;
+
 /* VARIABLES GLOBALES */
 let scene, camera, renderer;
 let animationId = null;
@@ -118,41 +141,97 @@ ground.rotation.x = -Math.PI/2;
 scene.add(ground);
 ground.receiveShadow = true;
 
-/* =========================
-ÁRBOLES NATURALES
-========================= */
 
-function crearArbol(x,z){
 
-/* altura base del terreno */
-let y = 0;
 
-/* TRONCO */
-const troncoGeo = new THREE.CylinderGeometry(0.15,0.25,2,6);
-const troncoMat = new THREE.MeshStandardMaterial({color:0x5d4037});
-const tronco = new THREE.Mesh(troncoGeo, troncoMat);
 
-/* COPA MÁS NATURAL */
-const copaGeo = new THREE.SphereGeometry(1.5, 8, 8);
-const copaMat = new THREE.MeshStandardMaterial({color:0x1b5e20});
-const copa = new THREE.Mesh(copaGeo, copaMat);
+function crearArbolPro(x,z){
 
-/* posición */
-tronco.position.set(x, y + 1, z);
-copa.position.set(x, y + 3, z);
+const group = new THREE.Group();
 
-/* pequeña variación */
-copa.scale.set(
-0.8 + Math.random()*0.6,
-0.8 + Math.random()*0.8,
-0.8 + Math.random()*0.6
+const trunkMat = new THREE.MeshStandardMaterial({ color: 0x4b3621 });
+
+const leafMat = new THREE.ShaderMaterial({
+uniforms: { 
+uTime: { value: 0 }, 
+uColor: { value: new THREE.Color(0x2d5a27) } 
+},
+vertexShader: leafVertexShader,
+fragmentShader: leafFragmentShader,
+side: THREE.DoubleSide
+});
+
+const leafGeom = new THREE.SphereGeometry(0.2, 6, 6);
+const leafMesh = new THREE.InstancedMesh(leafGeom, leafMat, 500);
+
+let leafCount = 0;
+const dummy = new THREE.Object3D();
+
+const grow = (pos, dir, len, wid, depth) => {
+
+if (depth <= 0) {
+
+for (let i = 0; i < 4; i++) {
+
+if (leafCount < 500) {
+
+dummy.position.copy(pos).add(new THREE.Vector3(
+Math.random()-0.5,
+Math.random()-0.5,
+Math.random()-0.5
+));
+
+dummy.scale.setScalar(Math.random() * 2 + 1);
+dummy.updateMatrix();
+
+leafMesh.setMatrixAt(leafCount++, dummy.matrix);
+
+}
+
+}
+
+return;
+}
+
+const geom = new THREE.CylinderGeometry(wid * 0.7, wid, len, 6);
+geom.translate(0, len / 2, 0);
+
+const branch = new THREE.Mesh(geom, trunkMat);
+branch.castShadow = true;
+
+branch.position.copy(pos);
+branch.quaternion.setFromUnitVectors(
+new THREE.Vector3(0, 1, 0),
+dir.clone().normalize()
 );
 
-tronco.castShadow = true;
-copa.castShadow = true;
+group.add(branch);
 
-scene.add(tronco);
-scene.add(copa);
+const tip = pos.clone().add(dir.clone().setLength(len));
+
+for (let i = 0; i < 2; i++) {
+
+const newDir = dir.clone()
+.applyAxisAngle(new THREE.Vector3(1,0,0), (Math.random()-0.5)*1.5)
+.applyAxisAngle(new THREE.Vector3(0,0,1), (Math.random()-0.5)*1.5);
+
+grow(tip, newDir, len * 0.7, wid * 0.7, depth - 1);
+
+}
+
+};
+
+grow(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 1, 0), 3, 0.3, 4);
+
+group.add(leafMesh);
+
+/* POSICIÓN EN EL TERRENO */
+group.position.set(x, 0, z);
+
+scene.add(group);
+
+/* GUARDAMOS MATERIAL PARA ANIMAR */
+return leafMat;
 
 }
 
@@ -160,12 +239,16 @@ scene.add(copa);
 GENERAR ÁRBOLES
 ========================= */
 
-for(let i=0;i<50;i++){
+let hojasAnimadas = [];
+
+for(let i=0;i<20;i++){
 
 let x = (Math.random()*80)-40;
 let z = (Math.random()*80)-40;
 
-crearArbol(x,z);
+const hojas = crearArbolPro(x,z);
+
+hojasAnimadas.push(hojas);
 
 }
 
@@ -234,9 +317,22 @@ camera.lookAt(0,0,0);
 
 /* LOOP */
 
-function animate(){
+function animate(time){
+
 animationId = requestAnimationFrame(animate);
+
+/* tiempo */
+let t = time * 0.001;
+
+/* animar hojas */
+if(hojasAnimadas){
+hojasAnimadas.forEach(mat=>{
+mat.uniforms.uTime.value = t;
+});
+}
+
 cube.rotation.y += 0.01;
+
 renderer.render(scene,camera);
 }
 
