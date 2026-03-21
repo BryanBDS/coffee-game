@@ -31,6 +31,7 @@ let scene, camera, renderer;
 let animationId = null;
 let sol;
 let aves = [];
+let nubes = [];
 let hojasAnimadas = [];
 
 /* =========================
