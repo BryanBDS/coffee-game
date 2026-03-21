@@ -133,13 +133,11 @@ function crearNube(){
 
 const group = new THREE.Group();
 
-/* cantidad de partes de la nube */
-const partes = 5 + Math.floor(Math.random()*5);
-
-for(let i=0;i<partes;i++){
+/* varias esferas para forma real */
+for(let i=0;i<5;i++){
 
 const geo = new THREE.SphereGeometry(
-1.5 + Math.random()*1.5,
+1.5 + Math.random(),
 8,
 8
 );
@@ -150,29 +148,24 @@ transparent: true,
 opacity: 0.85
 });
 
-const nubeParte = new THREE.Mesh(geo, mat);
+const parte = new THREE.Mesh(geo, mat);
 
-/* dispersión tipo nube */
-nubeParte.position.set(
-(Math.random()-0.5)*4,
-(Math.random()-0.5)*1.5,
-(Math.random()-0.5)*4
+parte.position.set(
+(Math.random()-0.5)*3,
+Math.random()*1,
+(Math.random()-0.5)*3
 );
 
-group.add(nubeParte);
+group.add(parte);
+
 }
 
-/* posición general en el cielo */
+/* 🔥 ALTURA ALTA (CLAVE) */
 group.position.set(
-(Math.random()*80)-40,
-12 + Math.random()*8,
-(Math.random()*80)-40
+(Math.random()*100)-50,
+25 + Math.random()*10, // 🔥 MÁS ALTO
+(Math.random()*100)-50
 );
-
-/* guardar velocidad */
-group.userData = {
-velocidad: 0.01 + Math.random()*0.02
-};
 
 scene.add(group);
 nubes.push(group);
@@ -186,40 +179,31 @@ function crearAve(){
 
 const group = new THREE.Group();
 
-/* CUERPO */
-const bodyGeo = new THREE.SphereGeometry(0.2, 8, 8);
-const bodyMat = new THREE.MeshStandardMaterial({color:0x222222});
-const body = new THREE.Mesh(bodyGeo, bodyMat);
+/* alas */
+const alaGeo = new THREE.BoxGeometry(0.8,0.05,0.3);
+const mat = new THREE.MeshStandardMaterial({color:0x222222});
 
-/* ALA IZQUIERDA */
-const wingGeo = new THREE.BoxGeometry(0.6, 0.05, 0.2);
-const wingMat = new THREE.MeshStandardMaterial({color:0x111111});
+const ala1 = new THREE.Mesh(alaGeo, mat);
+const ala2 = new THREE.Mesh(alaGeo, mat);
 
-const wingL = new THREE.Mesh(wingGeo, wingMat);
-wingL.position.set(-0.3, 0, 0);
+ala1.position.x = -0.4;
+ala2.position.x = 0.4;
 
-/* ALA DERECHA */
-const wingR = new THREE.Mesh(wingGeo, wingMat);
-wingR.position.set(0.3, 0, 0);
+group.add(ala1);
+group.add(ala2);
 
-/* agregar */
-group.add(body);
-group.add(wingL);
-group.add(wingR);
+/* cuerpo */
+const cuerpoGeo = new THREE.SphereGeometry(0.2,6,6);
+const cuerpo = new THREE.Mesh(cuerpoGeo, mat);
 
-/* posición en el cielo */
+group.add(cuerpo);
+
+/* 🔥 ALTURA CORRECTA */
 group.position.set(
-(Math.random()*40)-20,
-8 + Math.random()*5,
-(Math.random()*40)-20
+(Math.random()*80)-40,
+15 + Math.random()*10, // 🔥 MÁS ALTO
+(Math.random()*80)-40
 );
-
-/* guardar alas para animación */
-group.userData = {
-wingL: wingL,
-wingR: wingR,
-offset: Math.random() * Math.PI
-};
 
 scene.add(group);
 aves.push(group);
@@ -362,41 +346,34 @@ sol.intensity = 1 + dia;
 sol.position.x = Math.sin(time * 0.1) * 20;
 sol.position.y = 20 + Math.cos(time * 0.1) * 10;
 
-/* aves */
+/* =========================
+ANIMACIÓN AVES REAL
+========================= */
 aves.forEach(ave=>{
+ave.position.x += 0.1;
 
-/* movimiento horizontal */
-ave.position.x += 0.05;
-if(ave.position.x > 50) ave.position.x = -50;
+/* movimiento tipo vuelo */
+ave.position.y += Math.sin(Date.now()*0.002) * 0.01;
 
-/* movimiento suave vertical */
-ave.position.y += Math.sin(Date.now() * 0.002 + ave.userData.offset) * 0.01;
+if(ave.position.x > 50){
+ave.position.x = -50;
+}
+});
 
-/* animación alas */
-const flap = Math.sin(Date.now() * 0.01 + ave.userData.offset) * 0.8;
-
-ave.userData.wingL.rotation.z = flap;
-ave.userData.wingR.rotation.z = -flap;
 
 
 /* =========================
-MOVIMIENTO NUBES
+MOVER NUBES
 ========================= */
-
-if(nubes){
 nubes.forEach(nube=>{
+nube.position.x += 0.01;
 
-nube.position.x += nube.userData.velocidad;
-
-/* reiniciar cuando salen */
-if(nube.position.x > 50){
-nube.position.x = -50;
+if(nube.position.x > 60){
+nube.position.x = -60;
 }
 
 });
-}
 
-});
 
 renderer.render(scene,camera);
 }
