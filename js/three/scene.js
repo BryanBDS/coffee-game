@@ -1,5 +1,8 @@
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
+/* =========================
+SHADERS HOJAS (VIENTO)
+========================= */
 const leafVertexShader = `
 varying vec3 vNormal;
 uniform float uTime;
@@ -26,45 +29,38 @@ gl_FragColor = vec4(uColor * light, 1.0);
 /* VARIABLES GLOBALES */
 let scene, camera, renderer;
 let animationId = null;
-let arbolesShader = [];
 let sol;
+let aves = [];
+let hojasAnimadas = [];
 
+/* =========================
+INICIAR ESCENA
+========================= */
 function iniciarFinca3D(){
 
 const container = document.getElementById("finca3d");
+if(!container) return;
 
-if(!container){
-console.log("No existe finca3d");
-return;
-}
-
-/* 🔥 DETENER ANIMACIÓN */
+/* limpiar anterior */
 if(animationId){
 cancelAnimationFrame(animationId);
 animationId = null;
 }
 
-/* 🔥 DESTRUIR RENDERER ANTERIOR */
 if(renderer){
 renderer.dispose();
 renderer.forceContextLoss();
-renderer.domElement = null;
 renderer = null;
 }
 
-/* 🔥 LIMPIAR HTML COMPLETAMENTE */
 container.innerHTML = "";
 
-
 /* ESCENA */
-
 scene = new THREE.Scene();
 scene.background = new THREE.Color(0xbfd1e5);
-
 scene.fog = new THREE.FogExp2(0xbfd1e5, 0.01);
 
 /* CAMARA */
-
 camera = new THREE.PerspectiveCamera(
 75,
 container.clientWidth / container.clientHeight,
@@ -73,42 +69,29 @@ container.clientWidth / container.clientHeight,
 );
 
 /* RENDER */
-
 renderer = new THREE.WebGLRenderer({antialias:true});
 renderer.setSize(container.clientWidth, container.clientHeight);
-
 renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 container.appendChild(renderer.domElement);
 
-/* LUZ */
-
+/* =========================
+LUCES
+========================= */
 sol = new THREE.DirectionalLight(0xffffff,1);
 sol.position.set(10,20,10);
-
 sol.castShadow = true;
 sol.shadow.mapSize.width = 2048;
 sol.shadow.mapSize.height = 2048;
-
 scene.add(sol);
 
-/* guardar global */
-window.sol = sol;
-
-
-let tiempoDia = 0;
-
-const ambient = new
-THREE.AmbientLight(0xffffff,0.6);
+const ambient = new THREE.AmbientLight(0xffffff,0.6);
 scene.add(ambient);
 
- 
-
-/* TERRENO */
-
+/* =========================
+TERRENO MONTAÑOSO
+========================= */
 const textureLoader = new THREE.TextureLoader();
-
 const groundTexture = textureLoader.load("https://threejs.org/examples/textures/terrain/grasslight-big.jpg");
 
 groundTexture.wrapS = THREE.RepeatWrapping;
@@ -116,46 +99,37 @@ groundTexture.wrapT = THREE.RepeatWrapping;
 groundTexture.repeat.set(10,10);
 
 const groundGeo = new THREE.PlaneGeometry(100,100,64,64);
-
-/* =========================
-CREAR MONTAÑAS (ALTURA)
-========================= */
-
 const vertices = groundGeo.attributes.position;
 
 for(let i=0; i<vertices.count; i++){
-
 const x = vertices.getX(i);
 const y = vertices.getY(i);
 
-/* ruido simple tipo montaña */
 const altura =
 Math.sin(x * 0.15) * Math.cos(y * 0.15) * 3 +
 Math.sin(x * 0.05) * 2;
 
 vertices.setZ(i, altura);
-
 }
 
 groundGeo.computeVertexNormals();
 
 const groundMat = new THREE.MeshStandardMaterial({
-map: groundTexture,
-roughness: 1,
-metalness: 0
+map: groundTexture
 });
 
 const ground = new THREE.Mesh(groundGeo,groundMat);
 ground.rotation.x = -Math.PI/2;
-
-scene.add(ground);
 ground.receiveShadow = true;
 
+scene.add(ground);
 
+/* =========================
+NUBES
+========================= */
 let nubes = [];
 
 function crearNube(){
-
 const geo = new THREE.SphereGeometry(2,6,6);
 const mat = new THREE.MeshStandardMaterial({
 color: 0xffffff,
@@ -173,19 +147,14 @@ nube.position.set(
 
 scene.add(nube);
 nubes.push(nube);
-
 }
 
-/* generar varias */
-for(let i=0;i<10;i++){
-crearNube();
-}
+for(let i=0;i<10;i++) crearNube();
 
-
-let aves = [];
-window.aves = aves;
+/* =========================
+AVES
+========================= */
 function crearAve(){
-
 const geo = new THREE.ConeGeometry(0.2,0.5,4);
 const mat = new THREE.MeshStandardMaterial({color:0x000000});
 
@@ -199,16 +168,14 @@ ave.position.set(
 
 scene.add(ave);
 aves.push(ave);
-
 }
 
-for(let i=0;i<5;i++){
-crearAve();
-}
+for(let i=0;i<5;i++) crearAve();
 
-
-
-function crearArbolPro(x,z){
+/* =========================
+ÁRBOLES PRO
+========================= */
+function crearArbol(x,z){
 
 const group = new THREE.Group();
 
@@ -233,26 +200,18 @@ const dummy = new THREE.Object3D();
 const grow = (pos, dir, len, wid, depth) => {
 
 if (depth <= 0) {
-
 for (let i = 0; i < 4; i++) {
-
 if (leafCount < 500) {
-
 dummy.position.copy(pos).add(new THREE.Vector3(
 Math.random()-0.5,
 Math.random()-0.5,
 Math.random()-0.5
 ));
-
 dummy.scale.setScalar(Math.random() * 2 + 1);
 dummy.updateMatrix();
-
 leafMesh.setMatrixAt(leafCount++, dummy.matrix);
-
 }
-
 }
-
 return;
 }
 
@@ -273,173 +232,89 @@ group.add(branch);
 const tip = pos.clone().add(dir.clone().setLength(len));
 
 for (let i = 0; i < 2; i++) {
-
 const newDir = dir.clone()
 .applyAxisAngle(new THREE.Vector3(1,0,0), (Math.random()-0.5)*1.5)
 .applyAxisAngle(new THREE.Vector3(0,0,1), (Math.random()-0.5)*1.5);
 
 grow(tip, newDir, len * 0.7, wid * 0.7, depth - 1);
-
 }
-
 };
 
 grow(new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 1, 0), 3, 0.3, 4);
 
 group.add(leafMesh);
-
-/* POSICIÓN EN EL TERRENO */
 group.position.set(x, 0, z);
 
 scene.add(group);
-
-/* GUARDAMOS MATERIAL PARA ANIMAR */
 return leafMat;
-
 }
 
-/* =========================
-GENERAR ÁRBOLES
-========================= */
-
-let hojasAnimadas = [];
-window.arbolesShader = hojasAnimadas;
-
+/* generar árboles */
 for(let i=0;i<20;i++){
-
 let x = (Math.random()*80)-40;
 let z = (Math.random()*80)-40;
-
-const hojas = crearArbolPro(x,z);
-
-hojasAnimadas.push(hojas);
-
+hojasAnimadas.push(crearArbol(x,z));
 }
 
-
-
 /* =========================
-PARCELAS REALES DEL JUGADOR
+PARCELAS
 ========================= */
-
 if(window.GameManager){
-
-console.log("Parcelas del jugador:", GameManager.parcelas);
-
 GameManager.parcelas.forEach((p, index)=>{
 
-/* tamaño según hectáreas */
 let size = 3;
-
 if(p.hectareas === 2) size = 5;
 if(p.hectareas === 5) size = 8;
 
-/* geometría */
 const geo = new THREE.PlaneGeometry(size, size);
 
-/* color según estado */
-let color = 0x6d4c41; // café
-
+let color = 0x6d4c41;
 if(p.estado === "sembrado") color = 0x2e7d32;
 if(p.estado === "listo") color = 0xffeb3b;
 
-const mat = new THREE.MeshStandardMaterial({
-color: color,
-roughness: 1,
-metalness: 0
-});
+const mat = new THREE.MeshStandardMaterial({color});
 
 const parcela = new THREE.Mesh(geo, mat);
-
 parcela.rotation.x = -Math.PI/2;
-
-/* posición separada */
 parcela.position.set(index * (size + 1), 0.02, 0);
 
 scene.add(parcela);
-
 });
-
 }
 
-
-
-/* CUBO */
-
-const cubeGeo = new THREE.BoxGeometry();
-const cubeMat = new THREE.MeshStandardMaterial({color:0xff0000});
-
-const cube = new THREE.Mesh(cubeGeo,cubeMat);
-cube.position.y = 1;
-
-scene.add(cube);
-
 /* CAMARA */
-
 camera.position.set(15,10,15);
 camera.lookAt(0,0,0);
 
-/* LOOP */
-
+/* =========================
+ANIMACIÓN
+========================= */
 function animate(t){
 
 animationId = requestAnimationFrame(animate);
 
-/* =========================
-TIEMPO GLOBAL
-========================= */
-
 const time = t * 0.001;
 
-/* =========================
-MOVIMIENTO HOJAS (VIENTO)
-========================= */
-
-if(window.arbolesShader){
-window.arbolesShader.forEach(mat=>{
+/* viento hojas */
+hojasAnimadas.forEach(mat=>{
 mat.uniforms.uTime.value = time;
 });
-}
 
-/* =========================
-CICLO DÍA / NOCHE
-========================= */
-
+/* día/noche */
 const dia = Math.sin(time * 0.05);
-
-/* color del cielo */
 scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
 
-/* intensidad de luz */
-if(window.sol){
-window.sol.intensity = 1 + dia;
-window.sol.position.x = Math.sin(time * 0.1) * 20;
-window.sol.position.y = 20 + Math.cos(time * 0.1) * 10;
-}
+sol.intensity = 1 + dia;
+sol.position.x = Math.sin(time * 0.1) * 20;
+sol.position.y = 20 + Math.cos(time * 0.1) * 10;
 
-/* =========================
-ANIMACIÓN AVES
-========================= */
-
-if(window.aves){
-window.aves.forEach(ave=>{
+/* aves */
+aves.forEach(ave=>{
 ave.position.x += 0.05;
 if(ave.position.x > 50) ave.position.x = -50;
 });
-}
-
-/* =========================
-CUBO DEBUG (puedes quitar luego)
-========================= */
-
-cube.rotation.y += 0.01;
-
-/* =========================
-RENDER
-========================= */
 
 renderer.render(scene,camera);
-
 }
 
 animate(0);
