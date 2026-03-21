@@ -523,19 +523,18 @@ ave.position.x = -50;
 MOVER NUBES
 ========================= */
 nubes.forEach(nube=>{
-nube.position.x += 0.01;
+    nube.position.x += 0.01;
 
-if(nube.position.x > 60){
-nube.position.x = -60;
-}
-
+    if(nube.position.x > 60){
+        nube.position.x = -60;
+    }
+});
 
 /* =========================
 MOVIMIENTO NIEBLA
 ========================= */
-
 if(niebla){
-niebla.position.x += 0.01;
+    niebla.position.x += 0.01;
 }
 
 
