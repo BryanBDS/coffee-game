@@ -35,6 +35,13 @@ let nubes = [];
 let hojasAnimadas = [];
 
 /* =========================
+CLIMA DINÁMICO
+========================= */
+let clima = "soleado"; // soleado | lluvia | post-lluvia
+let intensidadLluvia = 0;
+let transicionNiebla = 0;
+
+/* =========================
 INICIAR ESCENA
 ========================= */
 function iniciarFinca3D(){
@@ -105,6 +112,7 @@ return niebla;
 }
 
 const niebla = crearNiebla();
+niebla.material.opacity = 0; // empieza invisible
 
 
 /* CAMARA */
@@ -491,6 +499,27 @@ animationId = requestAnimationFrame(animate);
 
 const time = t * 0.001;
 
+
+
+/* =========================
+CAMBIO DE CLIMA AUTOMÁTICO
+========================= */
+
+// cambia clima cada cierto tiempo
+if(Math.floor(time) % 30 === 0){
+    const rand = Math.random();
+
+    if(rand < 0.3){
+        clima = "lluvia";
+    } else if(rand < 0.6){
+        clima = "post-lluvia";
+    } else {
+        clima = "soleado";
+    }
+}
+
+
+
 /* viento hojas */
 hojasAnimadas.forEach(mat=>{
 mat.uniforms.uTime.value = time;
@@ -498,6 +527,16 @@ mat.uniforms.uTime.value = time;
 
 /* día/noche */
 const dia = Math.sin(time * 0.05);
+
+/* =========================
+EFECTO LLUVIA EN LUZ
+========================= */
+
+if(clima === "lluvia"){
+    sol.intensity *= 0.5; // más oscuro
+}
+
+
 scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
 
 sol.intensity = 1 + dia;
@@ -531,10 +570,31 @@ nubes.forEach(nube=>{
     }
 });
 
+
+
 /* =========================
-MOVIMIENTO NIEBLA
+NIEBLA DINÁMICA SEGÚN CLIMA
 ========================= */
+
+// transición suave
+if(clima === "lluvia"){
+    transicionNiebla += 0.01;
+}
+else if(clima === "post-lluvia"){
+    transicionNiebla += 0.005;
+}
+else{
+    transicionNiebla -= 0.01;
+}
+
+// límites
+transicionNiebla = Math.max(0, Math.min(1, transicionNiebla));
+
+// aplicar opacidad
 if(niebla){
+    niebla.material.opacity = 0.15 * transicionNiebla;
+
+    // movimiento suave
     niebla.position.x += 0.01;
 }
 
