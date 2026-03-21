@@ -27,7 +27,6 @@ gl_FragColor = vec4(uColor * light, 1.0);
 let scene, camera, renderer;
 let animationId = null;
 let arbolesShader = [];
-let aves = [];
 let sol;
 
 function iniciarFinca3D(){
@@ -90,17 +89,12 @@ sol.position.set(10,20,10);
 sol.castShadow = true;
 
 scene.add(sol);
+window.sol = sol;
+
 
 let tiempoDia = 0;
 
-light.castShadow = true;
-
-light.shadow.mapSize.width = 2048;
-light.shadow.mapSize.height = 2048;
-
-scene.add(light);
-
-const ambient = new THREE.AmbientLight(0xffffff,0.6);
+THREE.AmbientLight(0xffffff,0.6);
 scene.add(ambient);
 
 /* TERRENO */
@@ -180,8 +174,8 @@ crearNube();
 }
 
 
-
-
+let aves = [];
+window.aves = aves;
 function crearAve(){
 
 const geo = new THREE.ConeGeometry(0.2,0.5,4);
@@ -301,6 +295,7 @@ GENERAR ÁRBOLES
 ========================= */
 
 let hojasAnimadas = [];
+window.arbolesShader = hojasAnimadas;
 
 for(let i=0;i<20;i++){
 
@@ -378,7 +373,7 @@ camera.lookAt(0,0,0);
 
 /* LOOP */
 
-function animate(t){
+function animate(){
 
 animationId = requestAnimationFrame(animate);
 
