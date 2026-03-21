@@ -38,6 +38,15 @@ let hojasAnimadas = [];
 CLIMA DINÁMICO
 ========================= */
 let clima = "soleado"; // soleado | lluvia | post-lluvia
+
+/* =========================
+TIPOS DE LLUVIA
+========================= */
+let tipoLluvia = "ninguna"; // llovizna | lluvia | tormenta
+let lluviaParticulas;
+let lluviaVelocidad = 0;
+let rayosTiempo =
+
 let intensidadLluvia = 0;
 let transicionNiebla = 0;
 
@@ -113,6 +122,37 @@ return niebla;
 
 const niebla = crearNiebla();
 niebla.material.opacity = 0; // empieza invisible
+
+/* =========================
+CREAR LLUVIA
+========================= */
+function crearLluvia(){
+
+const cantidad = 2000;
+const geo = new THREE.BufferGeometry();
+
+const posiciones = new Float32Array(cantidad * 3);
+
+for(let i=0; i<cantidad; i++){
+posiciones[i*3] = (Math.random()*100)-50;
+posiciones[i*3+1] = Math.random()*50;
+posiciones[i*3+2] = (Math.random()*100)-50;
+}
+
+geo.setAttribute("position", new THREE.BufferAttribute(posiciones,3));
+
+const mat = new THREE.PointsMaterial({
+color: 0xaaaaaa,
+size: 0.1,
+transparent: true
+});
+
+lluviaParticulas = new THREE.Points(geo, mat);
+scene.add(lluviaParticulas);
+
+}
+
+crearLluvia();
 
 
 /* CAMARA */
@@ -506,16 +546,34 @@ CAMBIO DE CLIMA AUTOMÁTICO
 ========================= */
 
 // cambia clima cada cierto tiempo
-if(Math.floor(time) % 30 === 0){
-    const rand = Math.random();
 
-    if(rand < 0.3){
-        clima = "lluvia";
-    } else if(rand < 0.6){
-        clima = "post-lluvia";
-    } else {
-        clima = "soleado";
-    }
+if(Math.floor(time) % 30 === 0){
+
+const rand = Math.random();
+
+if(rand < 0.25){
+clima = "soleado";
+tipoLluvia = "ninguna";
+}
+else if(rand < 0.5){
+clima = "lluvia";
+tipoLluvia = "llovizna";
+velocidadLluvia = 0.2;
+intensidadLluviaMax = 0.3;
+}
+else if(rand < 0.75){
+clima = "lluvia";
+tipoLluvia = "lluvia";
+velocidadLluvia = 0.5;
+intensidadLluviaMax = 0.7;
+}
+else{
+clima = "lluvia";
+tipoLluvia = "tormenta";
+velocidadLluvia = 1.2;
+intensidadLluviaMax = 1.2;
+}
+
 }
 
 
@@ -540,6 +598,39 @@ if(clima === "lluvia"){
 scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
 
 sol.intensity = 1 + dia;
+
+/* =========================
+RAYOS (TORMENTA)
+========================= */
+
+if(tipoLluvia === "tormenta"){
+
+if(Math.random() < 0.01){
+
+scene.background = new THREE.Color(0xffffff);
+sol.intensity = 5;
+
+/* opcional: crear luz flash */
+if(!relampago){
+relampago = new THREE.PointLight(0xffffff, 10, 100);
+scene.add(relampago);
+}
+
+relampago.position.set(
+(Math.random()*50)-25,
+30,
+(Math.random()*50)-25
+);
+
+}
+
+/* volver normal */
+setTimeout(()=>{
+scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
+}, 100);
+
+}
+
 sol.position.x = Math.sin(time * 0.1) * 20;
 sol.position.y = 20 + Math.cos(time * 0.1) * 10;
 
@@ -597,6 +688,37 @@ if(niebla){
     // movimiento suave
     niebla.position.x += 0.01;
 }
+
+
+/* =========================
+ANIMAR LLUVIA
+========================= */
+
+if(lluviaParticulas){
+
+const positions = lluviaParticulas.geometry.attributes.position;
+
+for(let i=0; i<positions.count; i++){
+
+let y = positions.getY(i);
+
+y -= velocidadLluvia;
+
+if(y < 0){
+y = 50;
+}
+
+positions.setY(i, y);
+
+}
+
+positions.needsUpdate = true;
+
+/* visibilidad */
+lluviaParticulas.visible = tipoLluvia !== "ninguna";
+
+}
+
 
 
 
