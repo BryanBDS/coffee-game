@@ -237,12 +237,27 @@ GameManager.money -= precio;
 /* crear parcela REAL */
 const id = Date.now();
 
+let tipoRegion = "montaña"; // default
+
+if(municipio.includes("Pasto") || municipio.includes("Buesaco")){
+tipoRegion = "montaña";
+}
+
+if(municipio.includes("La Unión")){
+tipoRegion = "valle";
+}
+
+if(municipio.includes("Sandoná")){
+tipoRegion = "bosque";
+}
+
 GameManager.parcelas.push({
 id: id,
 municipio: municipio,
-nombre: lote,
+lote: lote,
 precio: precio,
-hectareas: hectareas, // 🔥 NUEVO
+hectareas: hectareas,
+tipoRegion: tipoRegion, // 🔥 NUEVO
 estado: "vacio",
 nivel: 1
 });
