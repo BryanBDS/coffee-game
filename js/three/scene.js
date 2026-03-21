@@ -99,7 +99,9 @@ window.sol = sol;
 
 let tiempoDia = 0;
 
-const ambient = new THREE.AmbientLight(0xffffff,0.6);
+const ambient = new
+
+THREE.AmbientLight(0xffffff,0.6);
 scene.add(ambient); 
 
 /* TERRENO */
