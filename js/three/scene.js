@@ -703,7 +703,7 @@ for(let i=0; i<positions.count; i++){
 
 let y = positions.getY(i);
 
-y -= velocidadLluvia;
+y -= lluviaVelocidad;
 
 if(y < 0){
 y = 50;
