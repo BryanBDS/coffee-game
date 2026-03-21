@@ -57,8 +57,28 @@ container.innerHTML = "";
 
 /* ESCENA */
 scene = new THREE.Scene();
+
+let tipoRegion = "montaña";
+
+if(window.GameManager && GameManager.parcelas.length > 0){
+tipoRegion = GameManager.parcelas[0].tipoRegion || "montaña";
+}
+
+console.log("Tipo de región:", tipoRegion);
+
 scene.background = new THREE.Color(0xbfd1e5);
+
+if(tipoRegion === "montaña"){
 scene.fog = new THREE.FogExp2(0xdbe9f4, 0.02);
+}
+
+if(tipoRegion === "valle"){
+scene.fog = new THREE.FogExp2(0xe0f7fa, 0.01);
+}
+
+if(tipoRegion === "bosque"){
+scene.fog = new THREE.FogExp2(0xc8e6c9, 0.03);
+}
 
 /* =========================
 CAPA DE NIEBLA BAJA
@@ -110,6 +130,18 @@ sol.castShadow = true;
 sol.shadow.mapSize.width = 2048;
 sol.shadow.mapSize.height = 2048;
 scene.add(sol);
+
+if(tipoRegion === "montaña"){
+sol.intensity = 1.2;
+}
+
+if(tipoRegion === "valle"){
+sol.intensity = 1.5;
+}
+
+if(tipoRegion === "bosque"){
+sol.intensity = 0.9;
+}
 
 const ambient = new THREE.AmbientLight(0xffffff,0.6);
 scene.add(ambient);
@@ -267,7 +299,12 @@ const trunkMat = new THREE.MeshStandardMaterial({ color: 0x4b3621 });
 const leafMat = new THREE.ShaderMaterial({
 uniforms: { 
 uTime: { value: 0 }, 
-uColor: { value: new THREE.Color(0x2d5a27) } 
+let colorHoja = 0x2d5a27;
+
+if(tipoRegion === "valle") colorHoja = 0x4caf50;
+if(tipoRegion === "bosque") colorHoja = 0x1b5e20;
+
+uColor: { value: new THREE.Color(colorHoja) } 
 },
 vertexShader: leafVertexShader,
 fragmentShader: leafFragmentShader,
