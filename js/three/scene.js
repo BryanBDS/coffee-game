@@ -155,22 +155,48 @@ for(let i=0;i<10;i++) crearNube();
 AVES
 ========================= */
 function crearAve(){
-const geo = new THREE.ConeGeometry(0.2,0.5,4);
-const mat = new THREE.MeshStandardMaterial({color:0x000000});
 
-const ave = new THREE.Mesh(geo, mat);
+const group = new THREE.Group();
 
-ave.position.set(
+/* CUERPO */
+const bodyGeo = new THREE.SphereGeometry(0.2, 8, 8);
+const bodyMat = new THREE.MeshStandardMaterial({color:0x222222});
+const body = new THREE.Mesh(bodyGeo, bodyMat);
+
+/* ALA IZQUIERDA */
+const wingGeo = new THREE.BoxGeometry(0.6, 0.05, 0.2);
+const wingMat = new THREE.MeshStandardMaterial({color:0x111111});
+
+const wingL = new THREE.Mesh(wingGeo, wingMat);
+wingL.position.set(-0.3, 0, 0);
+
+/* ALA DERECHA */
+const wingR = new THREE.Mesh(wingGeo, wingMat);
+wingR.position.set(0.3, 0, 0);
+
+/* agregar */
+group.add(body);
+group.add(wingL);
+group.add(wingR);
+
+/* posición en el cielo */
+group.position.set(
 (Math.random()*40)-20,
 8 + Math.random()*5,
 (Math.random()*40)-20
 );
 
-scene.add(ave);
-aves.push(ave);
-}
+/* guardar alas para animación */
+group.userData = {
+wingL: wingL,
+wingR: wingR,
+offset: Math.random() * Math.PI
+};
 
-for(let i=0;i<5;i++) crearAve();
+scene.add(group);
+aves.push(group);
+
+}
 
 /* =========================
 ÁRBOLES PRO
@@ -310,8 +336,20 @@ sol.position.y = 20 + Math.cos(time * 0.1) * 10;
 
 /* aves */
 aves.forEach(ave=>{
+
+/* movimiento horizontal */
 ave.position.x += 0.05;
 if(ave.position.x > 50) ave.position.x = -50;
+
+/* movimiento suave vertical */
+ave.position.y += Math.sin(Date.now() * 0.002 + ave.userData.offset) * 0.01;
+
+/* animación alas */
+const flap = Math.sin(Date.now() * 0.01 + ave.userData.offset) * 0.8;
+
+ave.userData.wingL.rotation.z = flap;
+ave.userData.wingR.rotation.z = -flap;
+
 });
 
 renderer.render(scene,camera);
