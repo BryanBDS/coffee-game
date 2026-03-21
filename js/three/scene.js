@@ -160,15 +160,43 @@ const groundGeo = new THREE.PlaneGeometry(100,100,64,64);
 const vertices = groundGeo.attributes.position;
 
 for(let i=0; i<vertices.count; i++){
+
 const x = vertices.getX(i);
 const y = vertices.getY(i);
 
-const altura =
-Math.sin(x * 0.1) * Math.cos(y * 0.1) * 6 +   // montañas grandes
-Math.sin(x * 0.05) * 3 +                      // variación media
-Math.sin(x * 0.02) * 8;                       // picos altos 🔥
+let altura = 0;
 
+/* =========================
+TERRENO SEGÚN REGIÓN
+========================= */
+
+if(tipoRegion === "montaña"){
+
+altura =
+Math.sin(x * 0.1) * Math.cos(y * 0.1) * 6 +
+Math.sin(x * 0.05) * 3 +
+Math.sin(x * 0.02) * 8;
+
+}
+
+if(tipoRegion === "valle"){
+
+altura =
+Math.sin(x * 0.05) * 2 +
+Math.sin(y * 0.05) * 2;
+
+}
+
+if(tipoRegion === "bosque"){
+
+altura =
+Math.sin(x * 0.08) * Math.cos(y * 0.08) * 4;
+
+}
+
+/* aplicar altura */
 vertices.setZ(i, altura);
+
 }
 
 groundGeo.computeVertexNormals();
