@@ -324,14 +324,14 @@ const group = new THREE.Group();
 
 const trunkMat = new THREE.MeshStandardMaterial({ color: 0x4b3621 });
 
-const leafMat = new THREE.ShaderMaterial({
-uniforms: { 
-uTime: { value: 0 }, 
 let colorHoja = 0x2d5a27;
 
 if(tipoRegion === "valle") colorHoja = 0x4caf50;
 if(tipoRegion === "bosque") colorHoja = 0x1b5e20;
 
+const leafMat = new THREE.ShaderMaterial({
+uniforms: { 
+uTime: { value: 0 }, 
 uColor: { value: new THREE.Color(colorHoja) } 
 },
 vertexShader: leafVertexShader,
@@ -439,6 +439,9 @@ if(p.estado === "sembrado") color = 0x2e7d32;
 if(p.estado === "listo") color = 0xffeb3b;
 
 const mat = new THREE.MeshStandardMaterial({color});
+
+const parcela = new THREE.Mesh(geo, mat);
+parcela.rotation.x = -Math.PI/2;
 
 let posX = index * (size + 1);
 let posZ = 0;
