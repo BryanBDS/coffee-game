@@ -99,7 +99,7 @@ window.sol = sol;
 
 let tiempoDia = 0;
 
-THREE.AmbientLight(0xffffff,0.6);
+const ambient = new THREE.AmbientLight(0xffffff,0.6);
 scene.add(ambient);
 
 /* TERRENO */
@@ -378,7 +378,7 @@ camera.lookAt(0,0,0);
 
 /* LOOP */
 
-function animate(){
+function animate(t){
 
 animationId = requestAnimationFrame(animate);
 
@@ -439,7 +439,7 @@ renderer.render(scene,camera);
 
 }
 
-animate();
+animate(0);
 
 }
 
