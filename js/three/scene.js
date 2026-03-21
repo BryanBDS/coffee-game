@@ -45,6 +45,7 @@ TIPOS DE LLUVIA
 let tipoLluvia = "ninguna"; // llovizna | lluvia | tormenta
 let lluviaParticulas;
 let lluviaVelocidad = 0;
+let relampago = null;
 let rayosTiempo = 0;
 
 let intensidadLluvia = 0;
