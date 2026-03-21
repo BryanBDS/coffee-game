@@ -50,6 +50,7 @@ let rayosTiempo = 0;
 
 let intensidadLluvia = 0;
 let transicionNiebla = 0;
+let intensidadLluviaMax = 0;
 
 /* =========================
 INICIAR ESCENA
@@ -703,7 +704,7 @@ for(let i=0; i<positions.count; i++){
 
 let y = positions.getY(i);
 
-y -= lluviaVelocidad;
+y -= lluviaVelocidad * (0.5 + intensidadLluviaMax);
 
 if(y < 0){
 y = 50;
