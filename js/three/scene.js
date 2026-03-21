@@ -45,7 +45,7 @@ TIPOS DE LLUVIA
 let tipoLluvia = "ninguna"; // llovizna | lluvia | tormenta
 let lluviaParticulas;
 let lluviaVelocidad = 0;
-let rayosTiempo =
+let rayosTiempo = 0;
 
 let intensidadLluvia = 0;
 let transicionNiebla = 0;
@@ -558,19 +558,19 @@ tipoLluvia = "ninguna";
 else if(rand < 0.5){
 clima = "lluvia";
 tipoLluvia = "llovizna";
-velocidadLluvia = 0.2;
+lluviaVelocidad = 0.2;
 intensidadLluviaMax = 0.3;
 }
 else if(rand < 0.75){
 clima = "lluvia";
 tipoLluvia = "lluvia";
-velocidadLluvia = 0.5;
+lluviaVelocidad = 0.5;
 intensidadLluviaMax = 0.7;
 }
 else{
 clima = "lluvia";
 tipoLluvia = "tormenta";
-velocidadLluvia = 1.2;
+lluviaVelocidad = 1.2;
 intensidadLluviaMax = 1.2;
 }
 
