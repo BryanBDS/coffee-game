@@ -86,9 +86,14 @@ container.appendChild(renderer.domElement);
 
 sol = new THREE.DirectionalLight(0xffffff,1);
 sol.position.set(10,20,10);
+
 sol.castShadow = true;
+sol.shadow.mapSize.width = 2048;
+sol.shadow.mapSize.height = 2048;
 
 scene.add(sol);
+
+/* guardar global */
 window.sol = sol;
 
 
