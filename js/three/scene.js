@@ -58,7 +58,33 @@ container.innerHTML = "";
 /* ESCENA */
 scene = new THREE.Scene();
 scene.background = new THREE.Color(0xbfd1e5);
-scene.fog = new THREE.FogExp2(0xbfd1e5, 0.01);
+scene.fog = new THREE.FogExp2(0xdbe9f4, 0.02);
+
+/* =========================
+CAPA DE NIEBLA BAJA
+========================= */
+
+function crearNiebla(){
+
+const geo = new THREE.PlaneGeometry(200,200);
+const mat = new THREE.MeshStandardMaterial({
+color: 0xffffff,
+transparent: true,
+opacity: 0.15,
+depthWrite: false
+});
+
+const niebla = new THREE.Mesh(geo, mat);
+niebla.rotation.x = -Math.PI/2;
+niebla.position.y = 2; // altura baja
+
+scene.add(niebla);
+
+return niebla;
+}
+
+const niebla = crearNiebla();
+
 
 /* CAMARA */
 camera = new THREE.PerspectiveCamera(
@@ -106,8 +132,9 @@ const x = vertices.getX(i);
 const y = vertices.getY(i);
 
 const altura =
-Math.sin(x * 0.15) * Math.cos(y * 0.15) * 3 +
-Math.sin(x * 0.05) * 2;
+Math.sin(x * 0.1) * Math.cos(y * 0.1) * 6 +   // montañas grandes
+Math.sin(x * 0.05) * 3 +                      // variación media
+Math.sin(x * 0.02) * 8;                       // picos altos 🔥
 
 vertices.setZ(i, altura);
 }
@@ -322,7 +349,25 @@ let size = 3;
 if(p.hectareas === 2) size = 5;
 if(p.hectareas === 5) size = 8;
 
-const geo = new THREE.PlaneGeometry(size, size);
+const geo = new THREE.PlaneGeometry(size, size, 10, 10);
+
+/* deformar bordes */
+const v = geo.attributes.position;
+
+for(let i=0; i<v.count; i++){
+
+let px = v.getX(i);
+let py = v.getY(i);
+
+let ruido = (Math.random() - 0.5) * 0.3;
+
+v.setZ(i, ruido);
+
+}
+
+geo.computeVertexNormals();
+
+
 
 let color = 0x6d4c41;
 if(p.estado === "sembrado") color = 0x2e7d32;
@@ -330,9 +375,35 @@ if(p.estado === "listo") color = 0xffeb3b;
 
 const mat = new THREE.MeshStandardMaterial({color});
 
-const parcela = new THREE.Mesh(geo, mat);
-parcela.rotation.x = -Math.PI/2;
-parcela.position.set(index * (size + 1), 0.02, 0);
+let posX = index * (size + 1);
+let posZ = 0;
+
+/* 🔥 obtener altura real del terreno */
+let alturaTerreno = 0;
+
+const vertices = groundGeo.attributes.position;
+
+let distanciaMin = Infinity;
+
+for(let i=0; i<vertices.count; i++){
+
+const vx = vertices.getX(i);
+const vz = vertices.getY(i);
+
+const dx = vx - posX;
+const dz = vz - posZ;
+
+const dist = dx*dx + dz*dz;
+
+if(dist < distanciaMin){
+distanciaMin = dist;
+alturaTerreno = vertices.getZ(i);
+}
+
+}
+
+/* 🔥 colocar parcela sobre terreno */
+parcela.position.set(posX, alturaTerreno + 0.05, posZ);
 
 scene.add(parcela);
 });
@@ -389,6 +460,16 @@ nube.position.x += 0.01;
 if(nube.position.x > 60){
 nube.position.x = -60;
 }
+
+
+/* =========================
+MOVIMIENTO NIEBLA
+========================= */
+
+if(niebla){
+niebla.position.x += 0.01;
+}
+
 
 });
 
