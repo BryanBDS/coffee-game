@@ -130,26 +130,54 @@ NUBES
 let nubes = [];
 
 function crearNube(){
-const geo = new THREE.SphereGeometry(2,6,6);
+
+const group = new THREE.Group();
+
+/* cantidad de partes de la nube */
+const partes = 5 + Math.floor(Math.random()*5);
+
+for(let i=0;i<partes;i++){
+
+const geo = new THREE.SphereGeometry(
+1.5 + Math.random()*1.5,
+8,
+8
+);
+
 const mat = new THREE.MeshStandardMaterial({
 color: 0xffffff,
 transparent: true,
-opacity: 0.8
+opacity: 0.85
 });
 
-const nube = new THREE.Mesh(geo, mat);
+const nubeParte = new THREE.Mesh(geo, mat);
 
-nube.position.set(
+/* dispersión tipo nube */
+nubeParte.position.set(
+(Math.random()-0.5)*4,
+(Math.random()-0.5)*1.5,
+(Math.random()-0.5)*4
+);
+
+group.add(nubeParte);
+}
+
+/* posición general en el cielo */
+group.position.set(
 (Math.random()*80)-40,
-10 + Math.random()*10,
+12 + Math.random()*8,
 (Math.random()*80)-40
 );
 
-scene.add(nube);
-nubes.push(nube);
-}
+/* guardar velocidad */
+group.userData = {
+velocidad: 0.01 + Math.random()*0.02
+};
 
-for(let i=0;i<10;i++) crearNube();
+scene.add(group);
+nubes.push(group);
+
+}
 
 /* =========================
 AVES
@@ -349,6 +377,24 @@ const flap = Math.sin(Date.now() * 0.01 + ave.userData.offset) * 0.8;
 
 ave.userData.wingL.rotation.z = flap;
 ave.userData.wingR.rotation.z = -flap;
+
+
+/* =========================
+MOVIMIENTO NUBES
+========================= */
+
+if(nubes){
+nubes.forEach(nube=>{
+
+nube.position.x += nube.userData.velocidad;
+
+/* reiniciar cuando salen */
+if(nube.position.x > 50){
+nube.position.x = -50;
+}
+
+});
+}
 
 });
 
