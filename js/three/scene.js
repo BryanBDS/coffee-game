@@ -49,8 +49,9 @@ let relampago = null;
 let rayosTiempo = 0;
 
 let intensidadLluvia = 0;
-let transicionNiebla = 0;
 let intensidadLluviaMax = 0;
+let transicionNiebla = 0;
+
 
 /* =========================
 INICIAR ESCENA
