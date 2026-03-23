@@ -564,8 +564,9 @@ scene.add(parcela);
 }
 
 /* CAMARA */
-camera.position.set(15,10,15);
+camera.position.set(10, 8, 10);
 camera.lookAt(0,0,0);
+console.log("Render OK");
 
 /* =========================
 ANIMACIÓN
