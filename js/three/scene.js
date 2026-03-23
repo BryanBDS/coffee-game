@@ -746,22 +746,12 @@ if(tipoLluvia === "tormenta"){
 
     if(Math.random() < 0.005){
 
-        setTimeout(()=>{
-            sonidoTrueno.currentTime = 0;
-            sonidoTrueno.volume = 1;
-            if(audioActivado){
-    sonidoTrueno.currentTime = 0;
-    sonidoTrueno.play().catch(()=>{});
-}
-        }, 500 + Math.random()*1500);
-
-        // flash fuerte
+        // ⚡ FLASH VISUAL
         scene.background = new THREE.Color(0xffffff);
         sol.intensity = 4;
 
-        // crear relámpago
         if(!relampago){
-            relampago = new THREE.PointLight(0xffffff, 80, 300);
+            relampago = new THREE.PointLight(0xffffff, 20, 200);
             scene.add(relampago);
         }
 
@@ -771,9 +761,27 @@ if(tipoLluvia === "tormenta"){
             (Math.random()*50)-25
         );
 
-relampago.intensity = 80;
+        // ⚡ SONIDO DE TRUENO (FIJO)
+        setTimeout(()=>{
 
-        // apagar rápido (flash real)
+            try{
+                sonidoTrueno.pause();
+                sonidoTrueno.currentTime = 0;
+
+                // 🔒 asegurar volumen válido
+                sonidoTrueno.volume = Math.max(0, Math.min(1, 1));
+
+                sonidoTrueno.play().catch(e=>{
+                    console.log("⚠️ Trueno bloqueado:", e);
+                });
+
+            }catch(e){
+                console.log("ERROR TRUENO:", e);
+            }
+
+        }, 300 + Math.random()*700);
+
+        // volver a normal
         setTimeout(()=>{
             scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
             sol.intensity = 1 + dia;
