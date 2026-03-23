@@ -170,7 +170,7 @@ const mat = new THREE.LineBasicMaterial({
 color: 0xaaaaaa,
 transparent: true,
 opacity: 0.4
-depthWrite: false
+depthWrite: false, 
 });
 
 lluviaParticulas = new THREE.LineSegments(geo, mat);
