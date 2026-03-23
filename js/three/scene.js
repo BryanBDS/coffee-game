@@ -169,8 +169,8 @@ geo.setAttribute("position", new THREE.BufferAttribute(posiciones,3));
 const mat = new THREE.LineBasicMaterial({
 color: 0xaaaaaa,
 transparent: true,
-opacity: 0.4
-depthWrite: false, 
+opacity: 0.4, 
+depthWrite: false 
 });
 
 lluviaParticulas = new THREE.LineSegments(geo, mat);
