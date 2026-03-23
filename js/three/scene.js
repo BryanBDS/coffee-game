@@ -628,46 +628,40 @@ RAYOS (TORMENTA)
 
 if(tipoLluvia === "tormenta"){
 
-if(Math.random() < 0.005){
+    if(Math.random() < 0.005){
 
+        setTimeout(()=>{
+            sonidoTrueno.currentTime = 0;
+            sonidoTrueno.play();
+        }, 500 + Math.random()*1500);
 
-setTimeout(()=>{
-sonidoTrueno.currentTime = 0;
-sonidoTrueno.play();
-}, 500 + Math.random()*1500);
+        // flash fuerte
+        scene.background = new THREE.Color(0xffffff);
+        sol.intensity = 4;
 
+        // crear relámpago
+        if(!relampago){
+            relampago = new THREE.PointLight(0xffffff, 20, 200);
+            scene.add(relampago);
+        }
 
-// flash fuerte
-scene.background = new THREE.Color(0xffffff);
-sol.intensity = 4;
+        relampago.position.set(
+            (Math.random()*50)-25,
+            30,
+            (Math.random()*50)-25
+        );
 
-// crear relámpago
-if(!relampago){
-relampago = new THREE.PointLight(0xffffff, 20, 200);
-scene.add(relampago);
-}
+        // apagar rápido (flash real)
+        setTimeout(()=>{
+            scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
+            sol.intensity = 1 + dia;
+        }, 80);
 
-relampago.position.set(
-(Math.random()*50)-25,
-30,
-(Math.random()*50)-25
-);
-
-// apagar rápido (flash real)
-setTimeout(()=>{
-scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
-sol.intensity = 1 + dia;
-}, 80);
-
-}
-}
-
-/* volver normal */
-setTimeout(()=>{
-scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
-}, 100);
+    }
 
 }
+
+
 
 sol.position.x = Math.sin(time * 0.1) * 20;
 sol.position.y = 20 + Math.cos(time * 0.1) * 10;
