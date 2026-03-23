@@ -56,6 +56,15 @@ let transicionNiebla = 0;
 let splashes = [];
 let sonidoTrueno = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-thunder-strike-1680.mp3");
 
+let sonidoLluvia = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-light-rain-loop-2393.mp3");
+let sonidoViento = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-strong-wind-1171.mp3");
+
+// configuración
+sonidoLluvia.loop = true;
+sonidoViento.loop = true;
+
+sonidoLluvia.volume = 0;
+sonidoViento.volume = 0;
 
 
 /* =========================
@@ -64,6 +73,13 @@ INICIAR ESCENA
 function iniciarFinca3D(){
 
 const container = document.getElementById("finca3d");
+
+// activar audio con interacción (necesario en móviles)
+container.addEventListener("click", () => {
+    sonidoLluvia.play().catch(()=>{});
+    sonidoViento.play().catch(()=>{});
+});
+
 if(!container) return;
 
 /* limpiar anterior */
@@ -649,6 +665,33 @@ ground.material.roughness = Math.max(0.3, Math.min(1, ground.material.roughness)
 ground.material.metalness = Math.max(0, Math.min(0.5, ground.material.metalness));
 
 
+/* =========================
+SONIDO DE LLUVIA
+========================= */
+
+if(clima === "lluvia"){
+    sonidoLluvia.volume += 0.01;
+}else{
+    sonidoLluvia.volume -= 0.01;
+}
+
+// límites
+sonidoLluvia.volume = Math.max(0, Math.min(0.5, sonidoLluvia.volume));
+
+/* =========================
+SONIDO DE VIENTO
+========================= */
+
+if(tipoLluvia === "tormenta"){
+    sonidoViento.volume += 0.01;
+}else{
+    sonidoViento.volume -= 0.01;
+}
+
+// límites
+sonidoViento.volume = Math.max(0, Math.min(0.6, sonidoViento.volume));
+
+
 
 /* =========================
 EFECTO LLUVIA EN LUZ
@@ -675,6 +718,7 @@ if(tipoLluvia === "tormenta"){
 
         setTimeout(()=>{
             sonidoTrueno.currentTime = 0;
+            sonidoTrueno.volume = 1;
             sonidoTrueno.play();
         }, 500 + Math.random()*1500);
 
