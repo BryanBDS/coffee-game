@@ -54,17 +54,21 @@ let transicionNiebla = 0;
 
 
 let splashes = [];
-let sonidoTrueno = new Audio("https://cdn.pixabay.com/download/audio/2022/03/15/audio_5f9b0d3b6e.mp3");
-let sonidoLluvia = new Audio("https://cdn.pixabay.com/download/audio/2021/09/06/audio_1b1b1b1b1b.mp3");
-let sonidoViento = new Audio("https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8f1b2c9f1.mp3");
+let sonidoTrueno = new Audio("audio/trueno.mp3");
+let sonidoLluvia = new Audio("audio/lluvia.mp3");
+let sonidoViento = new Audio("audio/viento.mp3");
+
 
 // configuración
+
 sonidoLluvia.loop = true;
 sonidoViento.loop = true;
 
 sonidoLluvia.volume = 0.5;
 sonidoViento.volume = 0.4;
 sonidoTrueno.volume = 1;
+
+
 
 
 /* =========================
