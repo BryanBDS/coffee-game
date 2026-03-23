@@ -91,18 +91,20 @@ tipoRegion = GameManager.parcelas[0].tipoRegion || "montaña";
 
 console.log("Tipo de región:", tipoRegion);
 
-scene.background = new THREE.Color(0xbfd1e5);
+const skyColor = new THREE.Color(0x87CEEB);
+scene.background = skyColor;
+scene.environment = skyColor;
 
 if(tipoRegion === "montaña"){
-scene.fog = new THREE.FogExp2(0xdbe9f4, 0.02);
+scene.fog = new THREE.Fog(0xcfd8dc, 20, 120);
 }
 
 if(tipoRegion === "valle"){
-scene.fog = new THREE.FogExp2(0xe0f7fa, 0.01);
+scene.fog = new THREE.Fog(0xcfd8dc, 20, 120);
 }
 
 if(tipoRegion === "bosque"){
-scene.fog = new THREE.FogExp2(0xc8e6c9, 0.03);
+scene.fog = new THREE.Fog(0xcfd8dc, 20, 120);
 }
 
 /* =========================
@@ -167,7 +169,8 @@ geo.setAttribute("position", new THREE.BufferAttribute(posiciones,3));
 const mat = new THREE.LineBasicMaterial({
 color: 0xaaaaaa,
 transparent: true,
-opacity: 0.6
+opacity: 0.4
+depthWrite: false
 });
 
 lluviaParticulas = new THREE.LineSegments(geo, mat);
@@ -188,15 +191,18 @@ container.clientWidth / container.clientHeight,
 
 /* RENDER */
 renderer = new THREE.WebGLRenderer({antialias:true});
-renderer.setSize(container.clientWidth, container.clientHeight);
-renderer.shadowMap.enabled = true;
 
-container.appendChild(renderer.domElement);
+renderer.physicallyCorrectLights = true;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.8;
 
 /* =========================
 LUCES
 ========================= */
-sol = new THREE.DirectionalLight(0xffffff,1);
+sol = new THREE.DirectionalLight(0xfff3e0, 3);
+sol.shadow.bias = -0.0005;
 sol.position.set(10,20,10);
 sol.castShadow = true;
 sol.shadow.mapSize.width = 2048;
@@ -274,7 +280,9 @@ vertices.setZ(i, altura);
 groundGeo.computeVertexNormals();
 
 const groundMat = new THREE.MeshStandardMaterial({
-map: groundTexture
+map: groundTexture,
+roughness: 1,
+metalness: 0
 });
 
 const ground = new THREE.Mesh(groundGeo,groundMat);
@@ -608,6 +616,15 @@ mat.uniforms.uTime.value = time;
 
 /* día/noche */
 const dia = Math.sin(time * 0.05);
+
+/* =========================
+ATMÓSFERA HÚMEDA (REALISMO)
+========================= */
+if(clima === "lluvia"){
+    renderer.toneMappingExposure = 0.6;
+}else{
+    renderer.toneMappingExposure = 0.8;
+}
 
 /* =========================
 EFECTO LLUVIA EN LUZ
