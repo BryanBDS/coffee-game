@@ -76,21 +76,34 @@ const container = document.getElementById("finca3d");
 
 let audioActivado = false;
 
-container.addEventListener("click", () => {
+function activarAudio(){
 
     if(audioActivado) return;
-
     audioActivado = true;
 
-    sonidoLluvia.play().catch(()=>{});
-    sonidoViento.play().catch(()=>{});
+    // Forzar carga real
+    sonidoLluvia.muted = true;
+    sonidoViento.muted = true;
 
-    sonidoLluvia.volume = 0;
-    sonidoViento.volume = 0;
+    sonidoLluvia.play().then(()=>{
+        sonidoLluvia.pause();
+        sonidoLluvia.currentTime = 0;
+        sonidoLluvia.muted = false;
+    });
 
-    console.log("🔊 Audio activado");
+    sonidoViento.play().then(()=>{
+        sonidoViento.pause();
+        sonidoViento.currentTime = 0;
+        sonidoViento.muted = false;
+    });
 
-});
+    console.log("🔊 Audio desbloqueado PRO");
+
+}
+
+// múltiples eventos (por seguridad en Android)
+container.addEventListener("click", activarAudio);
+container.addEventListener("touchstart", activarAudio);
 
 
 if(!container) return;
@@ -682,18 +695,13 @@ ground.material.metalness = Math.max(0, Math.min(0.5, ground.material.metalness)
 SONIDO DE LLUVIA
 ========================= */
 
-let volLluvia = sonidoLluvia.volume;
-
-if(clima === "lluvia"){
-    volLluvia += 0.01;
+if(clima === "lluvia" && audioActivado){
+    if(sonidoLluvia.paused){
+        sonidoLluvia.play().catch(()=>{});
+    }
 }else{
-    volLluvia -= 0.01;
+    sonidoLluvia.pause();
 }
-
-// limitar ANTES de asignar
-volLluvia = Math.max(0, Math.min(0.5, volLluvia));
-
-sonidoLluvia.volume = volLluvia;
 
 
 
@@ -701,18 +709,13 @@ sonidoLluvia.volume = volLluvia;
 SONIDO DE VIENTO
 ========================= */
 
-let volViento = sonidoViento.volume;
-
-if(tipoLluvia === "tormenta"){
-    volViento += 0.01;
+if(tipoLluvia === "tormenta" && audioActivado){
+    if(sonidoViento.paused){
+        sonidoViento.play().catch(()=>{});
+    }
 }else{
-    volViento -= 0.01;
+    sonidoViento.pause();
 }
-
-// limitar antes
-volViento = Math.max(0, Math.min(0.6, volViento));
-
-sonidoViento.volume = volViento;
 
 
 
