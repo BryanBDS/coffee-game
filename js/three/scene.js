@@ -53,6 +53,11 @@ let intensidadLluviaMax = 0;
 let transicionNiebla = 0;
 
 
+let splashes = [];
+let sonidoTrueno = new Audio("https://assets.mixkit.co/sfx/preview/mixkit-thunder-strike-1680.mp3");
+
+
+
 /* =========================
 INICIAR ESCENA
 ========================= */
@@ -131,26 +136,41 @@ CREAR LLUVIA
 ========================= */
 function crearLluvia(){
 
-const cantidad = 2000;
-const geo = new THREE.BufferGeometry();
+const cantidad = 3000;
 
-const posiciones = new Float32Array(cantidad * 3);
+const posiciones = new Float32Array(cantidad * 6); 
+// cada gota = 2 puntos (línea)
 
 for(let i=0; i<cantidad; i++){
-posiciones[i*3] = (Math.random()*100)-50;
-posiciones[i*3+1] = Math.random()*50;
-posiciones[i*3+2] = (Math.random()*100)-50;
+
+let x = (Math.random()*100)-50;
+let y = Math.random()*50;
+let z = (Math.random()*100)-50;
+
+let largo = Math.random() * 0.5 + 0.5;
+
+// punto superior
+posiciones[i*6] = x;
+posiciones[i*6+1] = y;
+posiciones[i*6+2] = z;
+
+// punto inferior
+posiciones[i*6+3] = x;
+posiciones[i*6+4] = y - largo;
+posiciones[i*6+5] = z;
+
 }
 
+const geo = new THREE.BufferGeometry();
 geo.setAttribute("position", new THREE.BufferAttribute(posiciones,3));
 
-const mat = new THREE.PointsMaterial({
+const mat = new THREE.LineBasicMaterial({
 color: 0xaaaaaa,
-size: 0.1,
-transparent: true
+transparent: true,
+opacity: 0.6
 });
 
-lluviaParticulas = new THREE.Points(geo, mat);
+lluviaParticulas = new THREE.LineSegments(geo, mat);
 scene.add(lluviaParticulas);
 
 }
@@ -608,14 +628,22 @@ RAYOS (TORMENTA)
 
 if(tipoLluvia === "tormenta"){
 
-if(Math.random() < 0.01){
+if(Math.random() < 0.005){
 
+
+setTimeout(()=>{
+sonidoTrueno.currentTime = 0;
+sonidoTrueno.play();
+}, 500 + Math.random()*1500);
+
+
+// flash fuerte
 scene.background = new THREE.Color(0xffffff);
-sol.intensity = 5;
+sol.intensity = 4;
 
-/* opcional: crear luz flash */
+// crear relámpago
 if(!relampago){
-relampago = new THREE.PointLight(0xffffff, 10, 100);
+relampago = new THREE.PointLight(0xffffff, 20, 200);
 scene.add(relampago);
 }
 
@@ -625,6 +653,13 @@ relampago.position.set(
 (Math.random()*50)-25
 );
 
+// apagar rápido (flash real)
+setTimeout(()=>{
+scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
+sol.intensity = 1 + dia;
+}, 80);
+
+}
 }
 
 /* volver normal */
@@ -707,7 +742,37 @@ let y = positions.getY(i);
 
 y -= lluviaVelocidad * (0.5 + intensidadLluviaMax);
 
+// viento lateral
+let x = positions.getX(i);
+x += 0.02 * intensidadLluviaMax;
+
+positions.setX(i, x);
+
 if(y < 0){
+
+// crear splash
+const geoSplash = new THREE.CircleGeometry(0.2, 6);
+const matSplash = new THREE.MeshBasicMaterial({
+color: 0xaaaaaa,
+transparent: true,
+opacity: 0.5
+});
+
+const splash = new THREE.Mesh(geoSplash, matSplash);
+splash.rotation.x = -Math.PI/2;
+
+splash.position.set(
+positions.getX(i),
+0.05,
+positions.getZ(i)
+);
+
+scene.add(splash);
+splashes.push(splash);
+
+// reset gota
+y = 50;
+
 y = 50;
 }
 
@@ -722,6 +787,17 @@ lluviaParticulas.visible = tipoLluvia !== "ninguna";
 
 }
 
+
+splashes.forEach((s, index)=>{
+s.scale.x += 0.05;
+s.scale.y += 0.05;
+s.material.opacity -= 0.02;
+
+if(s.material.opacity <= 0){
+scene.remove(s);
+splashes.splice(index,1);
+}
+});
 
 
 
