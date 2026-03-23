@@ -669,27 +669,37 @@ ground.material.metalness = Math.max(0, Math.min(0.5, ground.material.metalness)
 SONIDO DE LLUVIA
 ========================= */
 
+let volLluvia = sonidoLluvia.volume;
+
 if(clima === "lluvia"){
-    sonidoLluvia.volume += 0.01;
+    volLluvia += 0.01;
 }else{
-    sonidoLluvia.volume -= 0.01;
+    volLluvia -= 0.01;
 }
 
-// límites
-sonidoLluvia.volume = Math.max(0, Math.min(0.5, sonidoLluvia.volume));
+// limitar ANTES de asignar
+volLluvia = Math.max(0, Math.min(0.5, volLluvia));
+
+sonidoLluvia.volume = volLluvia;
+
+
 
 /* =========================
 SONIDO DE VIENTO
 ========================= */
 
+let volViento = sonidoViento.volume;
+
 if(tipoLluvia === "tormenta"){
-    sonidoViento.volume += 0.01;
+    volViento += 0.01;
 }else{
-    sonidoViento.volume -= 0.01;
+    volViento -= 0.01;
 }
 
-// límites
-sonidoViento.volume = Math.max(0, Math.min(0.6, sonidoViento.volume));
+// limitar antes
+volViento = Math.max(0, Math.min(0.6, volViento));
+
+sonidoViento.volume = volViento;
 
 
 
