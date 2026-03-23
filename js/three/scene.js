@@ -93,7 +93,7 @@ console.log("Tipo de región:", tipoRegion);
 
 const skyColor = new THREE.Color(0x87CEEB);
 scene.background = skyColor;
-scene.environment = skyColor;
+
 
 if(tipoRegion === "montaña"){
 scene.fog = new THREE.Fog(0xcfd8dc, 20, 120);
@@ -197,6 +197,12 @@ renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 renderer.toneMappingExposure = 0.8;
+
+renderer.setSize(container.clientWidth, container.clientHeight);
+renderer.shadowMap.enabled = true;
+
+container.appendChild(renderer.domElement);
+
 
 /* =========================
 LUCES
@@ -631,7 +637,9 @@ EFECTO LLUVIA EN LUZ
 ========================= */
 
 if(clima === "lluvia"){
-    sol.intensity *= 0.5; // más oscuro
+    sol.intensity = (1 + dia) * 0.5;
+}else{
+    sol.intensity = 1 + dia;
 }
 
 
