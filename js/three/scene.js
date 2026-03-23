@@ -167,10 +167,11 @@ const geo = new THREE.BufferGeometry();
 geo.setAttribute("position", new THREE.BufferAttribute(posiciones,3));
 
 const mat = new THREE.LineBasicMaterial({
-color: 0xaaaaaa,
+color: 0xcccccc,
 transparent: true,
-opacity: 0.4, 
-depthWrite: false 
+opacity: 0.25, // más suave
+depthWrite: false,
+blending: THREE.AdditiveBlending // 🔥 EFECTO REALISTA
 });
 
 lluviaParticulas = new THREE.LineSegments(geo, mat);
@@ -287,8 +288,8 @@ groundGeo.computeVertexNormals();
 
 const groundMat = new THREE.MeshStandardMaterial({
 map: groundTexture,
-roughness: 1,
-metalness: 0
+roughness: 0.9,
+metalness: 0.1
 });
 
 const ground = new THREE.Mesh(groundGeo,groundMat);
@@ -633,6 +634,22 @@ if(clima === "lluvia"){
     renderer.toneMappingExposure = 0.8;
 }
 
+
+// suelo mojado dinámico
+if(clima === "lluvia"){
+    ground.material.roughness -= 0.01;
+    ground.material.metalness += 0.01;
+}else{
+    ground.material.roughness += 0.01;
+    ground.material.metalness -= 0.01;
+}
+
+// límites
+ground.material.roughness = Math.max(0.3, Math.min(1, ground.material.roughness));
+ground.material.metalness = Math.max(0, Math.min(0.5, ground.material.metalness));
+
+
+
 /* =========================
 EFECTO LLUVIA EN LUZ
 ========================= */
@@ -667,7 +684,7 @@ if(tipoLluvia === "tormenta"){
 
         // crear relámpago
         if(!relampago){
-            relampago = new THREE.PointLight(0xffffff, 20, 200);
+            relampago = new THREE.PointLight(0xffffff, 80, 300);
             scene.add(relampago);
         }
 
@@ -676,6 +693,8 @@ if(tipoLluvia === "tormenta"){
             30,
             (Math.random()*50)-25
         );
+
+relampago.intensity = 80;
 
         // apagar rápido (flash real)
         setTimeout(()=>{
@@ -764,7 +783,7 @@ y -= lluviaVelocidad * (0.5 + intensidadLluviaMax);
 
 // viento lateral
 let x = positions.getX(i);
-x += 0.02 * intensidadLluviaMax;
+x += (0.01 + Math.sin(time * 2 + i) * 0.02) * intensidadLluviaMax;
 
 positions.setX(i, x);
 
