@@ -118,7 +118,7 @@ const mat = new THREE.MeshStandardMaterial({
 color: 0xffffff,
 transparent: true,
 opacity: 0.15,
-depthWrite: false, 
+depthWrite: false
 });
 
 const niebla = new THREE.Mesh(geo, mat);
