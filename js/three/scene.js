@@ -74,11 +74,24 @@ function iniciarFinca3D(){
 
 const container = document.getElementById("finca3d");
 
-// activar audio con interacción (necesario en móviles)
+let audioActivado = false;
+
 container.addEventListener("click", () => {
+
+    if(audioActivado) return;
+
+    audioActivado = true;
+
     sonidoLluvia.play().catch(()=>{});
     sonidoViento.play().catch(()=>{});
+
+    sonidoLluvia.volume = 0;
+    sonidoViento.volume = 0;
+
+    console.log("🔊 Audio activado");
+
 });
+
 
 if(!container) return;
 
@@ -729,7 +742,10 @@ if(tipoLluvia === "tormenta"){
         setTimeout(()=>{
             sonidoTrueno.currentTime = 0;
             sonidoTrueno.volume = 1;
-            sonidoTrueno.play();
+            if(audioActivado){
+    sonidoTrueno.currentTime = 0;
+    sonidoTrueno.play().catch(()=>{});
+}
         }, 500 + Math.random()*1500);
 
         // flash fuerte
