@@ -76,38 +76,31 @@ async function obtenerClimaReal(){
     try{
 
         const apiKey = "c8f6f70942774338a9e14343262403";
+        const ciudad = "Pasto";
 
-        const ciudad = "Pasto,CO";
-
-        const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}&lang=es`;
+        const url = `https://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${ciudad}&lang=es`;
 
         const res = await fetch(url);
         const data = await res.json();
 
         console.log("🌦️ Clima real:", data);
 
-        const climaAPI = data.weather[0].main;
+        const condicion = data.current.condition.text.toLowerCase();
 
-        // 🔥 MAPEAR CLIMA
-        if(climaAPI === "Rain"){
+        // 🔥 MAPEO A TU SISTEMA
+        if(condicion.includes("lluvia")){
             clima = "lluvia";
             tipoLluvia = "lluvia";
-            lluviaVelocidad = 0.5;
-            intensidadLluviaMax = 0.7;
+            lluviaVelocidad = 0.6;
+            intensidadLluviaMax = 0.8;
         }
-        else if(climaAPI === "Thunderstorm"){
+        else if(condicion.includes("tormenta")){
             clima = "lluvia";
             tipoLluvia = "tormenta";
             lluviaVelocidad = 1.2;
             intensidadLluviaMax = 1.2;
         }
-        else if(climaAPI === "Drizzle"){
-            clima = "lluvia";
-            tipoLluvia = "llovizna";
-            lluviaVelocidad = 0.2;
-            intensidadLluviaMax = 0.3;
-        }
-        else if(climaAPI === "Clouds"){
+        else if(condicion.includes("nublado")){
             clima = "post-lluvia";
             tipoLluvia = "ninguna";
         }
@@ -115,6 +108,8 @@ async function obtenerClimaReal(){
             clima = "soleado";
             tipoLluvia = "ninguna";
         }
+
+        console.log("🌦️ Aplicado:", clima, tipoLluvia);
 
     }catch(e){
         console.log("❌ Error clima:", e);
