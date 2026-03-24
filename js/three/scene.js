@@ -1,5 +1,12 @@
 import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
 
+
+import { EffectComposer } from "https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/UnrealBloomPass.js";
+
+
+
 /* =========================
 SHADERS HOJAS (VIENTO)
 ========================= */
@@ -203,6 +210,22 @@ container.innerHTML = "";
 /* ESCENA */
 scene = new THREE.Scene();
 
+/* =========================
+CIELO REALISTA (SKYBOX)
+========================= */
+const loader = new THREE.CubeTextureLoader();
+
+const skybox = loader.load([
+    "https://threejs.org/examples/textures/cube/skybox/px.jpg",
+    "https://threejs.org/examples/textures/cube/skybox/nx.jpg",
+    "https://threejs.org/examples/textures/cube/skybox/py.jpg",
+    "https://threejs.org/examples/textures/cube/skybox/ny.jpg",
+    "https://threejs.org/examples/textures/cube/skybox/pz.jpg",
+    "https://threejs.org/examples/textures/cube/skybox/nz.jpg"
+]);
+
+scene.background = skybox;
+
 let tipoRegion = "montaña";
 
 if(window.GameManager && GameManager.parcelas.length > 0){
@@ -313,6 +336,20 @@ container.clientWidth / container.clientHeight,
 /* RENDER */
 renderer = new THREE.WebGLRenderer({antialias:true});
 
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+
+const bloomPass = new UnrealBloomPass(
+    new THREE.Vector2(container.clientWidth, container.clientHeight),
+    0.5, // intensidad
+    0.4,
+    0.85
+);
+
+composer.addPass(bloomPass);
+
+
 renderer.physicallyCorrectLights = true;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
@@ -321,6 +358,7 @@ renderer.toneMappingExposure = 0.8;
 
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 container.appendChild(renderer.domElement);
 
@@ -328,7 +366,20 @@ container.appendChild(renderer.domElement);
 /* =========================
 LUCES
 ========================= */
-sol = new THREE.DirectionalLight(0xfff3e0, 3);
+sol = new THREE.DirectionalLight(0xffffff, 5);
+sol.castShadow = true;
+
+// sombras suaves PRO
+sol.shadow.mapSize.width = 4096;
+sol.shadow.mapSize.height = 4096;
+
+sol.shadow.camera.near = 0.5;
+sol.shadow.camera.far = 100;
+sol.shadow.camera.left = -50;
+sol.shadow.camera.right = 50;
+sol.shadow.camera.top = 50;
+sol.shadow.camera.bottom = -50;
+
 sol.shadow.bias = -0.0005;
 sol.position.set(10,20,10);
 sol.castShadow = true;
@@ -1013,7 +1064,7 @@ splashes.splice(index,1);
 
 
 
-renderer.render(scene,camera);
+composer.render();
 }
 
 animate(0);
