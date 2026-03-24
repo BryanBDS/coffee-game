@@ -1023,4 +1023,32 @@ animate(0);
 
 }
 
+
+
+function detenerFinca3D(){
+
+    console.log("🛑 Saliendo de finca...");
+
+    // detener animación
+    if(animationId){
+        cancelAnimationFrame(animationId);
+        animationId = null;
+    }
+
+    // apagar sonidos
+    sonidoLluvia.pause();
+    sonidoLluvia.currentTime = 0;
+
+    sonidoViento.pause();
+    sonidoViento.currentTime = 0;
+
+    sonidoTrueno.pause();
+    sonidoTrueno.currentTime = 0;
+
+}
+
+
+window.detenerFinca3D = detenerFinca3D;
+
+
 window.iniciarFinca3D = iniciarFinca3D;
