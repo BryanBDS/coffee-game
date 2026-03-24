@@ -86,6 +86,17 @@ async function obtenerClimaReal(){
         console.log("🌦️ Clima real:", data);
 
         const condicion = data.current.condition.text.toLowerCase();
+const codigo = data.current.condition.code;
+
+if(codigo >= 200 && codigo < 300){
+    tipoLluvia = "tormenta";
+}
+else if(codigo >= 300 && codigo < 700){
+    tipoLluvia = "lluvia";
+}
+else if(codigo >= 1000 && codigo < 1030){
+    tipoLluvia = "ninguna";
+}
 
         // 🔥 MAPEO A TU SISTEMA
         if(condicion.includes("lluvia")){
@@ -768,11 +779,6 @@ aplicarClimaVisual(dia);
 /* =========================
 ATMÓSFERA HÚMEDA (REALISMO)
 ========================= */
-if(clima === "lluvia"){
-    renderer.toneMappingExposure = 0.6;
-}else{
-    renderer.toneMappingExposure = 0.8;
-}
 
 
 // suelo mojado dinámico
@@ -821,13 +827,6 @@ if(tipoLluvia === "tormenta" && audioActivado){
 EFECTO LLUVIA EN LUZ
 ========================= */
 
-if(clima === "lluvia"){
-    sol.intensity = (1 + dia) * 0.5;
-}else{
-    sol.intensity = 1 + dia;
-}
-
-
 
 /* =========================
 RAYOS (TORMENTA)
@@ -874,8 +873,7 @@ if(tipoLluvia === "tormenta"){
 
         // volver a normal
         setTimeout(()=>{
-            scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
-            sol.intensity = 1 + dia;
+            
         }, 80);
 
     }
