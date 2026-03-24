@@ -75,7 +75,7 @@ async function obtenerClimaReal(){
 
     try{
 
-        const apiKey = "25082a20bf847b74b3cf288f87127a8e";
+        const apiKey = "c8f6f70942774338a9e14343262403";
 
         const ciudad = "Pasto,CO";
 
