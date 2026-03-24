@@ -58,6 +58,8 @@ let sonidoTrueno = new Audio("audio/trueno.mp3");
 let sonidoLluvia = new Audio("audio/lluvia.mp3");
 let sonidoViento = new Audio("audio/viento.mp3");
 
+let audioActivado = false;
+
 
 // configuración
 
@@ -78,32 +80,40 @@ function iniciarFinca3D(){
 
 const container = document.getElementById("finca3d");
 
-let audioActivado = false;
 
 function activarAudio(){
 
     if(audioActivado) return;
     audioActivado = true;
 
-    // Forzar carga real
-    sonidoLluvia.muted = true;
-    sonidoViento.muted = true;
+    console.log("🔊 Audio desbloqueado PRO");
 
+    // lluvia
+    sonidoLluvia.muted = true;
     sonidoLluvia.play().then(()=>{
         sonidoLluvia.pause();
         sonidoLluvia.currentTime = 0;
         sonidoLluvia.muted = false;
     });
 
+    // viento
+    sonidoViento.muted = true;
     sonidoViento.play().then(()=>{
         sonidoViento.pause();
         sonidoViento.currentTime = 0;
         sonidoViento.muted = false;
     });
 
-    console.log("🔊 Audio desbloqueado PRO");
+    // 🔥 TRUENO (CLAVE)
+    sonidoTrueno.muted = true;
+    sonidoTrueno.play().then(()=>{
+        sonidoTrueno.pause();
+        sonidoTrueno.currentTime = 0;
+        sonidoTrueno.muted = false;
+    });
 
 }
+
 
 // múltiples eventos (por seguridad en Android)
 container.addEventListener("click", activarAudio);
@@ -615,32 +625,6 @@ camera.position.set(10, 8, 10);
 camera.lookAt(0,0,0);
 console.log("Render OK");
 
-
-
-
-let audioActivado = false;
-
-window.addEventListener("click", () => {
-
-    if(!audioActivado){
-
-        console.log("🔊 Audio desbloqueado");
-
-        sonidoTrueno.volume = 0;
-        sonidoTrueno.play().then(()=>{
-
-            setTimeout(()=>{
-                sonidoTrueno.pause();
-                sonidoTrueno.currentTime = 0;
-                sonidoTrueno.volume = 1;
-            }, 100);
-
-        }).catch(()=>{});
-
-        audioActivado = true;
-    }
-
-});
 
 
 
