@@ -615,6 +615,30 @@ camera.position.set(10, 8, 10);
 camera.lookAt(0,0,0);
 console.log("Render OK");
 
+
+
+
+let audioActivado = false;
+
+window.addEventListener("click", () => {
+
+    if(!audioActivado){
+
+        console.log("🔊 Audio desbloqueado");
+
+        sonidoTrueno.play().then(()=>{
+            sonidoTrueno.pause();
+            sonidoTrueno.currentTime = 0;
+        }).catch(()=>{});
+
+        audioActivado = true;
+    }
+
+});
+
+
+
+
 /* =========================
 ANIMACIÓN
 ========================= */
