@@ -85,40 +85,37 @@ async function obtenerClimaReal(){
 
         console.log("🌦️ Clima real:", data);
 
-        const condicion = data.current.condition.text.toLowerCase();
+ const condicion = data.current.condition.text.toLowerCase();
 const codigo = data.current.condition.code;
 
+// 🔥 PRIMERO definir tipo de lluvia SOLO con código
 if(codigo >= 200 && codigo < 300){
     tipoLluvia = "tormenta";
 }
 else if(codigo >= 300 && codigo < 700){
     tipoLluvia = "lluvia";
 }
-else if(codigo >= 1000 && codigo < 1030){
+else{
     tipoLluvia = "ninguna";
 }
 
-        // 🔥 MAPEO A TU SISTEMA
-        if(condicion.includes("lluvia")){
-            clima = "lluvia";
-            tipoLluvia = "lluvia";
-            lluviaVelocidad = 0.6;
-            intensidadLluviaMax = 0.8;
-        }
-        else if(condicion.includes("tormenta")){
-            clima = "lluvia";
-            tipoLluvia = "tormenta";
-            lluviaVelocidad = 1.2;
-            intensidadLluviaMax = 1.2;
-        }
-        else if(condicion.includes("nublado")){
-            clima = "post-lluvia";
-            tipoLluvia = "ninguna";
-        }
-        else{
-            clima = "soleado";
-            tipoLluvia = "ninguna";
-        }
+// 🔥 AHORA definir clima GENERAL (sin romper tipoLluvia)
+if(tipoLluvia === "tormenta"){
+    clima = "lluvia";
+    lluviaVelocidad = 1.2;
+    intensidadLluviaMax = 1.2;
+}
+else if(tipoLluvia === "lluvia"){
+    clima = "lluvia";
+    lluviaVelocidad = 0.6;
+    intensidadLluviaMax = 0.8;
+}
+else if(condicion.includes("nublado")){
+    clima = "post-lluvia";
+}
+else{
+    clima = "soleado";
+}
 
         console.log("🌦️ Aplicado:", clima, tipoLluvia);
 
@@ -181,8 +178,10 @@ function activarAudio(){
 
 
 // múltiples eventos (por seguridad en Android)
-container.addEventListener("click", activarAudio);
-container.addEventListener("touchstart", activarAudio);
+if(container){
+    container.addEventListener("click", activarAudio);
+    container.addEventListener("touchstart", activarAudio);
+}
 
 
 if(!container) return;
@@ -873,8 +872,8 @@ if(tipoLluvia === "tormenta"){
 
         // volver a normal
         setTimeout(()=>{
-            
-        }, 80);
+    aplicarClimaVisual(dia);
+}, 80);
 
     }
 
