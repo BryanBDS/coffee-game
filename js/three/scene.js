@@ -681,6 +681,54 @@ console.log("Render OK");
 
 
 
+/* =========================
+APLICAR CLIMA VISUAL
+========================= */
+function aplicarClimaVisual(dia){
+
+    // ☀️ SOLEADO
+    if(clima === "soleado"){
+
+        scene.background = new THREE.Color(0x87CEEB);
+        sol.intensity = 1.5 + dia;
+
+        renderer.toneMappingExposure = 0.9;
+
+    }
+
+    // ☁️ NUBLADO
+    else if(clima === "post-lluvia"){
+
+        scene.background = new THREE.Color(0xb0bec5);
+        sol.intensity = 0.8 + dia;
+
+        renderer.toneMappingExposure = 0.7;
+
+    }
+
+    // 🌧️ LLUVIA
+    else if(clima === "lluvia" && tipoLluvia !== "tormenta"){
+
+        scene.background = new THREE.Color(0x5f6a6a);
+        sol.intensity = 0.5 + dia;
+
+        renderer.toneMappingExposure = 0.6;
+
+    }
+
+    // ⛈️ TORMENTA
+    else if(tipoLluvia === "tormenta"){
+
+        scene.background = new THREE.Color(0x2c3e50);
+        sol.intensity = 0.3 + dia;
+
+        renderer.toneMappingExposure = 0.5;
+
+    }
+
+}
+
+
 
 
 /* =========================
@@ -691,6 +739,8 @@ function animate(t){
 animationId = requestAnimationFrame(animate);
 
 const time = t * 0.001;
+
+
 
 
 
@@ -711,6 +761,9 @@ mat.uniforms.uTime.value = time;
 
 /* día/noche */
 const dia = Math.sin(time * 0.05);
+
+aplicarClimaVisual(dia);
+
 
 /* =========================
 ATMÓSFERA HÚMEDA (REALISMO)
@@ -775,9 +828,6 @@ if(clima === "lluvia"){
 }
 
 
-scene.background = new THREE.Color().setHSL(0.6, 0.5, 0.6 + dia * 0.2);
-
-sol.intensity = 1 + dia;
 
 /* =========================
 RAYOS (TORMENTA)
