@@ -626,9 +626,15 @@ window.addEventListener("click", () => {
 
         console.log("🔊 Audio desbloqueado");
 
+        sonidoTrueno.volume = 0;
         sonidoTrueno.play().then(()=>{
-            sonidoTrueno.pause();
-            sonidoTrueno.currentTime = 0;
+
+            setTimeout(()=>{
+                sonidoTrueno.pause();
+                sonidoTrueno.currentTime = 0;
+                sonidoTrueno.volume = 1;
+            }, 100);
+
         }).catch(()=>{});
 
         audioActivado = true;
