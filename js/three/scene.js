@@ -71,12 +71,71 @@ sonidoViento.volume = 0.4;
 sonidoTrueno.volume = 1;
 
 
+async function obtenerClimaReal(){
+
+    try{
+
+        const apiKey = "25082a20bf847b74b3cf288f87127a8e";
+
+        const ciudad = "Pasto,CO";
+
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${apiKey}&lang=es`;
+
+        const res = await fetch(url);
+        const data = await res.json();
+
+        console.log("🌦️ Clima real:", data);
+
+        const climaAPI = data.weather[0].main;
+
+        // 🔥 MAPEAR CLIMA
+        if(climaAPI === "Rain"){
+            clima = "lluvia";
+            tipoLluvia = "lluvia";
+            lluviaVelocidad = 0.5;
+            intensidadLluviaMax = 0.7;
+        }
+        else if(climaAPI === "Thunderstorm"){
+            clima = "lluvia";
+            tipoLluvia = "tormenta";
+            lluviaVelocidad = 1.2;
+            intensidadLluviaMax = 1.2;
+        }
+        else if(climaAPI === "Drizzle"){
+            clima = "lluvia";
+            tipoLluvia = "llovizna";
+            lluviaVelocidad = 0.2;
+            intensidadLluviaMax = 0.3;
+        }
+        else if(climaAPI === "Clouds"){
+            clima = "post-lluvia";
+            tipoLluvia = "ninguna";
+        }
+        else{
+            clima = "soleado";
+            tipoLluvia = "ninguna";
+        }
+
+    }catch(e){
+        console.log("❌ Error clima:", e);
+    }
+
+}
+
 
 
 /* =========================
 INICIAR ESCENA
 ========================= */
 function iniciarFinca3D(){
+
+// 🌦️ cargar clima real
+obtenerClimaReal();
+
+// actualizar cada 10 minutos
+setInterval(()=>{
+    obtenerClimaReal();
+}, 600000);
 
 const container = document.getElementById("finca3d");
 
@@ -646,34 +705,7 @@ CAMBIO DE CLIMA AUTOMÁTICO
 
 // cambia clima cada cierto tiempo
 
-if(Math.floor(time) % 30 === 0){
 
-const rand = Math.random();
-
-if(rand < 0.25){
-clima = "soleado";
-tipoLluvia = "ninguna";
-}
-else if(rand < 0.5){
-clima = "lluvia";
-tipoLluvia = "llovizna";
-lluviaVelocidad = 0.2;
-intensidadLluviaMax = 0.3;
-}
-else if(rand < 0.75){
-clima = "lluvia";
-tipoLluvia = "lluvia";
-lluviaVelocidad = 0.5;
-intensidadLluviaMax = 0.7;
-}
-else{
-clima = "lluvia";
-tipoLluvia = "tormenta";
-lluviaVelocidad = 1.2;
-intensidadLluviaMax = 1.2;
-}
-
-}
 
 
 
