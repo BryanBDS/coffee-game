@@ -3,7 +3,7 @@ import * as THREE from "three";
 import { EffectComposer } from "three/examples/jsm/postprocessing/EffectComposer.js";
 import { RenderPass } from "three/examples/jsm/postprocessing/RenderPass.js";
 import { UnrealBloomPass } from "three/examples/jsm/postprocessing/UnrealBloomPass.js";
-import { Sky } from "three/examples/jsm/objects/Sky.js";
+import { RGBELoader } from "three/examples/jsm/loaders/RGBELoader.js";
 
 
 
@@ -212,21 +212,15 @@ scene = new THREE.Scene();
 
 
 
-const sky = new Sky();
-sky.scale.setScalar(10000);
-scene.add(sky);
+new RGBELoader()
+.load("https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr", function(texture){
 
-const skyUniforms = sky.material.uniforms;
+    texture.mapping = THREE.EquirectangularReflectionMapping;
 
-skyUniforms["turbidity"].value = 2;
-skyUniforms["rayleigh"].value = 1.2;
-skyUniforms["mieCoefficient"].value = 0.005;
-skyUniforms["mieDirectionalG"].value = 0.8;
+    scene.background = texture;
+    scene.environment = texture;
 
-const sunPosition = new THREE.Vector3();
-sunPosition.setFromSphericalCoords(1, Math.PI / 3, Math.PI / 4);
-
-skyUniforms["sunPosition"].value.copy(sunPosition);
+});
 
 
 let tipoRegion = "montaña";
@@ -751,8 +745,8 @@ scene.add(parcela);
 }
 
 /* CAMARA */
-camera.position.set(20, 12, 20);
-camera.lookAt(0,0,0);
+camera.position.set(-30, 20, 40);
+camera.lookAt(0, 0, 0);
 console.log("Render OK");
 
 
