@@ -402,6 +402,7 @@ sol.intensity = 0.9;
 }
 
 const ambient = new THREE.AmbientLight(0xffffff, 0.25);
+Scene. add (ambient);
 
 /* =========================
 TERRENO MONTAÑOSO
