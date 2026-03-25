@@ -1,9 +1,8 @@
-import * as THREE from "https://unpkg.com/three@0.160.0/build/three.module.js";
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js";
 
-
-import { EffectComposer } from "https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/EffectComposer.js";
-import { RenderPass } from "https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/RenderPass.js";
-import { UnrealBloomPass } from "https://unpkg.com/three@0.160.0/examples/jsm/postprocessing/UnrealBloomPass.js";
+import { EffectComposer } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/EffectComposer.js";
+import { RenderPass } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/postprocessing/UnrealBloomPass.js";
 
 
 
@@ -233,10 +232,7 @@ tipoRegion = GameManager.parcelas[0].tipoRegion || "montaña";
 }
 
 console.log("Tipo de región:", tipoRegion);
-
-const skyColor = new THREE.Color(0x87CEEB);
-scene.background = skyColor;
-
+ 
 
 if(tipoRegion === "montaña"){
 scene.fog = new THREE.Fog(0xcfd8dc, 20, 120);
@@ -747,44 +743,30 @@ APLICAR CLIMA VISUAL
 ========================= */
 function aplicarClimaVisual(dia){
 
+    // NO tocar scene.background (dejamos el skybox)
+
     // ☀️ SOLEADO
     if(clima === "soleado"){
-
-        scene.background = new THREE.Color(0x87CEEB);
         sol.intensity = 1.5 + dia;
-
         renderer.toneMappingExposure = 0.9;
-
     }
 
     // ☁️ NUBLADO
     else if(clima === "post-lluvia"){
-
-        scene.background = new THREE.Color(0xb0bec5);
         sol.intensity = 0.8 + dia;
-
         renderer.toneMappingExposure = 0.7;
-
     }
 
     // 🌧️ LLUVIA
     else if(clima === "lluvia" && tipoLluvia !== "tormenta"){
-
-        scene.background = new THREE.Color(0x5f6a6a);
         sol.intensity = 0.5 + dia;
-
         renderer.toneMappingExposure = 0.6;
-
     }
 
     // ⛈️ TORMENTA
     else if(tipoLluvia === "tormenta"){
-
-        scene.background = new THREE.Color(0x2c3e50);
         sol.intensity = 0.3 + dia;
-
         renderer.toneMappingExposure = 0.5;
-
     }
 
 }
