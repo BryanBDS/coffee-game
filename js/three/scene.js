@@ -239,15 +239,15 @@ console.log("Tipo de región:", tipoRegion);
  
 
 if(tipoRegion === "montaña"){
-scene.fog = new THREE.Fog(0xcfd8dc, 20, 120);
+scene.fog = new THREE.FogExp2(0xdfe9f3, 0.01);
 }
 
 if(tipoRegion === "valle"){
-scene.fog = new THREE.Fog(0xcfd8dc, 20, 120);
+scene.fog = new THREE.FogExp2(0xdfe9f3, 0.01);
 }
 
 if(tipoRegion === "bosque"){
-scene.fog = new THREE.Fog(0xcfd8dc, 20, 120);
+scene.fog = new THREE.FogExp2(0xdfe9f3, 0.01);
 }
 
 /* =========================
@@ -351,6 +351,8 @@ composer.addPass(bloomPass);
 
 
 renderer.physicallyCorrectLights = true;
+renderer.useLegacyLights = false;
+renderer.toneMappingExposure = 1.2;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -459,8 +461,8 @@ groundGeo.computeVertexNormals();
 
 const groundMat = new THREE.MeshStandardMaterial({
 map: groundTexture,
-roughness: 0.9,
-metalness: 0.1
+roughness: 1,
+metalness: 0
 });
 
 const ground = new THREE.Mesh(groundGeo,groundMat);
