@@ -218,8 +218,8 @@ scene.add(sky);
 
 const skyUniforms = sky.material.uniforms;
 
-skyUniforms["turbidity"].value = 10;
-skyUniforms["rayleigh"].value = 2;
+skyUniforms["turbidity"].value = 2;
+skyUniforms["rayleigh"].value = 1.2;
 skyUniforms["mieCoefficient"].value = 0.005;
 skyUniforms["mieDirectionalG"].value = 0.8;
 
@@ -239,15 +239,15 @@ console.log("Tipo de región:", tipoRegion);
  
 
 if(tipoRegion === "montaña"){
-scene.fog = new THREE.FogExp2(0xdfe9f3, 0.01);
+scene.fog = new THREE.FogExp2(0xcfd8dc, 0.015);
 }
 
 if(tipoRegion === "valle"){
-scene.fog = new THREE.FogExp2(0xdfe9f3, 0.01);
+scene.fog = new THREE.FogExp2(0xcfd8dc, 0.015);
 }
 
 if(tipoRegion === "bosque"){
-scene.fog = new THREE.FogExp2(0xdfe9f3, 0.01);
+scene.fog = new THREE.FogExp2(0xcfd8dc, 0.015);
 }
 
 /* =========================
@@ -352,7 +352,7 @@ composer.addPass(bloomPass);
 
 renderer.physicallyCorrectLights = true;
 
-renderer.toneMappingExposure = 1;
+renderer.toneMappingExposure = 0.5;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -368,7 +368,7 @@ container.appendChild(renderer.domElement);
 /* =========================
 LUCES
 ========================= */
-sol = new THREE.DirectionalLight(0xfff2cc, 1.5);
+sol = new THREE.DirectionalLight(0xffffff, 1);
 sol.castShadow = true;
 
 // sombras suaves PRO
@@ -401,14 +401,22 @@ if(tipoRegion === "bosque"){
 sol.intensity = 0.9;
 }
 
-const ambient = new THREE.AmbientLight(0xffffff, 0.25);
+const ambient = new THREE.AmbientLight(0xffffff, 0.15);
 scene.add(ambient);
 
 /* =========================
 TERRENO MONTAÑOSO
 ========================= */
 const textureLoader = new THREE.TextureLoader();
-const groundTexture = textureLoader.load("https://threejs.org/examples/textures/terrain/grasslight-big-nm.jpg");
+
+const groundTexture = textureLoader.load("https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/terrain/grasslight-big.jpg");
+const normalTexture = textureLoader.load("https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/terrain/grasslight-big-nm.jpg");
+
+groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+normalTexture.wrapS = normalTexture.wrapT = THREE.RepeatWrapping;
+
+groundTexture.repeat.set(20,20);
+normalTexture.repeat.set(20,20);
 
 
 groundTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
@@ -435,8 +443,9 @@ if(tipoRegion === "montaña"){
 
 altura =
 Math.sin(x * 0.1) * Math.cos(y * 0.1) * 6 +
-Math.sin(x * 0.05) * 3 +
-Math.sin(x * 0.02) * 8;
+Math.sin(x * 0.03) * 10 +
+Math.cos(y * 0.03) * 10 +
+Math.sin(x * 0.1 + y * 0.1) * 3;
 
 }
 
@@ -464,8 +473,9 @@ groundGeo.computeVertexNormals();
 
 const groundMat = new THREE.MeshStandardMaterial({
 map: groundTexture,
-roughness: 1,
-metalness: 0
+normalMap: normalTexture,
+roughness: 0.9,
+metalness: 0.05
 });
 
 const ground = new THREE.Mesh(groundGeo,groundMat);
@@ -741,7 +751,7 @@ scene.add(parcela);
 }
 
 /* CAMARA */
-camera.position.set(15, 10, 15);
+camera.position.set(20, 12, 20);
 camera.lookAt(0,0,0);
 console.log("Render OK");
 
