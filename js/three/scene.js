@@ -233,15 +233,15 @@ console.log("Tipo de región:", tipoRegion);
  
 
 if(tipoRegion === "montaña"){
-scene.fog = new THREE.FogExp2(0xcfd8dc, 0.015);
+scene.fog = new THREE.FogExp2(0xbfc9ca, 0.02);
 }
 
 if(tipoRegion === "valle"){
-scene.fog = new THREE.FogExp2(0xcfd8dc, 0.015);
+scene.fog = new THREE.FogExp2(0xbfc9ca, 0.02);
 }
 
 if(tipoRegion === "bosque"){
-scene.fog = new THREE.FogExp2(0xcfd8dc, 0.015);
+scene.fog = new THREE.FogExp2(0xbfc9ca, 0.02);
 }
 
 /* =========================
@@ -591,7 +591,7 @@ const group = new THREE.Group();
 
 const trunkMat = new THREE.MeshStandardMaterial({ color: 0x4b3621 });
 
-let colorHoja = 0x2d5a27;
+let colorHoja = 0x1f7a1f;
 
 if(tipoRegion === "valle") colorHoja = 0x4caf50;
 if(tipoRegion === "bosque") colorHoja = 0x1b5e20;
@@ -606,7 +606,7 @@ fragmentShader: leafFragmentShader,
 side: THREE.DoubleSide
 });
 
-const leafGeom = new THREE.SphereGeometry(0.2, 6, 6);
+const leafGeom = new THREE.SphereGeometry(0.4, 8, 8);
 const leafMesh = new THREE.InstancedMesh(leafGeom, leafMat, 500);
 
 let leafCount = 0;
