@@ -210,21 +210,24 @@ container.innerHTML = "";
 /* ESCENA */
 scene = new THREE.Scene();
 
-/* =========================
-CIELO REALISTA (SKYBOX)
-========================= */
-const loader = new THREE.CubeTextureLoader();
 
-const skybox = loader.load([
-    "https://threejs.org/examples/textures/cube/skybox/px.jpg",
-    "https://threejs.org/examples/textures/cube/skybox/nx.jpg",
-    "https://threejs.org/examples/textures/cube/skybox/py.jpg",
-    "https://threejs.org/examples/textures/cube/skybox/ny.jpg",
-    "https://threejs.org/examples/textures/cube/skybox/pz.jpg",
-    "https://threejs.org/examples/textures/cube/skybox/nz.jpg"
-]);
 
-scene.background = skybox;
+const sky = new Sky();
+sky.scale.setScalar(10000);
+scene.add(sky);
+
+const skyUniforms = sky.material.uniforms;
+
+skyUniforms["turbidity"].value = 10;
+skyUniforms["rayleigh"].value = 2;
+skyUniforms["mieCoefficient"].value = 0.005;
+skyUniforms["mieDirectionalG"].value = 0.8;
+
+const sunPosition = new THREE.Vector3();
+sunPosition.setFromSphericalCoords(1, Math.PI / 3, Math.PI / 4);
+
+skyUniforms["sunPosition"].value.copy(sunPosition);
+
 
 let tipoRegion = "montaña";
 
@@ -363,7 +366,7 @@ container.appendChild(renderer.domElement);
 /* =========================
 LUCES
 ========================= */
-sol = new THREE.DirectionalLight(0xffffff, 5);
+sol = new sol = new THREE.DirectionalLight(0xfff2cc, 3);
 sol.castShadow = true;
 
 // sombras suaves PRO
