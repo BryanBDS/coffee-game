@@ -352,11 +352,11 @@ composer.addPass(bloomPass);
 
 renderer.physicallyCorrectLights = true;
 renderer.useLegacyLights = false;
-renderer.toneMappingExposure = 1.2;
+renderer.toneMappingExposure = 1;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 0.8;
+
 
 renderer.setSize(container.clientWidth, container.clientHeight);
 renderer.shadowMap.enabled = true;
@@ -401,14 +401,17 @@ if(tipoRegion === "bosque"){
 sol.intensity = 0.9;
 }
 
-const ambient = new THREE.AmbientLight(0xffffff,0.6);
+const ambient = new THREE.AmbientLight(0xffffff, 0.3);
 scene.add(ambient);
 
 /* =========================
 TERRENO MONTAÑOSO
 ========================= */
 const textureLoader = new THREE.TextureLoader();
-const groundTexture = textureLoader.load("https://threejs.org/examples/textures/terrain/grasslight-big.jpg");
+const groundTexture = textureLoader.load("https://threejs.org/examples/textures/terrain/grasslight-big-nm.jpg");
+
+
+groundTexture.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
 groundTexture.wrapS = THREE.RepeatWrapping;
 groundTexture.wrapT = THREE.RepeatWrapping;
@@ -738,7 +741,7 @@ scene.add(parcela);
 }
 
 /* CAMARA */
-camera.position.set(10, 8, 10);
+camera.position.set(15, 10, 15);
 camera.lookAt(0,0,0);
 console.log("Render OK");
 
