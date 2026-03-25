@@ -351,7 +351,7 @@ composer.addPass(bloomPass);
 
 
 renderer.physicallyCorrectLights = true;
-renderer.useLegacyLights = false;
+
 renderer.toneMappingExposure = 1;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
@@ -368,7 +368,7 @@ container.appendChild(renderer.domElement);
 /* =========================
 LUCES
 ========================= */
-sol = new THREE.DirectionalLight(0xfff2cc, 3);
+sol = new THREE.DirectionalLight(0xfff2cc, 1.5);
 sol.castShadow = true;
 
 // sombras suaves PRO
@@ -401,8 +401,7 @@ if(tipoRegion === "bosque"){
 sol.intensity = 0.9;
 }
 
-const ambient = new THREE.AmbientLight(0xffffff, 0.3);
-scene.add(ambient);
+const ambient = new THREE.AmbientLight(0xffffff, 0.25);
 
 /* =========================
 TERRENO MONTAÑOSO
