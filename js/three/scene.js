@@ -368,8 +368,7 @@ container.appendChild(renderer.domElement);
 /* =========================
 LUCES
 ========================= */
-sol = new
- THREE.DirectionalLight(0xfff2cc, 3);
+sol = new THREE.DirectionalLight(0xfff2cc, 3);
 sol.castShadow = true;
 
 // sombras suaves PRO
