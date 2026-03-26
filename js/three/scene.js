@@ -331,7 +331,7 @@ container.clientWidth / container.clientHeight,
 renderer = new THREE.WebGLRenderer({antialias:true});
 
 
-const composer = new EffectComposer(renderer);
+//const composer = new EffectComposer(renderer);
 composer.addPass(new RenderPass(scene, camera));
 
 const bloomPass = new UnrealBloomPass(
@@ -341,7 +341,7 @@ const bloomPass = new UnrealBloomPass(
     0.85
 );
 
-composer.addPass(bloomPass);
+//composer.addPass(bloomPass);
 
 
 renderer.physicallyCorrectLights = true;
