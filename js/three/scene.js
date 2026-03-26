@@ -1071,7 +1071,7 @@ splashes.splice(index,1);
 
 
 
-composer.render();
+renderer.render(scene, camera);
 }
 
 animate(0);
