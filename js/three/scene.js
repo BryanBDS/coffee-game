@@ -212,15 +212,24 @@ scene = new THREE.Scene();
 
 
 
-new RGBELoader()
-.load("https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr", function(texture){
+const rgbeLoader = new RGBELoader();
 
-    texture.mapping = THREE.EquirectangularReflectionMapping;
+rgbeLoader.load(
+    "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr",
+    
+    function(texture){
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+        scene.background = texture;
+        scene.environment = texture;
+        console.log("HDR cargado ✅");
+    },
 
-    scene.background = texture;
-    scene.environment = texture;
+    undefined,
 
-});
+    function(error){
+        console.log("❌ Error HDR:", error);
+    }
+);
 
 
 let tipoRegion = "montaña";
@@ -493,7 +502,7 @@ scene.add(ground);
 /* =========================
 NUBES
 ========================= */
-let nubes = [];
+
 
 function crearNube(){
 
@@ -1071,7 +1080,9 @@ splashes.splice(index,1);
 
 
 
-renderer.render(scene, camera);
+if(renderer && scene && camera){
+    renderer.render(scene, camera);
+}
 }
 
 animate(0);
