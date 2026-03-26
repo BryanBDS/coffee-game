@@ -499,6 +499,54 @@ ground.receiveShadow = true;
 
 scene.add(ground);
 
+
+
+
+/* =========================
+PASTO ULTRA REALISTA
+========================= */
+
+function crearPasto(){
+
+    const cantidad = 2000;
+
+    const geo = new THREE.PlaneGeometry(0.3, 0.6);
+    const mat = new THREE.MeshStandardMaterial({
+        color: 0x3a7d3a,
+        side: THREE.DoubleSide,
+    });
+
+    const instanced = new THREE.InstancedMesh(geo, mat, cantidad);
+
+    const dummy = new THREE.Object3D();
+
+    for(let i=0; i<cantidad; i++){
+
+        const x = (Math.random()*100)-50;
+        const z = (Math.random()*100)-50;
+
+        // altura del terreno
+        let y = 0;
+
+        dummy.position.set(x, y + 0.1, z);
+
+        dummy.rotation.y = Math.random() * Math.PI;
+
+        const escala = 0.5 + Math.random();
+        dummy.scale.set(escala, escala, escala);
+
+        dummy.updateMatrix();
+        instanced.setMatrixAt(i, dummy.matrix);
+    }
+
+    scene.add(instanced);
+}
+
+crearPasto();
+
+
+
+
 /* =========================
 NUBES
 ========================= */
