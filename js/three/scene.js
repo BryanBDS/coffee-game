@@ -346,7 +346,7 @@ composer.addPass(bloomPass);
 
 renderer.physicallyCorrectLights = true;
 
-renderer.toneMappingExposure = 0.5;
+renderer.toneMappingExposure = 0.25;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -362,7 +362,7 @@ container.appendChild(renderer.domElement);
 /* =========================
 LUCES
 ========================= */
-sol = new THREE.DirectionalLight(0xffffff, 1);
+sol = new THREE.DirectionalLight(0xffffff, 0.4);
 sol.castShadow = true;
 
 // sombras suaves PRO
@@ -395,7 +395,7 @@ if(tipoRegion === "bosque"){
 sol.intensity = 0.9;
 }
 
-const ambient = new THREE.AmbientLight(0xffffff, 0.15);
+const ambient = new THREE.AmbientLight(0xffffff, 0.1);
 scene.add(ambient);
 
 /* =========================
