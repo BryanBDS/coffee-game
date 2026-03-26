@@ -480,7 +480,8 @@ map: groundTexture,
 normalMap: normalTexture,
 roughnessMap: roughnessTexture,
 roughness: 1,
-metalness: 0
+metalness: 0,
+envMapIntensity: 0.3 // 🔥 CLAVE
 });
 
 const ground = new THREE.Mesh(groundGeo,groundMat);
