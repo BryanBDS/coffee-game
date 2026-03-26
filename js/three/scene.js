@@ -403,8 +403,18 @@ TERRENO MONTAÑOSO
 ========================= */
 const textureLoader = new THREE.TextureLoader();
 
-const groundTexture = textureLoader.load("https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/terrain/grasslight-big.jpg");
-const normalTexture = textureLoader.load("https://cdn.jsdelivr.net/gh/mrdoob/three.js@master/examples/textures/terrain/grasslight-big-nm.jpg");
+const groundTexture = textureLoader.load("assets/textures/grass_diffuse.jpg");
+const normalTexture = textureLoader.load("assets/textures/grass_normal.jpg");
+const roughnessTexture = textureLoader.load("assets/textures/grass_roughness.jpg");
+
+// repetir textura
+groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
+normalTexture.wrapS = normalTexture.wrapT = THREE.RepeatWrapping;
+roughnessTexture.wrapS = roughnessTexture.wrapT = THREE.RepeatWrapping;
+
+groundTexture.repeat.set(30, 30);
+normalTexture.repeat.set(30, 30);
+roughnessTexture.repeat.set(30, 30);
 
 groundTexture.wrapS = groundTexture.wrapT = THREE.RepeatWrapping;
 normalTexture.wrapS = normalTexture.wrapT = THREE.RepeatWrapping;
@@ -468,8 +478,9 @@ groundGeo.computeVertexNormals();
 const groundMat = new THREE.MeshStandardMaterial({
 map: groundTexture,
 normalMap: normalTexture,
-roughness: 0.9,
-metalness: 0.05
+roughnessMap: roughnessTexture,
+roughness: 1,
+metalness: 0
 });
 
 const ground = new THREE.Mesh(groundGeo,groundMat);
