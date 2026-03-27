@@ -238,7 +238,7 @@ function cargarHDR(tipo){
 }
 
 // ✅ AHORA SÍ LLAMAS
-cargarHDR("soleado");
+cargarHDR("soleado"); 
 
 
 
