@@ -41,6 +41,9 @@ let aves = [];
 let nubes = [];
 let hojasAnimadas = [];
 
+let velocidadViento = 0.01;
+let direccionViento = new THREE.Vector2(1, 0);
+
 /* =========================
 CLIMA DINÁMICO
 ========================= */
@@ -603,10 +606,13 @@ const geo = new THREE.SphereGeometry(
 );
 
 const mat = new THREE.MeshStandardMaterial({
-color: 0xffffff,
-transparent: true,
-opacity: 0.85
+    color: 0xffffff,
+    transparent: true,
+    opacity: 0.85
 });
+
+group.userData.material = mat;
+
 
 const parte = new THREE.Mesh(geo, mat);
 
@@ -896,6 +902,30 @@ function aplicarClimaVisual(dia){
 
 
 
+/* =========================
+VIENTO DINÁMICO
+========================= */
+
+if(clima === "soleado"){
+    velocidadViento = 0.01;
+}
+else if(clima === "post-lluvia"){
+    velocidadViento = 0.02;
+}
+else if(clima === "lluvia"){
+    velocidadViento = 0.04;
+}
+else if(tipoLluvia === "tormenta"){
+    velocidadViento = 0.08;
+}
+
+// dirección cambia lentamente
+direccionViento.x = Math.sin(Date.now() * 0.0001);
+direccionViento.y = Math.cos(Date.now() * 0.0001);
+
+
+
+
 
 /* =========================
 ANIMACIÓN
@@ -1060,11 +1090,57 @@ ave.position.x = -50;
 MOVER NUBES
 ========================= */
 nubes.forEach(nube=>{
-    nube.position.x += 0.01;
 
-    if(nube.position.x > 60){
-        nube.position.x = -60;
-    }
+    nube.position.x += direccionViento.x * velocidadViento;
+    nube.position.z += direccionViento.y * velocidadViento;
+
+    // movimiento vertical suave (muy realista)
+    nube.position.y += Math.sin(Date.now() * 0.001 + nube.position.x) * 0.005;
+
+    // rotación leve (natural)
+    nube.rotation.y += 0.0005;
+
+    // reciclaje de nubes
+    if(nube.position.x > 60) nube.position.x = -60;
+    if(nube.position.x < -60) nube.position.x = 60;
+
+    if(nube.position.z > 60) nube.position.z = -60;
+    if(nube.position.z < -60) nube.position.z = 60;
+
+});
+
+
+
+/* =========================
+COLOR DE NUBES SEGÚN CLIMA
+========================= */
+
+nubes.forEach(nube=>{
+
+    nube.children.forEach(parte=>{
+
+        if(clima === "soleado"){
+            parte.material.color.set(0xffffff);
+            parte.material.opacity = 0.9;
+        }
+
+        else if(clima === "post-lluvia"){
+            parte.material.color.set(0xdfe6e9);
+            parte.material.opacity = 0.85;
+        }
+
+        else if(clima === "lluvia"){
+            parte.material.color.set(0xaaaaaa);
+            parte.material.opacity = 0.7;
+        }
+
+        else if(tipoLluvia === "tormenta"){
+            parte.material.color.set(0x555555);
+            parte.material.opacity = 0.6;
+        }
+
+    });
+
 });
 
 
