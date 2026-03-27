@@ -42,6 +42,7 @@ let nubes = [];
 let hojasAnimadas = [];
 
 let velocidadViento = 0.01;
+let rotacionCielo = 0;
 let direccionViento = new THREE.Vector2(1, 0);
 
 /* =========================
@@ -228,10 +229,15 @@ function cargarHDR(tipo){
     const loader = new RGBELoader();
 
     loader.load(hdrs[tipo], (texture)=>{
+
         texture.mapping = THREE.EquirectangularReflectionMapping;
 
         scene.environment = texture;
         scene.background = texture;
+
+        // 🔥 CLAVE PRO (activar rotación real)
+        scene.environmentRotation = new THREE.Euler(0, 0, 0);
+        scene.backgroundRotation = scene.environmentRotation;
 
         hdrActual = tipo;
     });
@@ -1335,16 +1341,27 @@ splashes.splice(index,1);
 
 
 /* =========================
-MOVIMIENTO DEL CIELO (HDR)
+MOVIMIENTO REAL DEL CIELO HDR
 ========================= */
 
-if(scene.environment){
+if(scene.environmentRotation){
 
-    // simular movimiento de nubes
-    scene.environment.rotation.y += velocidadViento * 0.2;
+    // velocidad depende del clima
+    let velocidadCielo = velocidadViento * 0.2;
 
-    if(scene.background){
-        scene.background.rotation = scene.environment.rotation;
+    // más rápido en tormenta
+    if(tipoLluvia === "tormenta"){
+        velocidadCielo *= 2;
+    }
+
+    // acumulador suave
+    rotacionCielo += velocidadCielo;
+
+    // aplicar rotación REAL
+    scene.environmentRotation.y = rotacionCielo;
+
+    if(scene.backgroundRotation){
+        scene.backgroundRotation.y = rotacionCielo;
     }
 }
 
