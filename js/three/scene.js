@@ -638,6 +638,39 @@ nubes.push(group);
 
 }
 
+
+
+function crearNubeAlta(){
+
+    const geo = new THREE.PlaneGeometry(20,10);
+
+    const texture = new THREE.TextureLoader().load("assets/textures/clouds.png");
+
+    const mat = new THREE.MeshStandardMaterial({
+        map: texture,
+        transparent: true,
+        opacity: 0.5,
+        depthWrite: false
+    });
+
+    const nube = new THREE.Mesh(geo, mat);
+
+    nube.position.set(
+        (Math.random()*200)-100,
+        40 + Math.random()*20, // MÁS ALTO que las normales
+        (Math.random()*200)-100
+    );
+
+    nube.rotation.x = -Math.PI/2;
+    nube.rotation.z = Math.random() * Math.PI;
+
+    scene.add(nube);
+
+    nubes.push(nube);
+}
+
+
+
 /* =========================
 AVES
 ========================= */
@@ -681,9 +714,16 @@ aves.push(group);
 GENERAR NUBES
 ========================= */
 
+// nubes normales
 for(let i=0;i<8;i++){
-crearNube();
+    crearNube();
 }
+
+// nubes altas (cielo real)
+for(let i=0;i<12;i++){
+    crearNubeAlta();
+}
+
 
 /* =========================
 GENERAR AVES
@@ -920,8 +960,8 @@ else if(tipoLluvia === "tormenta"){
 }
 
 // dirección cambia lentamente
-direccionViento.x = Math.sin(Date.now() * 0.0001);
-direccionViento.y = Math.cos(Date.now() * 0.0001);
+direccionViento.x = Math.sin(Date.now() * 0.00005);
+direccionViento.y = Math.cos(Date.now() * 0.00005);
 
 
 
@@ -1091,23 +1131,37 @@ MOVER NUBES
 ========================= */
 nubes.forEach(nube=>{
 
-    nube.position.x += direccionViento.x * velocidadViento;
-    nube.position.z += direccionViento.y * velocidadViento;
+    // detectar altura (capas)
+    const esAlta = nube.position.y > 35;
 
-    // movimiento vertical suave (muy realista)
-    nube.position.y += Math.sin(Date.now() * 0.001 + nube.position.x) * 0.005;
+    let velocidad = velocidadViento;
 
-    // rotación leve (natural)
-    nube.rotation.y += 0.0005;
+    // nubes altas = más lentas (realista)
+    if(esAlta){
+        velocidad *= 0.3;
+    }
 
-    // reciclaje de nubes
-    if(nube.position.x > 60) nube.position.x = -60;
-    if(nube.position.x < -60) nube.position.x = 60;
+    nube.position.x += direccionViento.x * velocidad;
+    nube.position.z += direccionViento.y * velocidad;
 
-    if(nube.position.z > 60) nube.position.z = -60;
-    if(nube.position.z < -60) nube.position.z = 60;
+    // movimiento suave vertical (solo bajas)
+    if(!esAlta){
+        nube.position.y += Math.sin(Date.now() * 0.001 + nube.position.x) * 0.01;
+    }
+
+    // rotación leve
+    nube.rotation.y += 0.0003;
+
+    // reciclaje infinito
+    if(nube.position.x > 100) nube.position.x = -100;
+    if(nube.position.x < -100) nube.position.x = 100;
+
+    if(nube.position.z > 100) nube.position.z = -100;
+    if(nube.position.z < -100) nube.position.z = 100;
 
 });
+
+    
 
 
 
@@ -1119,25 +1173,25 @@ nubes.forEach(nube=>{
 
     nube.children.forEach(parte=>{
 
-        if(clima === "soleado"){
-            parte.material.color.set(0xffffff);
-            parte.material.opacity = 0.9;
-        }
+   if(clima === "soleado"){
+    parte.material.color.set(0xffffff);
+    parte.material.opacity = 0.9;
+}
 
-        else if(clima === "post-lluvia"){
-            parte.material.color.set(0xdfe6e9);
-            parte.material.opacity = 0.85;
-        }
+else if(clima === "post-lluvia"){
+    parte.material.color.set(0xdfe6e9);
+    parte.material.opacity = 0.8;
+}
 
-        else if(clima === "lluvia"){
-            parte.material.color.set(0xaaaaaa);
-            parte.material.opacity = 0.7;
-        }
+else if(clima === "lluvia"){
+    parte.material.color.set(0x999999);
+    parte.material.opacity = 0.7;
+}
 
-        else if(tipoLluvia === "tormenta"){
-            parte.material.color.set(0x555555);
-            parte.material.opacity = 0.6;
-        }
+else if(tipoLluvia === "tormenta"){
+    parte.material.color.set(0x444444);
+    parte.material.opacity = 0.6;
+}
 
     });
 
