@@ -355,7 +355,7 @@ composer.addPass(bloomPass);*/
 
 renderer.physicallyCorrectLights = true;
 
-renderer.toneMappingExposure = 0.25;
+renderer.toneMappingExposure = 0.18;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -393,7 +393,7 @@ sol.shadow.mapSize.height = 2048;
 scene.add(sol);
 
 if(tipoRegion === "montaña"){
-sol.intensity = 1.2;
+sol.intensity = 0.8;
 }
 
 if(tipoRegion === "valle"){
@@ -543,6 +543,43 @@ function crearPasto(){
 }
 
 crearPasto();
+
+
+
+/* =========================
+ARBUSTOS
+========================= */
+
+function crearArbustos(){
+
+    const cantidad = 80;
+
+    for(let i=0;i<cantidad;i++){
+
+        const geo = new THREE.SphereGeometry(0.8, 6, 6);
+        const mat = new THREE.MeshStandardMaterial({
+            color: 0x2f6d2f
+        });
+
+        const bush = new THREE.Mesh(geo, mat);
+
+        bush.position.set(
+            (Math.random()*100)-50,
+            0.5,
+            (Math.random()*100)-50
+        );
+
+        bush.scale.setScalar(0.5 + Math.random());
+
+        bush.castShadow = true;
+
+        scene.add(bush);
+    }
+}
+
+crearArbustos();
+
+
 
 
 
@@ -734,9 +771,13 @@ return leafMat;
 }
 
 /* generar árboles */
-for(let i=0;i<20;i++){
-let x = (Math.random()*80)-40;
-let z = (Math.random()*80)-40;
+for(let i=0;i<120;i++){
+let x = (Math.random()*100)-50;
+let z = (Math.random()*100)-50;
+
+// evitar centro (para vista tipo paisaje)
+if(Math.abs(x) < 10 && Math.abs(z) < 10) continue;
+
 hojasAnimadas.push(crearArbol(x,z));
 }
 
