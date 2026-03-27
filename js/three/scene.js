@@ -388,8 +388,8 @@ sol.shadow.camera.bottom = -50;
 sol.shadow.bias = -0.0005;
 sol.position.set(10,20,10);
 sol.castShadow = true;
-sol.shadow.mapSize.width = 2048;
-sol.shadow.mapSize.height = 2048;
+sol.shadow.mapSize.width = 1024;
+sol.shadow.mapSize.height = 1024;
 scene.add(sol);
 
 if(tipoRegion === "montaña"){
