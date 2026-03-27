@@ -214,35 +214,31 @@ container.innerHTML = "";
 scene = new THREE.Scene();
 
 
-cargarHDR("soleado");
-
-
 const hdrs = {
     soleado: "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr",
     nublado: "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/overcast_soil_puresky_2k.hdr",
     tormenta: "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/stormy_sky_2k.hdr"
 };
 
-
 let hdrActual = null;
 
 function cargarHDR(tipo){
-
     if(!hdrs[tipo]) return;
 
     const loader = new RGBELoader();
 
     loader.load(hdrs[tipo], (texture)=>{
-
         texture.mapping = THREE.EquirectangularReflectionMapping;
 
         scene.environment = texture;
         scene.background = texture;
 
-        hdrActual = tipo; // 🔥 guardar correctamente
-
+        hdrActual = tipo;
     });
 }
+
+// ✅ AHORA SÍ LLAMAS
+cargarHDR("soleado");
 
 
 
