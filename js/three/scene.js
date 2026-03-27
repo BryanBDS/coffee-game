@@ -214,25 +214,36 @@ container.innerHTML = "";
 scene = new THREE.Scene();
 
 
+cargarHDR("soleado");
 
-const rgbeLoader = new RGBELoader();
 
-rgbeLoader.load(
-    "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr",
-    
-    function(texture){
+let hdrActual = null;
+
+const hdrs = {
+    soleado: "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/kloofendal_48d_partly_cloudy_puresky_2k.hdr",
+    nublado: "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/overcast_soil_puresky_2k.hdr",
+    tormenta: "https://dl.polyhaven.org/file/ph-assets/HDRIs/hdr/2k/stormy_sky_2k.hdr"
+};
+
+function cargarHDR(tipo){
+
+    const loader = new RGBELoader();
+
+    loader.load(hdrs[tipo], (texture)=>{
+
         texture.mapping = THREE.EquirectangularReflectionMapping;
-        scene.background = texture;
+
         scene.environment = texture;
-        console.log("HDR cargado ✅");
-    },
+        scene.background = texture;
 
-    undefined,
+        hdrActual = texture;
 
-    function(error){
-        console.log("❌ Error HDR:", error);
-    }
-);
+        console.log("HDR cambiado a:", tipo);
+
+    });
+
+}
+
 
 
 let tipoRegion = "montaña";
@@ -938,6 +949,35 @@ function aplicarClimaVisual(dia){
         renderer.toneMappingExposure = 0.5;
     }
 
+
+
+/* =========================
+CAMBIO DE HDR SEGÚN CLIMA
+========================= */
+
+if(clima === "soleado"){
+    if(hdrActual !== "soleado"){
+        cargarHDR("soleado");
+        hdrActual = "soleado";
+    }
+}
+
+else if(clima === "post-lluvia"){
+    if(hdrActual !== "nublado"){
+        cargarHDR("nublado");
+        hdrActual = "nublado";
+    }
+}
+
+else if(clima === "lluvia" || tipoLluvia === "tormenta"){
+    if(hdrActual !== "tormenta"){
+        cargarHDR("tormenta");
+        hdrActual = "tormenta";
+    }
+}
+
+
+
 }
 
 
@@ -947,16 +987,16 @@ VIENTO DINÁMICO
 ========================= */
 
 if(clima === "soleado"){
-    velocidadViento = 0.01;
+    velocidadViento = 0.002;
 }
 else if(clima === "post-lluvia"){
-    velocidadViento = 0.02;
+    velocidadViento = 0.005;
 }
 else if(clima === "lluvia"){
-    velocidadViento = 0.04;
+    velocidadViento = 0.01;
 }
 else if(tipoLluvia === "tormenta"){
-    velocidadViento = 0.08;
+    velocidadViento = 0.02;
 }
 
 // dirección cambia lentamente
@@ -1296,6 +1336,22 @@ scene.remove(s);
 splashes.splice(index,1);
 }
 });
+
+
+/* =========================
+MOVIMIENTO DEL CIELO (HDR)
+========================= */
+
+if(scene.environment){
+
+    // simular movimiento de nubes
+    scene.environment.rotation.y += velocidadViento * 0.2;
+
+    if(scene.background){
+        scene.background.rotation = scene.environment.rotation;
+    }
+}
+
 
 
 
